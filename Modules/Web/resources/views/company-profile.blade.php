@@ -52,8 +52,8 @@
         .hov-card:hover{border-color:rgba(56,189,248,.3);box-shadow:0 0 32px rgba(56,189,248,.07),0 8px 32px rgba(0,0,0,.3);transform:translateY(-4px)}
 
         /* navbar */
-        #nav{position:fixed;top:0;left:0;right:0;z-index:100;transition:background .3s,border-color .3s,backdrop-filter .3s}
-        #nav.sc{background:rgba(7,17,31,.88);border-bottom:1px solid var(--border);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
+        #nav{position:fixed;top:0;left:0;right:0;z-index:100;transition:background .3s,border-color .3s,backdrop-filter .3s;background:rgba(7,17,31,.6);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+        #nav.sc{background:rgba(7,17,31,.92);border-bottom:1px solid var(--border);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
         .nl{position:relative;font-size:.875rem;color:var(--text2);transition:color .2s;padding:.25rem 0}
         .nl::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:2px;background:linear-gradient(90deg,var(--teal),var(--sky));border-radius:2px;transition:width .3s}
         .nl:hover{color:#fff}.nl:hover::after{width:100%}
@@ -63,12 +63,14 @@
         .btn-s:hover{border-color:rgba(56,189,248,.4);background:rgba(56,189,248,.06)}
 
         /* mobile menu */
-        #mob-menu{max-height:0;overflow:hidden;transition:max-height .5s cubic-bezier(.16,1,.3,1),opacity .4s;opacity:0}
+        #mob-menu{max-height:0;overflow:hidden;transition:max-height .5s cubic-bezier(.16,1,.3,1),opacity .4s;opacity:0;background:rgba(7,17,31,.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
         #mob-menu.open{max-height:600px;opacity:1}
         .ham-ln{display:block;width:22px;height:2px;background:var(--text2);border-radius:2px;transition:transform .3s,opacity .3s}
         #ham.open .ham-ln:nth-child(1){transform:rotate(45deg) translate(4px,4px)}
         #ham.open .ham-ln:nth-child(2){opacity:0}
         #ham.open .ham-ln:nth-child(3){transform:rotate(-45deg) translate(4px,-4px)}
+        #mob-menu a{color:rgba(148,163,184,.9)}
+        #mob-menu a:hover{color:#fff;background:rgba(255,255,255,.05)}
 
         /* hero orbs & animations */
         .orb{position:absolute;border-radius:50%;filter:blur(90px);pointer-events:none}
@@ -193,6 +195,21 @@
         [data-theme=light] #btt{background:rgba(255,255,255,.9)}
         [data-theme=light] .hero-badge{background:rgba(13,148,136,.08);border-color:rgba(13,148,136,.25);color:#0f766e}
         [data-theme=light] .hero-badge .dot{background:#0f766e}
+        [data-theme=light] #nav{background:rgba(240,244,248,.82);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+        [data-theme=light] #nav.sc{background:rgba(240,244,248,.95)}
+        [data-theme=light] #mob-menu{background:rgba(240,244,248,.98);border-color:var(--border)}
+        [data-theme=light] #mob-menu a{color:var(--text2)!important}
+        [data-theme=light] #mob-menu a:hover{color:var(--text1)!important}
+        [data-theme=light] .glass{background:rgba(255,255,255,.6);border-color:var(--border2)}
+        [data-theme=light] .glass2{background:rgba(255,255,255,.75);border-color:var(--border2)}
+        [data-theme=light] .hov-card:hover{box-shadow:0 0 24px rgba(14,165,233,.12),0 8px 24px rgba(0,0,0,.08)}
+        [data-theme=light] .orb{opacity:.04!important}
+        [data-theme=light] body::before{opacity:.5}
+        [data-theme=light] .text-slate-600{color:#64748b!important}
+        [data-theme=light] .badge-lbl{color:#0ea5e9}
+        [data-theme=light] .step:hover{border-color:rgba(14,165,233,.3)}
+        [data-theme=light] .ind:hover{background:rgba(167,139,250,.06)}
+        [data-theme=light] .gl{background:linear-gradient(to right,transparent,var(--border2),transparent)}
 
         /* grad line */
         .gl{height:1px;background:linear-gradient(to right,transparent,var(--border2),transparent)}
@@ -256,10 +273,6 @@
             </div>
 
             <div class="flex lg:hidden items-center gap-2">
-                <div class="flex gap-1">
-                    <button class="lang-b active" data-lang="id">ID</button>
-                    <button class="lang-b" data-lang="en">EN</button>
-                </div>
                 <button id="th-tog-m" class="th-tog"><i class="fas fa-moon text-sm" id="th-ic-m"></i></button>
                 <button id="ham" class="flex flex-col gap-1.5 p-2" aria-label="Menu">
                     <span class="ham-ln"></span><span class="ham-ln"></span><span class="ham-ln"></span>
@@ -268,17 +281,22 @@
         </div>
     </div>
 
-    <div id="mob-menu" class="lg:hidden border-t border-white/5">
+    <div id="mob-menu" class="lg:hidden border-t border-white/10">
         <div class="max-w-7xl mx-auto px-5 py-5 flex flex-col gap-4">
-            <div class="flex flex-col gap-2">
-                <a href="#about"      class="text-sm text-slate-300 hover:text-white py-1" data-i18n="nav.about">Tentang</a>
-                <a href="#services"   class="text-sm text-slate-300 hover:text-white py-1" data-i18n="nav.services">Layanan</a>
-                <a href="#industries" class="text-sm text-slate-300 hover:text-white py-1" data-i18n="nav.industries">Industri</a>
-                <a href="#portfolio"  class="text-sm text-slate-300 hover:text-white py-1" data-i18n="nav.projects">Proyek</a>
-                <a href="#process"    class="text-sm text-slate-300 hover:text-white py-1" data-i18n="nav.process">Proses</a>
-                <a href="#contact"    class="text-sm text-slate-300 hover:text-white py-1" data-i18n="nav.contact">Kontak</a>
+            <div class="flex flex-col gap-1">
+                <a href="#about"      class="text-sm py-2.5 px-3 rounded-xl transition-colors" data-i18n="nav.about">Tentang</a>
+                <a href="#services"   class="text-sm py-2.5 px-3 rounded-xl transition-colors" data-i18n="nav.services">Layanan</a>
+                <a href="#industries" class="text-sm py-2.5 px-3 rounded-xl transition-colors" data-i18n="nav.industries">Industri</a>
+                <a href="#portfolio"  class="text-sm py-2.5 px-3 rounded-xl transition-colors" data-i18n="nav.projects">Proyek</a>
+                <a href="#process"    class="text-sm py-2.5 px-3 rounded-xl transition-colors" data-i18n="nav.process">Proses</a>
+                <a href="#contact"    class="text-sm py-2.5 px-3 rounded-xl transition-colors" data-i18n="nav.contact">Kontak</a>
             </div>
-            <div class="flex flex-col gap-2 pt-2 border-t border-white/5">
+            <div class="flex gap-1.5 pt-3 border-t border-white/10">
+                <button class="lang-b active flex-1 text-center" data-lang="id">ID</button>
+                <button class="lang-b flex-1 text-center" data-lang="en">EN</button>
+                <button class="lang-b flex-1 text-center" data-lang="zh">中文</button>
+            </div>
+            <div class="flex flex-col gap-2">
                 <a href="mailto:official@fluxatritamaindonesia.com" class="btn-s text-center py-3" data-i18n="cta.email">Email Kami</a>
                 <a href="https://wa.me/6281250653005" class="btn-p text-center py-3" data-i18n="cta.consult">Konsultasi</a>
             </div>
@@ -683,14 +701,14 @@
 <!-- ══════════════════════════════════ CONTACT ══ -->
 <section id="contact" class="py-20 sm:py-28">
     <div class="max-w-7xl mx-auto px-5 sm:px-8">
-        <div class="glass2 rounded-[2rem] p-8 sm:p-10 lg:p-14 relative overflow-hidden reveal">
+        <div class="glass2 rounded-[1.5rem] sm:rounded-[2rem] p-5 sm:p-8 lg:p-14 relative overflow-hidden reveal">
             <div class="absolute top-0 right-0 w-80 h-80 rounded-full opacity-[.05] blur-3xl -translate-y-1/2 translate-x-1/2" style="background:radial-gradient(circle,#2dd4bf,#38bdf8)"></div>
-            <div class="grid gap-10 lg:grid-cols-2 items-start relative z-10">
+            <div class="grid gap-8 lg:grid-cols-2 items-start relative z-10">
                 <div>
                     <p class="badge-lbl" data-i18n="contact.badge">Kontak</p>
-                    <h2 class="text-3xl sm:text-5xl font-bold text-white leading-snug mb-5" data-i18n="contact.title">Siap membangun sistem digital yang profesional?</h2>
-                    <p class="text-sm leading-relaxed text-slate-400 max-w-lg mb-8" data-i18n="contact.desc">Jika Anda butuh website company profile, aplikasi internal, atau infrastruktur IT yang lebih rapi, kami siap membantu dari perencanaan sampai implementasi.</p>
-                    <div class="flex flex-col sm:flex-row gap-3">
+                    <h2 class="text-2xl sm:text-3xl lg:text-5xl font-bold text-white leading-snug mb-4" data-i18n="contact.title">Siap membangun sistem digital yang profesional?</h2>
+                    <p class="text-sm leading-relaxed text-slate-400 mb-6" data-i18n="contact.desc">Jika Anda butuh website company profile, aplikasi internal, atau infrastruktur IT yang lebih rapi, kami siap membantu dari perencanaan sampai implementasi.</p>
+                    <div class="flex flex-col gap-3">
                         <a href="https://wa.me/6281250653005" class="btn-p text-center py-3.5 px-7" data-i18n="contact.cta1"><i class="fab fa-whatsapp mr-2"></i>Chat via WhatsApp</a>
                         <a href="mailto:official@fluxatritamaindonesia.com" class="btn-s text-center py-3.5 px-7" data-i18n="contact.cta2"><i class="fas fa-envelope mr-2"></i>Kirim Email</a>
                     </div>
@@ -698,11 +716,17 @@
                 <div class="space-y-3">
                     <div class="ct-item">
                         <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style="background:rgba(56,189,248,.1)"><i class="fas fa-envelope text-sky-300 text-sm"></i></div>
-                        <div><p class="text-xs text-slate-500 uppercase tracking-widest mb-1" data-i18n="contact.card1">Email</p><a href="mailto:official@fluxatritamaindonesia.com" class="text-sm text-slate-200 hover:text-white transition-colors">official@fluxatritamaindonesia.com</a></div>
+                        <div class="min-w-0">
+                            <p class="text-xs text-slate-500 uppercase tracking-widest mb-1" data-i18n="contact.card1">Email</p>
+                            <a href="mailto:official@fluxatritamaindonesia.com" class="text-sm text-slate-200 hover:text-white transition-colors break-all">official@fluxatritamaindonesia.com</a>
+                        </div>
                     </div>
                     <div class="ct-item">
                         <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style="background:rgba(45,212,191,.1)"><i class="fas fa-phone text-teal-300 text-sm"></i></div>
-                        <div><p class="text-xs text-slate-500 uppercase tracking-widest mb-1" data-i18n="contact.card2">Telepon / WhatsApp</p><a href="tel:+6281250653005" class="text-sm text-slate-200 hover:text-white transition-colors">+62 812-5065-3005</a></div>
+                        <div class="min-w-0">
+                            <p class="text-xs text-slate-500 uppercase tracking-widest mb-1" data-i18n="contact.card2">Telepon / WhatsApp</p>
+                            <a href="tel:+6281250653005" class="text-sm text-slate-200 hover:text-white transition-colors">+62 812-5065-3005</a>
+                        </div>
                     </div>
                 </div>
             </div>
