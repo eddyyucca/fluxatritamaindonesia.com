@@ -107,15 +107,14 @@ const translations = {
         },
         media: {
             badge: 'Visual Showcase',
-            title: 'Presentasi yang terlihat hidup dengan foto profesional dan video singkat yang langsung menjelaskan kapabilitas tim.',
+            title: 'Visual desktop yang lebih rapi dengan komposisi editorial, foto profesional, dan hierarchy yang lebih meyakinkan.',
             desc: 'Section ini membantu calon klien melihat suasana kerja, pendekatan delivery, dan kualitas visual brand dalam satu alur yang lebih meyakinkan.',
             card1Badge: 'Foto',
             card1Title: 'Corporate Tech Photo',
             card1Desc: 'Cocok untuk memperkuat persepsi profesional, modern, dan siap eksekusi.',
-            card2Badge: 'Video',
-            card2Title: 'Short Motion Demo',
-            card2Desc: 'Memberi ritme visual yang lebih kuat dibanding section statis biasa.',
-            videoCaption: 'Preview visual presentasi company profile'
+            card2Badge: 'Layout',
+            card2Title: 'Desktop Presentation',
+            card2Desc: 'Disusun supaya area kanan terasa premium tanpa terlihat seperti placeholder demo.'
         },
         insight: {
             badge: 'Performance Insight',
@@ -273,15 +272,14 @@ const translations = {
         },
         media: {
             badge: 'Visual Showcase',
-            title: 'A more compelling presentation with professional photography and short video that immediately communicates team capability.',
+            title: 'A cleaner desktop visual system with editorial composition, professional photography, and more convincing hierarchy.',
             desc: 'This section helps prospective clients understand the working atmosphere, delivery approach, and brand quality in a more convincing flow.',
             card1Badge: 'Photo',
             card1Title: 'Corporate Tech Photo',
             card1Desc: 'Ideal for reinforcing a professional, modern, and execution-ready impression.',
-            card2Badge: 'Video',
-            card2Title: 'Short Motion Demo',
-            card2Desc: 'Adds stronger visual rhythm than a fully static section.',
-            videoCaption: 'Company profile visual preview'
+            card2Badge: 'Layout',
+            card2Title: 'Desktop Presentation',
+            card2Desc: 'Structured so the right-side area feels premium instead of reading like a temporary demo block.'
         },
         insight: {
             badge: 'Performance Insight',

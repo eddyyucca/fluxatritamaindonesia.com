@@ -146,8 +146,8 @@
         <section id="home" class="relative pt-32 pb-20 sm:pt-36 sm:pb-24">
             <div class="absolute inset-x-0 top-8 mx-auto h-[28rem] w-[28rem] rounded-full hero-orb opacity-60 blur-3xl"></div>
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-                <div class="grid gap-14 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
-                    <div>
+                <div class="hero-layout grid gap-14 lg:grid-cols-[1.08fr_0.92fr] lg:items-start">
+                    <div class="hero-copy-column">
                         <div class="inline-flex items-center gap-2 rounded-full border border-teal-300/20 bg-teal-300/8 px-4 py-2 text-xs font-semibold uppercase tracking-[0.24em] text-teal-200">
                             <span class="h-2 w-2 rounded-full bg-teal-300"></span>
                             <span data-i18n="hero.badge">IT Solutions for Growing Business</span>
@@ -169,53 +169,55 @@
                         </div>
                     </div>
 
-                    <div class="panel-strong soft-shadow rounded-[2rem] p-6 sm:p-8 hero-visual-card">
-                        <div class="flex items-center justify-between border-b border-white/10 pb-5">
-                            <div>
-                                <p class="text-sm uppercase tracking-[0.26em] text-sky-200/70" data-i18n="snapshot.badge">Company Snapshot</p>
-                                <h2 class="mt-2 display-font text-2xl font-bold text-white" data-i18n="snapshot.title">Why PT Fluxa Tritama Indonesia</h2>
-                            </div>
-                            <div class="rounded-2xl bg-teal-300/10 p-4 text-teal-200">
-                                <i class="fas fa-chart-line text-xl"></i>
-                            </div>
-                        </div>
-                        <div class="mt-6 grid gap-4 sm:grid-cols-2">
-                            <div class="metric-card rounded-3xl border border-white/10 bg-white/[0.03] p-5">
-                                <div class="text-3xl font-bold text-white">50+</div>
-                                <div class="mt-2 text-sm text-slate-300" data-i18n="snapshot.metric1">Inisiatif digital dan implementasi IT</div>
-                            </div>
-                            <div class="metric-card rounded-3xl border border-white/10 bg-white/[0.03] p-5">
-                                <div class="text-3xl font-bold text-white">30+</div>
-                                <div class="mt-2 text-sm text-slate-300" data-i18n="snapshot.metric2">Klien dari berbagai sektor bisnis</div>
-                            </div>
-                            <div class="metric-card rounded-3xl border border-white/10 bg-white/[0.03] p-5">
-                                <div class="text-3xl font-bold text-white">5+</div>
-                                <div class="mt-2 text-sm text-slate-300" data-i18n="snapshot.metric3">Tahun pengalaman delivery project</div>
-                            </div>
-                            <div class="metric-card rounded-3xl border border-white/10 bg-white/[0.03] p-5">
-                                <div class="text-3xl font-bold text-white">24/7</div>
-                                <div class="mt-2 text-sm text-slate-300" data-i18n="snapshot.metric4">Dukungan untuk operasional penting</div>
-                            </div>
-                        </div>
-                        <div class="mt-6 rounded-3xl border border-sky-300/15 bg-sky-300/5 p-5">
-                            <p class="text-sm leading-7 text-slate-300" data-i18n="snapshot.desc">Kami fokus pada hasil bisnis: sistem yang stabil, workflow yang lebih cepat, dan fondasi teknologi yang siap dipakai untuk scale-up.</p>
-                        </div>
-                        <div class="mt-6 overflow-hidden rounded-[1.75rem] border border-white/10">
-                            <img src="{{ asset('assets/images/hero-team-photo.png') }}" alt="Tim PT Fluxa Tritama Indonesia sedang berdiskusi di ruang monitoring digital" class="hero-showcase-image">
-                        </div>
-                        <div class="mt-5 grid gap-4 sm:grid-cols-[1fr_auto]">
-                            <div class="rounded-[1.5rem] border border-white/10 bg-white/[0.03] p-5">
-                                <p class="text-xs uppercase tracking-[0.24em] text-sky-200/70" data-i18n="heroVisual.badge">Live Delivery Focus</p>
-                                <p class="mt-3 text-sm leading-7 text-slate-300" data-i18n="heroVisual.desc">Kami merancang solusi digital dengan pendekatan visual, data, dan implementasi yang siap dipresentasikan ke calon klien maupun stakeholder internal.</p>
-                            </div>
-                            <div class="grid grid-cols-2 gap-3 sm:w-[13rem]">
-                                <div class="rounded-[1.5rem] border border-white/10 bg-white/[0.03] p-4">
-                                    <div class="text-2xl font-bold text-white">98%</div>
-                                    <div class="mt-2 text-xs text-slate-300" data-i18n="heroVisual.metric1">Project visibility</div>
+                    <div class="hero-visual-stack">
+                        <div class="panel-strong soft-shadow rounded-[2rem] p-6 sm:p-8 hero-visual-card">
+                            <div class="flex items-center justify-between border-b border-white/10 pb-5">
+                                <div>
+                                    <p class="text-sm uppercase tracking-[0.26em] text-sky-200/70" data-i18n="snapshot.badge">Company Snapshot</p>
+                                    <h2 class="mt-2 display-font text-2xl font-bold text-white" data-i18n="snapshot.title">Why PT Fluxa Tritama Indonesia</h2>
                                 </div>
-                                <div class="rounded-[1.5rem] border border-white/10 bg-white/[0.03] p-4">
-                                    <div class="text-2xl font-bold text-white">4.9</div>
-                                    <div class="mt-2 text-xs text-slate-300" data-i18n="heroVisual.metric2">Client rating</div>
+                                <div class="rounded-2xl bg-teal-300/10 p-4 text-teal-200">
+                                    <i class="fas fa-chart-line text-xl"></i>
+                                </div>
+                            </div>
+                            <div class="hero-visual-main mt-6 overflow-hidden rounded-[1.75rem] border border-white/10">
+                                <img src="{{ asset('assets/images/hero-team-photo.png') }}" alt="Tim PT Fluxa Tritama Indonesia sedang berdiskusi di ruang monitoring digital" class="hero-showcase-image">
+                            </div>
+                            <div class="hero-metrics-grid mt-6 grid gap-4 sm:grid-cols-2">
+                                <div class="metric-card rounded-3xl border border-white/10 bg-white/[0.03] p-5">
+                                    <div class="text-3xl font-bold text-white">50+</div>
+                                    <div class="mt-2 text-sm text-slate-300" data-i18n="snapshot.metric1">Inisiatif digital dan implementasi IT</div>
+                                </div>
+                                <div class="metric-card rounded-3xl border border-white/10 bg-white/[0.03] p-5">
+                                    <div class="text-3xl font-bold text-white">30+</div>
+                                    <div class="mt-2 text-sm text-slate-300" data-i18n="snapshot.metric2">Klien dari berbagai sektor bisnis</div>
+                                </div>
+                                <div class="metric-card rounded-3xl border border-white/10 bg-white/[0.03] p-5">
+                                    <div class="text-3xl font-bold text-white">5+</div>
+                                    <div class="mt-2 text-sm text-slate-300" data-i18n="snapshot.metric3">Tahun pengalaman delivery project</div>
+                                </div>
+                                <div class="metric-card rounded-3xl border border-white/10 bg-white/[0.03] p-5">
+                                    <div class="text-3xl font-bold text-white">24/7</div>
+                                    <div class="mt-2 text-sm text-slate-300" data-i18n="snapshot.metric4">Dukungan untuk operasional penting</div>
+                                </div>
+                            </div>
+                            <div class="mt-6 grid gap-4 lg:grid-cols-[1.15fr_0.85fr]">
+                                <div class="rounded-3xl border border-sky-300/15 bg-sky-300/5 p-5">
+                                    <p class="text-sm leading-7 text-slate-300" data-i18n="snapshot.desc">Kami fokus pada hasil bisnis: sistem yang stabil, workflow yang lebih cepat, dan fondasi teknologi yang siap dipakai untuk scale-up.</p>
+                                </div>
+                                <div class="rounded-3xl border border-white/10 bg-white/[0.03] p-5">
+                                    <p class="text-xs uppercase tracking-[0.24em] text-sky-200/70" data-i18n="heroVisual.badge">Live Delivery Focus</p>
+                                    <p class="mt-3 text-sm leading-7 text-slate-300" data-i18n="heroVisual.desc">Kami merancang solusi digital dengan pendekatan visual, data, dan implementasi yang siap dipresentasikan ke calon klien maupun stakeholder internal.</p>
+                                    <div class="mt-5 grid grid-cols-2 gap-3">
+                                        <div class="rounded-[1.25rem] border border-white/10 bg-white/[0.03] p-4">
+                                            <div class="text-2xl font-bold text-white">98%</div>
+                                            <div class="mt-2 text-xs text-slate-300" data-i18n="heroVisual.metric1">Project visibility</div>
+                                        </div>
+                                        <div class="rounded-[1.25rem] border border-white/10 bg-white/[0.03] p-4">
+                                            <div class="text-2xl font-bold text-white">4.9</div>
+                                            <div class="mt-2 text-xs text-slate-300" data-i18n="heroVisual.metric2">Client rating</div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -394,7 +396,7 @@
                 <div class="grid gap-8 lg:grid-cols-[0.95fr_1.05fr]">
                     <div>
                         <p class="text-sm uppercase tracking-[0.24em] text-sky-200/70" data-i18n="media.badge">Visual Showcase</p>
-                        <h2 class="mt-4 text-3xl font-bold text-white sm:text-5xl" data-i18n="media.title">Presentasi yang terlihat hidup dengan foto profesional dan video singkat yang langsung menjelaskan kapabilitas tim.</h2>
+                        <h2 class="mt-4 text-3xl font-bold text-white sm:text-5xl" data-i18n="media.title">Visual desktop yang lebih rapi dengan komposisi editorial, foto profesional, dan hierarchy yang lebih meyakinkan.</h2>
                         <p class="mt-5 text-base leading-8 text-slate-300" data-i18n="media.desc">Section ini membantu calon klien melihat suasana kerja, pendekatan delivery, dan kualitas visual brand dalam satu alur yang lebih meyakinkan.</p>
                         <div class="mt-8 grid gap-4 sm:grid-cols-2">
                             <div class="rounded-[1.5rem] border border-white/10 bg-white/[0.03] p-5">
@@ -403,26 +405,33 @@
                                 <p class="mt-2 text-sm leading-7 text-slate-300" data-i18n="media.card1Desc">Cocok untuk memperkuat persepsi profesional, modern, dan siap eksekusi.</p>
                             </div>
                             <div class="rounded-[1.5rem] border border-white/10 bg-white/[0.03] p-5">
-                                <p class="text-xs uppercase tracking-[0.24em] text-sky-200" data-i18n="media.card2Badge">Video</p>
-                                <h3 class="mt-3 text-xl font-bold text-white" data-i18n="media.card2Title">Short Motion Demo</h3>
-                                <p class="mt-2 text-sm leading-7 text-slate-300" data-i18n="media.card2Desc">Memberi ritme visual yang lebih kuat dibanding section statis biasa.</p>
+                                <p class="text-xs uppercase tracking-[0.24em] text-sky-200" data-i18n="media.card2Badge">Layout</p>
+                                <h3 class="mt-3 text-xl font-bold text-white" data-i18n="media.card2Title">Desktop Presentation</h3>
+                                <p class="mt-2 text-sm leading-7 text-slate-300" data-i18n="media.card2Desc">Disusun supaya area kanan terasa premium tanpa terlihat seperti placeholder demo.</p>
                             </div>
                         </div>
                     </div>
 
-                    <div class="grid gap-5">
-                        <div class="media-stage panel-strong rounded-[2rem] overflow-hidden soft-shadow">
+                    <div class="media-editorial-grid grid gap-5">
+                        <div class="media-stage panel-strong rounded-[2rem] overflow-hidden soft-shadow media-stage-photo">
                             <img src="{{ asset('assets/images/hero-team-photo.png') }}" alt="Suasana kolaborasi tim PT Fluxa Tritama Indonesia" class="media-photo">
-                        </div>
-                        <div class="media-stage panel rounded-[2rem] overflow-hidden">
-                            <div class="video-shell">
-                                <video class="showcase-video" controls autoplay muted loop playsinline poster="{{ asset('assets/images/hero-team-photo.png') }}">
-                                    <source src="{{ asset('assets/media/office-demo.mp4') }}" type="video/mp4">
-                                </video>
-                                <div class="video-caption">
-                                    <span class="video-dot"></span>
-                                    <span data-i18n="media.videoCaption">Preview visual presentasi company profile</span>
+                            <div class="media-photo-overlay">
+                                <div class="media-photo-card">
+                                    <p class="text-xs uppercase tracking-[0.24em] text-sky-200/70">Presentation Ready</p>
+                                    <p class="mt-3 text-sm leading-7 text-slate-300">Komposisi visual difokuskan untuk mempresentasikan tim, dashboard, dan rasa percaya dalam satu frame.</p>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="grid gap-5 lg:grid-cols-2">
+                            <div class="panel rounded-[1.75rem] p-6">
+                                <p class="text-xs uppercase tracking-[0.24em] text-teal-200">Desktop Fit</p>
+                                <h3 class="mt-3 text-2xl font-bold text-white">Balanced Composition</h3>
+                                <p class="mt-3 text-sm leading-7 text-slate-300">Area visual kini punya ritme yang lebih tenang: foto utama kuat, informasi pendukung ringkas, dan tidak ada elemen yang terasa berlebihan.</p>
+                            </div>
+                            <div class="panel rounded-[1.75rem] p-6">
+                                <p class="text-xs uppercase tracking-[0.24em] text-sky-200">Professional Tone</p>
+                                <h3 class="mt-3 text-2xl font-bold text-white">Clear Hierarchy</h3>
+                                <p class="mt-3 text-sm leading-7 text-slate-300">Setiap blok dibuat lebih mudah dipindai di layar lebar, sehingga headline, visual, dan angka penting tidak saling berebut perhatian.</p>
                             </div>
                         </div>
                     </div>
