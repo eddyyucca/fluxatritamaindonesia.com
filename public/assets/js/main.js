@@ -1,4 +1,4 @@
-const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+﻿const mobileMenuBtn = document.getElementById('mobileMenuBtn');
 const mobileMenu = document.getElementById('mobileMenu');
 const year = document.getElementById('year');
 const themeToggle = document.getElementById('themeToggle');
@@ -30,9 +30,10 @@ const translations = {
         nav: { about: 'Tentang', services: 'Layanan', industries: 'Industri', projects: 'Proyek', process: 'Proses', contact: 'Kontak' },
         cta: { email: 'Email Kami', consult: 'Konsultasi' },
         hero: {
-            badge: 'IT Solutions for Growing Business',
+            badge: 'Every Flow Builds The Future',
             title1: 'Solusi IT profesional untuk bisnis yang ingin',
             title2: 'tumbuh lebih cepat dan lebih terstruktur.',
+            slogan: 'Every Flow Builds The Future',
             desc: 'PT Fluxa Tritama Indonesia membantu perusahaan membangun sistem digital, aplikasi bisnis, dan infrastruktur IT yang aman, efisien, serta mudah dikembangkan.',
             ctaPrimary: 'Diskusikan Kebutuhan',
             ctaSecondary: 'Lihat Layanan',
@@ -42,12 +43,13 @@ const translations = {
         },
         snapshot: {
             badge: 'Company Snapshot',
-            title: 'Why PT Fluxa Tritama Indonesia',
+            titleLine1: 'Why PT Fluxa',
+            titleLine2: 'Tritama Indonesia',
             metric1: 'Inisiatif digital dan implementasi IT',
             metric2: 'Klien dari berbagai sektor bisnis',
             metric3: 'Tahun pengalaman delivery project',
             metric4: 'Dukungan untuk operasional penting',
-            desc: 'Kami fokus pada hasil bisnis: sistem yang stabil, workflow yang lebih cepat, dan fondasi teknologi yang siap dipakai untuk scale-up.'
+            desc: 'Sistem yang stabil, workflow yang lebih cepat, dan fondasi teknologi yang siap dipakai untuk scale-up.'
         },
         values: {
             badge: 'Nilai Utama',
@@ -73,7 +75,7 @@ const translations = {
         },
         heroVisual: {
             badge: 'Live Delivery Focus',
-            desc: 'Kami merancang solusi digital dengan pendekatan visual, data, dan implementasi yang siap dipresentasikan ke calon klien maupun stakeholder internal.',
+            desc: 'Solusi digital disusun dengan pendekatan visual, data, dan implementasi yang siap dipresentasikan ke calon klien maupun stakeholder internal.',
             metric1: 'Project visibility',
             metric2: 'Client rating'
         },
@@ -195,9 +197,10 @@ const translations = {
         nav: { about: 'About', services: 'Services', industries: 'Industries', projects: 'Projects', process: 'Process', contact: 'Contact' },
         cta: { email: 'Email Us', consult: 'Consult' },
         hero: {
-            badge: 'IT Solutions for Growing Business',
+            badge: 'Every Flow Builds The Future',
             title1: 'Professional IT solutions for businesses that want to',
             title2: 'grow faster and operate with more structure.',
+            slogan: 'Every Flow Builds The Future',
             desc: 'PT Fluxa Tritama Indonesia helps companies build digital systems, business applications, and IT infrastructure that are secure, efficient, and easy to scale.',
             ctaPrimary: 'Discuss Your Needs',
             ctaSecondary: 'View Services',
@@ -207,12 +210,13 @@ const translations = {
         },
         snapshot: {
             badge: 'Company Snapshot',
-            title: 'Why PT Fluxa Tritama Indonesia',
+            titleLine1: 'Why PT Fluxa',
+            titleLine2: 'Tritama Indonesia',
             metric1: 'Digital initiatives and IT implementations',
             metric2: 'Clients across multiple business sectors',
             metric3: 'Years of project delivery experience',
             metric4: 'Support for critical operations',
-            desc: 'We focus on business outcomes: stable systems, faster workflows, and technology foundations that are ready to scale.'
+            desc: 'Stable systems, faster workflows, and technology foundations that are ready to scale.'
         },
         values: {
             badge: 'Core Value',
@@ -238,7 +242,7 @@ const translations = {
         },
         heroVisual: {
             badge: 'Live Delivery Focus',
-            desc: 'We shape digital solutions with visuals, data, and implementation readiness so they present well to clients and internal stakeholders.',
+            desc: 'Digital solutions are shaped with visual clarity, data readiness, and implementation structure for client and stakeholder presentations.',
             metric1: 'Project visibility',
             metric2: 'Client rating'
         },
@@ -355,132 +359,133 @@ const translations = {
         }
     },
     zh: {
-        title: 'PT Fluxa Tritama Indonesia | 数字解决方案、应用开发与企业基础设施',
-        description: 'PT Fluxa Tritama Indonesia 为印度尼西亚企业提供数字解决方案、Web 与移动应用开发、网络基础设施、IT 采购与数字化转型服务。',
-        nav: { about: '关于我们', services: '服务', industries: '行业', projects: '项目', process: '流程', contact: '联系' },
-        cta: { email: '发送邮件', consult: '咨询' },
+        title: 'PT Fluxa Tritama Indonesia | æ•°å­—è§£å†³æ–¹æ¡ˆã€åº”ç”¨å¼€å‘ä¸Žä¼ä¸šåŸºç¡€è®¾æ–½',
+        description: 'PT Fluxa Tritama Indonesia ä¸ºå°åº¦å°¼è¥¿äºšä¼ä¸šæä¾›æ•°å­—è§£å†³æ–¹æ¡ˆã€Web ä¸Žç§»åŠ¨åº”ç”¨å¼€å‘ã€ç½‘ç»œåŸºç¡€è®¾æ–½ã€IT é‡‡è´­ä¸Žæ•°å­—åŒ–è½¬åž‹æœåŠ¡ã€‚',
+        nav: { about: 'å…³äºŽæˆ‘ä»¬', services: 'æœåŠ¡', industries: 'è¡Œä¸š', projects: 'é¡¹ç›®', process: 'æµç¨‹', contact: 'è”ç³»' },
+        cta: { email: 'å‘é€é‚®ä»¶', consult: 'å’¨è¯¢' },
         hero: {
-            badge: '成长型企业的 IT 解决方案',
-            title1: '为希望实现',
-            title2: '更快增长与更高效率的企业提供专业 IT 解决方案。',
-            desc: 'PT Fluxa Tritama Indonesia 帮助企业构建安全、高效且易于扩展的数字系统、业务应用和 IT 基础设施。',
-            ctaPrimary: '沟通需求',
-            ctaSecondary: '查看服务',
-            chip1: 'Web 与移动应用',
-            chip2: '基础设施与网络',
-            chip4: '业务自动化'
+            badge: 'Every Flow Builds The Future',
+            title1: 'ä¸ºå¸Œæœ›å®žçŽ°',
+            title2: 'æ›´å¿«å¢žé•¿ä¸Žæ›´é«˜æ•ˆçŽ‡çš„ä¼ä¸šæä¾›ä¸“ä¸š IT è§£å†³æ–¹æ¡ˆã€‚',
+            desc: 'PT Fluxa Tritama Indonesia å¸®åŠ©ä¼ä¸šæž„å»ºå®‰å…¨ã€é«˜æ•ˆä¸”æ˜“äºŽæ‰©å±•çš„æ•°å­—ç³»ç»Ÿã€ä¸šåŠ¡åº”ç”¨å’Œ IT åŸºç¡€è®¾æ–½ã€‚',
+            ctaPrimary: 'æ²Ÿé€šéœ€æ±‚',
+            ctaSecondary: 'æŸ¥çœ‹æœåŠ¡',
+            chip1: 'Web ä¸Žç§»åŠ¨åº”ç”¨',
+            chip2: 'åŸºç¡€è®¾æ–½ä¸Žç½‘ç»œ',
+            chip4: 'ä¸šåŠ¡è‡ªåŠ¨åŒ–'
         },
         snapshot: {
-            badge: '公司概览',
-            title: '为什么选择 PT Fluxa Tritama Indonesia',
-            metric1: '数字化项目与 IT 实施',
-            metric2: '来自多个行业的客户',
-            metric3: '项目交付经验年限',
-            metric4: '关键业务支持',
-            desc: '我们专注于业务成果：稳定的系统、更快的流程，以及可支持企业扩张的技术基础。'
+            badge: 'Company Snapshot',
+            titleLine1: 'Why PT Fluxa',
+            titleLine2: 'Tritama Indonesia',
+            metric1: 'æ•°å­—åŒ–é¡¹ç›®ä¸Ž IT å®žæ–½',
+            metric2: 'æ¥è‡ªå¤šä¸ªè¡Œä¸šçš„å®¢æˆ·',
+            metric3: 'é¡¹ç›®äº¤ä»˜ç»éªŒå¹´é™',
+            metric4: 'å…³é”®ä¸šåŠ¡æ”¯æŒ',
+            desc: 'æˆ‘ä»¬ä¸“æ³¨äºŽä¸šåŠ¡æˆæžœï¼šç¨³å®šçš„ç³»ç»Ÿã€æ›´å¿«çš„æµç¨‹ï¼Œä»¥åŠå¯æ”¯æŒä¼ä¸šæ‰©å¼ çš„æŠ€æœ¯åŸºç¡€ã€‚'
         },
         values: {
-            badge: '核心价值',
-            title: '我们不仅构建系统，更帮助企业更快推进业务。',
-            card1Title: '安全与可靠',
-            card1Desc: '架构与实施均以安全标准和运营稳定性为基础。',
-            card2Title: '清晰执行',
-            card2Desc: '路线图、里程碑和项目沟通清晰明确，加快业务决策。'
+            badge: 'æ ¸å¿ƒä»·å€¼',
+            title: 'æˆ‘ä»¬ä¸ä»…æž„å»ºç³»ç»Ÿï¼Œæ›´å¸®åŠ©ä¼ä¸šæ›´å¿«æŽ¨è¿›ä¸šåŠ¡ã€‚',
+            card1Title: 'å®‰å…¨ä¸Žå¯é ',
+            card1Desc: 'æž¶æž„ä¸Žå®žæ–½å‡ä»¥å®‰å…¨æ ‡å‡†å’Œè¿è¥ç¨³å®šæ€§ä¸ºåŸºç¡€ã€‚',
+            card2Title: 'æ¸…æ™°æ‰§è¡Œ',
+            card2Desc: 'è·¯çº¿å›¾ã€é‡Œç¨‹ç¢‘å’Œé¡¹ç›®æ²Ÿé€šæ¸…æ™°æ˜Žç¡®ï¼ŒåŠ å¿«ä¸šåŠ¡å†³ç­–ã€‚'
         },
         about: {
-            badge: '关于我们',
-            title: 'PT Fluxa Tritama Indonesia 致力于加强印度尼西亚企业的数字化转型。',
-            desc1: '我们是一家 IT 公司，帮助组织设计、构建并管理真正服务于运营和业务增长的技术解决方案。',
-            desc2: '我们专注于交付质量、流程清晰度以及贴近实际需求的解决方案，从内部应用到企业级基础设施。',
-            card1Title: '业务导向建设',
-            card1Desc: '每项解决方案都围绕具体业务流程、效率目标和运营需求来设计。',
-            card2Title: '结构化交付',
-            card2Desc: '项目流程可衡量、进度透明，更容易被控制。',
-            card3Title: '可扩展基础',
-            card3Desc: '基础设施与系统按照未来业务增长需求进行设计。',
-            card4Title: '长期支持',
-            card4Desc: '我们不会在上线后停止，持续支持让系统保持健康与适用。'
+            badge: 'å…³äºŽæˆ‘ä»¬',
+            title: 'PT Fluxa Tritama Indonesia è‡´åŠ›äºŽåŠ å¼ºå°åº¦å°¼è¥¿äºšä¼ä¸šçš„æ•°å­—åŒ–è½¬åž‹ã€‚',
+            desc1: 'æˆ‘ä»¬æ˜¯ä¸€å®¶ IT å…¬å¸ï¼Œå¸®åŠ©ç»„ç»‡è®¾è®¡ã€æž„å»ºå¹¶ç®¡ç†çœŸæ­£æœåŠ¡äºŽè¿è¥å’Œä¸šåŠ¡å¢žé•¿çš„æŠ€æœ¯è§£å†³æ–¹æ¡ˆã€‚',
+            desc2: 'æˆ‘ä»¬ä¸“æ³¨äºŽäº¤ä»˜è´¨é‡ã€æµç¨‹æ¸…æ™°åº¦ä»¥åŠè´´è¿‘å®žé™…éœ€æ±‚çš„è§£å†³æ–¹æ¡ˆï¼Œä»Žå†…éƒ¨åº”ç”¨åˆ°ä¼ä¸šçº§åŸºç¡€è®¾æ–½ã€‚',
+            card1Title: 'ä¸šåŠ¡å¯¼å‘å»ºè®¾',
+            card1Desc: 'æ¯é¡¹è§£å†³æ–¹æ¡ˆéƒ½å›´ç»•å…·ä½“ä¸šåŠ¡æµç¨‹ã€æ•ˆçŽ‡ç›®æ ‡å’Œè¿è¥éœ€æ±‚æ¥è®¾è®¡ã€‚',
+            card2Title: 'ç»“æž„åŒ–äº¤ä»˜',
+            card2Desc: 'é¡¹ç›®æµç¨‹å¯è¡¡é‡ã€è¿›åº¦é€æ˜Žï¼Œæ›´å®¹æ˜“è¢«æŽ§åˆ¶ã€‚',
+            card3Title: 'å¯æ‰©å±•åŸºç¡€',
+            card3Desc: 'åŸºç¡€è®¾æ–½ä¸Žç³»ç»ŸæŒ‰ç…§æœªæ¥ä¸šåŠ¡å¢žé•¿éœ€æ±‚è¿›è¡Œè®¾è®¡ã€‚',
+            card4Title: 'é•¿æœŸæ”¯æŒ',
+            card4Desc: 'æˆ‘ä»¬ä¸ä¼šåœ¨ä¸Šçº¿åŽåœæ­¢ï¼ŒæŒç»­æ”¯æŒè®©ç³»ç»Ÿä¿æŒå¥åº·ä¸Žé€‚ç”¨ã€‚'
         },
         vision: {
-            badge: '愿景与使命',
-            title: 'PT Fluxa Tritama Indonesia 在打造相关且有价值数字解决方案方面的战略方向。',
-            visionLabel: '愿景',
-            visionText: '成为一家值得信赖的科技公司，以创新、适应性强且有价值的数字解决方案支持企业在数字时代的成长。',
-            missionLabel: '使命',
-            mission1Title: '开发切实可用的数字解决方案',
-            mission1Desc: '建设符合客户业务需求的网站、应用程序、信息系统和技术服务。',
-            mission2Title: '提供专业且可持续的服务',
-            mission2Desc: '保持工作质量、沟通与技术支持，使每项解决方案都能被最佳使用。',
-            mission3Title: '推动企业数字化转型',
-            mission3Desc: '帮助企业、组织和机构通过技术提升效率。',
-            mission4Title: '优先考虑创新与可靠性',
-            mission4Desc: '提供现代、安全、易用且可根据未来需求持续扩展的系统。',
-            mission5Title: '通过每个解决方案创造价值',
-            mission5Desc: '让每个想法、流程和技术都成为能为用户和客户带来真实价值的成果。'
+            badge: 'æ„¿æ™¯ä¸Žä½¿å‘½',
+            title: 'PT Fluxa Tritama Indonesia åœ¨æ‰“é€ ç›¸å…³ä¸”æœ‰ä»·å€¼æ•°å­—è§£å†³æ–¹æ¡ˆæ–¹é¢çš„æˆ˜ç•¥æ–¹å‘ã€‚',
+            visionLabel: 'æ„¿æ™¯',
+            visionText: 'æˆä¸ºä¸€å®¶å€¼å¾—ä¿¡èµ–çš„ç§‘æŠ€å…¬å¸ï¼Œä»¥åˆ›æ–°ã€é€‚åº”æ€§å¼ºä¸”æœ‰ä»·å€¼çš„æ•°å­—è§£å†³æ–¹æ¡ˆæ”¯æŒä¼ä¸šåœ¨æ•°å­—æ—¶ä»£çš„æˆé•¿ã€‚',
+            missionLabel: 'ä½¿å‘½',
+            mission1Title: 'å¼€å‘åˆ‡å®žå¯ç”¨çš„æ•°å­—è§£å†³æ–¹æ¡ˆ',
+            mission1Desc: 'å»ºè®¾ç¬¦åˆå®¢æˆ·ä¸šåŠ¡éœ€æ±‚çš„ç½‘ç«™ã€åº”ç”¨ç¨‹åºã€ä¿¡æ¯ç³»ç»Ÿå’ŒæŠ€æœ¯æœåŠ¡ã€‚',
+            mission2Title: 'æä¾›ä¸“ä¸šä¸”å¯æŒç»­çš„æœåŠ¡',
+            mission2Desc: 'ä¿æŒå·¥ä½œè´¨é‡ã€æ²Ÿé€šä¸ŽæŠ€æœ¯æ”¯æŒï¼Œä½¿æ¯é¡¹è§£å†³æ–¹æ¡ˆéƒ½èƒ½è¢«æœ€ä½³ä½¿ç”¨ã€‚',
+            mission3Title: 'æŽ¨åŠ¨ä¼ä¸šæ•°å­—åŒ–è½¬åž‹',
+            mission3Desc: 'å¸®åŠ©ä¼ä¸šã€ç»„ç»‡å’Œæœºæž„é€šè¿‡æŠ€æœ¯æå‡æ•ˆçŽ‡ã€‚',
+            mission4Title: 'ä¼˜å…ˆè€ƒè™‘åˆ›æ–°ä¸Žå¯é æ€§',
+            mission4Desc: 'æä¾›çŽ°ä»£ã€å®‰å…¨ã€æ˜“ç”¨ä¸”å¯æ ¹æ®æœªæ¥éœ€æ±‚æŒç»­æ‰©å±•çš„ç³»ç»Ÿã€‚',
+            mission5Title: 'é€šè¿‡æ¯ä¸ªè§£å†³æ–¹æ¡ˆåˆ›é€ ä»·å€¼',
+            mission5Desc: 'è®©æ¯ä¸ªæƒ³æ³•ã€æµç¨‹å’ŒæŠ€æœ¯éƒ½æˆä¸ºèƒ½ä¸ºç”¨æˆ·å’Œå®¢æˆ·å¸¦æ¥çœŸå®žä»·å€¼çš„æˆæžœã€‚'
         },
         services: {
-            badge: '服务',
-            title: '为运营需求与业务增长而设计的 IT 解决方案。',
-            desc: '我们结合软件开发、基础设施建设与实施咨询，帮助企业更高效运作。',
-            card1Title: '应用开发',
-            card1Desc: '开发 Web、移动端及内部系统，用于数字化业务流程与客户服务。',
-            card2Title: '基础设施与网络',
-            card2Desc: '规划并实施安全稳定的 IT 基础设施、网络与运营环境。',
-            card3Title: 'IT 采购',
-            card3Desc: '以高效且务实的方式采购硬件、软件及其他技术需求。'
+            badge: 'æœåŠ¡',
+            title: 'ä¸ºè¿è¥éœ€æ±‚ä¸Žä¸šåŠ¡å¢žé•¿è€Œè®¾è®¡çš„ IT è§£å†³æ–¹æ¡ˆã€‚',
+            desc: 'æˆ‘ä»¬ç»“åˆè½¯ä»¶å¼€å‘ã€åŸºç¡€è®¾æ–½å»ºè®¾ä¸Žå®žæ–½å’¨è¯¢ï¼Œå¸®åŠ©ä¼ä¸šæ›´é«˜æ•ˆè¿ä½œã€‚',
+            card1Title: 'åº”ç”¨å¼€å‘',
+            card1Desc: 'å¼€å‘ Webã€ç§»åŠ¨ç«¯åŠå†…éƒ¨ç³»ç»Ÿï¼Œç”¨äºŽæ•°å­—åŒ–ä¸šåŠ¡æµç¨‹ä¸Žå®¢æˆ·æœåŠ¡ã€‚',
+            card2Title: 'åŸºç¡€è®¾æ–½ä¸Žç½‘ç»œ',
+            card2Desc: 'è§„åˆ’å¹¶å®žæ–½å®‰å…¨ç¨³å®šçš„ IT åŸºç¡€è®¾æ–½ã€ç½‘ç»œä¸Žè¿è¥çŽ¯å¢ƒã€‚',
+            card3Title: 'IT é‡‡è´­',
+            card3Desc: 'ä»¥é«˜æ•ˆä¸”åŠ¡å®žçš„æ–¹å¼é‡‡è´­ç¡¬ä»¶ã€è½¯ä»¶åŠå…¶ä»–æŠ€æœ¯éœ€æ±‚ã€‚'
         },
         industries: {
-            badge: '服务行业',
-            title: '适用于多种组织类型和 IT 实施需求。',
-            desc: '我们的方法灵活，适合优化内部流程、建设数字产品或强化基础设施的企业。',
-            card1Title: '企业与中小企业',
-            card1Desc: '流程数字化、运营看板与决策支持系统。',
-            card2Title: '零售与分销',
-            card2Desc: '销售、库存、报表及门店活动监控整合。',
-            card3Title: '教育与公共服务',
-            card3Desc: '信息系统、服务门户与更有序的数据治理。',
-            card4Title: '工业运营',
-            card4Desc: '网络、监控及现场运营支持方案。'
+            badge: 'æœåŠ¡è¡Œä¸š',
+            title: 'é€‚ç”¨äºŽå¤šç§ç»„ç»‡ç±»åž‹å’Œ IT å®žæ–½éœ€æ±‚ã€‚',
+            desc: 'æˆ‘ä»¬çš„æ–¹æ³•çµæ´»ï¼Œé€‚åˆä¼˜åŒ–å†…éƒ¨æµç¨‹ã€å»ºè®¾æ•°å­—äº§å“æˆ–å¼ºåŒ–åŸºç¡€è®¾æ–½çš„ä¼ä¸šã€‚',
+            card1Title: 'ä¼ä¸šä¸Žä¸­å°ä¼ä¸š',
+            card1Desc: 'æµç¨‹æ•°å­—åŒ–ã€è¿è¥çœ‹æ¿ä¸Žå†³ç­–æ”¯æŒç³»ç»Ÿã€‚',
+            card2Title: 'é›¶å”®ä¸Žåˆ†é”€',
+            card2Desc: 'é”€å”®ã€åº“å­˜ã€æŠ¥è¡¨åŠé—¨åº—æ´»åŠ¨ç›‘æŽ§æ•´åˆã€‚',
+            card3Title: 'æ•™è‚²ä¸Žå…¬å…±æœåŠ¡',
+            card3Desc: 'ä¿¡æ¯ç³»ç»Ÿã€æœåŠ¡é—¨æˆ·ä¸Žæ›´æœ‰åºçš„æ•°æ®æ²»ç†ã€‚',
+            card4Title: 'å·¥ä¸šè¿è¥',
+            card4Desc: 'ç½‘ç»œã€ç›‘æŽ§åŠçŽ°åœºè¿è¥æ”¯æŒæ–¹æ¡ˆã€‚'
         },
         portfolio: {
-            badge: '能力展示',
-            title: '我们可为您的企业提供的解决方案方向示例。',
-            card1Title: '管理驾驶舱',
-            card1Desc: '紧凑型仪表板，用于监控 KPI、运营、销售和跨部门关键数据。',
-            card2Title: '面向客户的应用',
-            card2Desc: '帮助企业提升客户服务与数字体验的应用和门户。',
-            card3Title: '基础设施现代化',
-            card3Desc: '升级网络、服务器和 IT 环境，使其更安全、更有序并具备增长能力。'
+            badge: 'èƒ½åŠ›å±•ç¤º',
+            title: 'æˆ‘ä»¬å¯ä¸ºæ‚¨çš„ä¼ä¸šæä¾›çš„è§£å†³æ–¹æ¡ˆæ–¹å‘ç¤ºä¾‹ã€‚',
+            card1Title: 'ç®¡ç†é©¾é©¶èˆ±',
+            card1Desc: 'ç´§å‡‘åž‹ä»ªè¡¨æ¿ï¼Œç”¨äºŽç›‘æŽ§ KPIã€è¿è¥ã€é”€å”®å’Œè·¨éƒ¨é—¨å…³é”®æ•°æ®ã€‚',
+            card2Title: 'é¢å‘å®¢æˆ·çš„åº”ç”¨',
+            card2Desc: 'å¸®åŠ©ä¼ä¸šæå‡å®¢æˆ·æœåŠ¡ä¸Žæ•°å­—ä½“éªŒçš„åº”ç”¨å’Œé—¨æˆ·ã€‚',
+            card3Title: 'åŸºç¡€è®¾æ–½çŽ°ä»£åŒ–',
+            card3Desc: 'å‡çº§ç½‘ç»œã€æœåŠ¡å™¨å’Œ IT çŽ¯å¢ƒï¼Œä½¿å…¶æ›´å®‰å…¨ã€æ›´æœ‰åºå¹¶å…·å¤‡å¢žé•¿èƒ½åŠ›ã€‚'
         },
         process: {
-            badge: '工作流程',
-            title: '我们如何确保每个项目都清晰、有方向并可交付。',
-            desc: '结构化流程可减少沟通偏差、加快验证并保持实施质量。',
-            step1Title: '需求发现与梳理',
-            step1Desc: '在执行前，我们先梳理业务需求、现有流程和实施目标。',
-            step2Title: '方案设计',
-            step2Desc: '方案架构、工作流程和实施优先级均与业务需求保持一致。',
-            step3Title: '建设与实施',
-            step3Desc: '团队以可衡量且有文档记录的方式开展开发、部署和配置工作。',
-            step4Title: '测试、交付与支持',
-            step4Desc: '方案经过验证后清晰交付，并提供支持以确保真实运营中的稳定性。'
+            badge: 'å·¥ä½œæµç¨‹',
+            title: 'æˆ‘ä»¬å¦‚ä½•ç¡®ä¿æ¯ä¸ªé¡¹ç›®éƒ½æ¸…æ™°ã€æœ‰æ–¹å‘å¹¶å¯äº¤ä»˜ã€‚',
+            desc: 'ç»“æž„åŒ–æµç¨‹å¯å‡å°‘æ²Ÿé€šåå·®ã€åŠ å¿«éªŒè¯å¹¶ä¿æŒå®žæ–½è´¨é‡ã€‚',
+            step1Title: 'éœ€æ±‚å‘çŽ°ä¸Žæ¢³ç†',
+            step1Desc: 'åœ¨æ‰§è¡Œå‰ï¼Œæˆ‘ä»¬å…ˆæ¢³ç†ä¸šåŠ¡éœ€æ±‚ã€çŽ°æœ‰æµç¨‹å’Œå®žæ–½ç›®æ ‡ã€‚',
+            step2Title: 'æ–¹æ¡ˆè®¾è®¡',
+            step2Desc: 'æ–¹æ¡ˆæž¶æž„ã€å·¥ä½œæµç¨‹å’Œå®žæ–½ä¼˜å…ˆçº§å‡ä¸Žä¸šåŠ¡éœ€æ±‚ä¿æŒä¸€è‡´ã€‚',
+            step3Title: 'å»ºè®¾ä¸Žå®žæ–½',
+            step3Desc: 'å›¢é˜Ÿä»¥å¯è¡¡é‡ä¸”æœ‰æ–‡æ¡£è®°å½•çš„æ–¹å¼å¼€å±•å¼€å‘ã€éƒ¨ç½²å’Œé…ç½®å·¥ä½œã€‚',
+            step4Title: 'æµ‹è¯•ã€äº¤ä»˜ä¸Žæ”¯æŒ',
+            step4Desc: 'æ–¹æ¡ˆç»è¿‡éªŒè¯åŽæ¸…æ™°äº¤ä»˜ï¼Œå¹¶æä¾›æ”¯æŒä»¥ç¡®ä¿çœŸå®žè¿è¥ä¸­çš„ç¨³å®šæ€§ã€‚'
         },
         contact: {
-            badge: '联系',
-            title: '打造更专业的企业官网与数字系统，提升潜在客户对您的信任。',
-            desc: '如果您需要企业官网、内部应用或更整洁的 IT 基础设施，我们可以从规划到实施全程协助。',
-            cta1: 'WhatsApp 咨询',
-            cta2: '发送邮件',
-            card1: '邮箱',
-            card2: '电话 / WhatsApp',
-            card3: '位置',
-            location: '加里曼丹，印度尼西亚'
+            badge: 'è”ç³»',
+            title: 'æ‰“é€ æ›´ä¸“ä¸šçš„ä¼ä¸šå®˜ç½‘ä¸Žæ•°å­—ç³»ç»Ÿï¼Œæå‡æ½œåœ¨å®¢æˆ·å¯¹æ‚¨çš„ä¿¡ä»»ã€‚',
+            desc: 'å¦‚æžœæ‚¨éœ€è¦ä¼ä¸šå®˜ç½‘ã€å†…éƒ¨åº”ç”¨æˆ–æ›´æ•´æ´çš„ IT åŸºç¡€è®¾æ–½ï¼Œæˆ‘ä»¬å¯ä»¥ä»Žè§„åˆ’åˆ°å®žæ–½å…¨ç¨‹ååŠ©ã€‚',
+            cta1: 'WhatsApp å’¨è¯¢',
+            cta2: 'å‘é€é‚®ä»¶',
+            card1: 'é‚®ç®±',
+            card2: 'ç”µè¯ / WhatsApp',
+            card3: 'ä½ç½®',
+            location: 'åŠ é‡Œæ›¼ä¸¹ï¼Œå°åº¦å°¼è¥¿äºš'
         },
-        clients: { title: '客户' },
+        clients: { title: 'å®¢æˆ·' },
         footer: {
-            taglinePrefix: 'PT Fluxa Tritama Indonesia 为现代商业需求提供技术服务与数字解决方案',
-            taglineSuffix: '。',
-            copySuffix: '版权所有。'
+            taglinePrefix: 'PT Fluxa Tritama Indonesia ä¸ºçŽ°ä»£å•†ä¸šéœ€æ±‚æä¾›æŠ€æœ¯æœåŠ¡ä¸Žæ•°å­—è§£å†³æ–¹æ¡ˆ',
+            taglineSuffix: 'ã€‚',
+            copySuffix: 'ç‰ˆæƒæ‰€æœ‰ã€‚'
         }
     }
 };
@@ -520,10 +525,10 @@ const chatbotReplies = {
         default: 'Yes. For this demo, the best path is to guide visitors into an initial consultation so the team can map needs and propose a relevant solution.'
     },
     zh: {
-        layanan: '我们提供企业官网、Web 与移动应用、内部系统、网络基础设施以及 IT 采购服务。',
-        website: '可以。我们可以构建企业官网、营销落地页、服务门户以及与业务流程连接的内部仪表板。',
-        konsultasi: '您可以通过联系部分的 WhatsApp 或电子邮件开始。演示流程建议从需求沟通、范围确认到实施估算。',
-        default: '可以。这个演示聊天机器人用于引导访客进入初步咨询，再由团队整理需求并提供合适方案。'
+        layanan: 'æˆ‘ä»¬æä¾›ä¼ä¸šå®˜ç½‘ã€Web ä¸Žç§»åŠ¨åº”ç”¨ã€å†…éƒ¨ç³»ç»Ÿã€ç½‘ç»œåŸºç¡€è®¾æ–½ä»¥åŠ IT é‡‡è´­æœåŠ¡ã€‚',
+        website: 'å¯ä»¥ã€‚æˆ‘ä»¬å¯ä»¥æž„å»ºä¼ä¸šå®˜ç½‘ã€è¥é”€è½åœ°é¡µã€æœåŠ¡é—¨æˆ·ä»¥åŠä¸Žä¸šåŠ¡æµç¨‹è¿žæŽ¥çš„å†…éƒ¨ä»ªè¡¨æ¿ã€‚',
+        konsultasi: 'æ‚¨å¯ä»¥é€šè¿‡è”ç³»éƒ¨åˆ†çš„ WhatsApp æˆ–ç”µå­é‚®ä»¶å¼€å§‹ã€‚æ¼”ç¤ºæµç¨‹å»ºè®®ä»Žéœ€æ±‚æ²Ÿé€šã€èŒƒå›´ç¡®è®¤åˆ°å®žæ–½ä¼°ç®—ã€‚',
+        default: 'å¯ä»¥ã€‚è¿™ä¸ªæ¼”ç¤ºèŠå¤©æœºå™¨äººç”¨äºŽå¼•å¯¼è®¿å®¢è¿›å…¥åˆæ­¥å’¨è¯¢ï¼Œå†ç”±å›¢é˜Ÿæ•´ç†éœ€æ±‚å¹¶æä¾›åˆé€‚æ–¹æ¡ˆã€‚'
     }
 };
 
@@ -662,7 +667,7 @@ const setChatbotPlaceholder = () => {
     const placeholders = {
         id: 'Tulis pertanyaan Anda...',
         en: 'Type your question...',
-        zh: '请输入您的问题...'
+        zh: 'è¯·è¾“å…¥æ‚¨çš„é—®é¢˜...'
     };
 
     chatbotInput.placeholder = placeholders[currentLanguage] || placeholders.id;
@@ -802,3 +807,4 @@ chatbotForm?.addEventListener('submit', (event) => {
 
 renderServicesChart();
 setChatbotPlaceholder();
+

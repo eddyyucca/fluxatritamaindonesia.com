@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('company-profile');
-})->name('home');
+// Routes are handled by HMVC Modules:
+// - Modules/Web      → / (company profile)
+// - Modules/Auth     → /login, /logout
+// - Modules/Dashboard → /dashboard

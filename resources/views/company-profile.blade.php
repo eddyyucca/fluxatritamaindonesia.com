@@ -20,7 +20,7 @@
     <meta id="twitterTitle" name="twitter:title" content="PT Fluxa Tritama Indonesia | Solusi Digital, Pengembangan Aplikasi & Infrastruktur Bisnis">
     <meta id="twitterDescription" name="twitter:description" content="PT Fluxa Tritama Indonesia menyediakan solusi digital, pengembangan aplikasi web dan mobile, infrastruktur jaringan, IT procurement, dan transformasi digital untuk bisnis di Indonesia.">
     <meta name="twitter:image" content="{{ asset('assets/images/FLUXATRITAMAINDONESIA.png') }}">
-    <link rel="icon" type="image/svg+xml" href="{{ asset('assets/images/favicon.svg') }}">
+    <link rel="icon" type="image/svg+xml" href="{{ asset('assets/images/favicon.ico') }}">
     <link rel="alternate icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -36,7 +36,7 @@
                     "@id": "#organization",
                     "name": "PT Fluxa Tritama Indonesia",
                     "alternateName": "PT Fluxa Tritama Indonesia",
-                    "email": "official@fluxaborneo.tech",
+                    "email": "official@fluxatritamaindonesia.com",
                     "telephone": "+62-812-5065-3005",
                     "address": {
                         "@type": "PostalAddress",
@@ -105,7 +105,7 @@
                         <i class="fas fa-moon theme-icon theme-icon-dark"></i>
                         <i class="fas fa-sun theme-icon theme-icon-light"></i>
                     </button>
-                    <a href="mailto:official@fluxaborneo.tech" class="rounded-full border border-white/10 px-4 py-2 text-sm text-slate-200 transition hover:border-sky-300/30 hover:bg-white/5" data-i18n="cta.email">Email Kami</a>
+                    <a href="mailto:official@fluxatritamaindonesia.com" class="rounded-full border border-white/10 px-4 py-2 text-sm text-slate-200 transition hover:border-sky-300/30 hover:bg-white/5" data-i18n="cta.email">Email Kami</a>
                     <a href="https://wa.me/6281250653005" class="rounded-full bg-gradient-to-r from-teal-300 to-sky-400 px-5 py-2 text-sm font-semibold text-slate-950 transition hover:brightness-110" data-i18n="cta.consult">Konsultasi</a>
                 </div>
 
@@ -135,7 +135,7 @@
                 <a href="#process" class="block" data-i18n="nav.process">Proses</a>
                 <a href="#contact" class="block" data-i18n="nav.contact">Kontak</a>
                 <div class="flex flex-col gap-3 pt-3">
-                    <a href="mailto:official@fluxaborneo.tech" class="rounded-2xl border border-white/10 px-4 py-3 text-center" data-i18n="cta.email">Email Kami</a>
+                    <a href="mailto:official@fluxatritamaindonesia.com" class="rounded-2xl border border-white/10 px-4 py-3 text-center" data-i18n="cta.email">Email Kami</a>
                     <a href="https://wa.me/6281250653005" class="rounded-2xl bg-gradient-to-r from-teal-300 to-sky-400 px-4 py-3 text-center font-semibold text-slate-950" data-i18n="cta.consult">Konsultasi</a>
                 </div>
             </div>
@@ -150,7 +150,7 @@
                     <div class="hero-copy-column">
                         <div class="inline-flex items-center gap-2 rounded-full border border-teal-300/20 bg-teal-300/8 px-4 py-2 text-xs font-semibold uppercase tracking-[0.24em] text-teal-200">
                             <span class="h-2 w-2 rounded-full bg-teal-300"></span>
-                            <span data-i18n="hero.badge">IT Solutions for Growing Business</span>
+                            <span data-i18n="hero.badge">Every Flow Builds The Future</span>
                         </div>
                         <h1 class="mt-8 max-w-4xl text-4xl font-bold leading-tight text-white sm:text-5xl lg:text-7xl">
                             <span data-i18n="hero.title1">Solusi IT profesional untuk bisnis yang ingin</span>
@@ -171,12 +171,15 @@
 
                     <div class="hero-visual-stack">
                         <div class="panel-strong soft-shadow rounded-[2rem] p-6 sm:p-8 hero-visual-card">
-                            <div class="flex items-center justify-between border-b border-white/10 pb-5">
-                                <div>
+                            <div class="snapshot-header border-b border-white/10 pb-5">
+                                <div class="snapshot-heading-wrap">
                                     <p class="text-sm uppercase tracking-[0.26em] text-sky-200/70" data-i18n="snapshot.badge">Company Snapshot</p>
-                                    <h2 class="mt-2 display-font text-2xl font-bold text-white" data-i18n="snapshot.title">Why PT Fluxa Tritama Indonesia</h2>
+                                    <h2 class="snapshot-title mt-3 display-font text-2xl font-bold leading-tight text-white">
+                                        <span class="block" data-i18n="snapshot.titleLine1">Why PT Fluxa</span>
+                                        <span class="snapshot-title-accent mt-1 block text-sky-100/95" data-i18n="snapshot.titleLine2">Tritama Indonesia</span>
+                                    </h2>
                                 </div>
-                                <div class="rounded-2xl bg-teal-300/10 p-4 text-teal-200">
+                                <div class="snapshot-icon rounded-2xl bg-teal-300/10 p-4 text-teal-200">
                                     <i class="fas fa-chart-line text-xl"></i>
                                 </div>
                             </div>
@@ -186,28 +189,43 @@
                             <div class="hero-metrics-grid mt-6 grid gap-4 sm:grid-cols-2">
                                 <div class="metric-card rounded-3xl border border-white/10 bg-white/[0.03] p-5">
                                     <div class="text-3xl font-bold text-white">50+</div>
-                                    <div class="mt-2 text-sm text-slate-300" data-i18n="snapshot.metric1">Inisiatif digital dan implementasi IT</div>
+                                    <div class="mt-2 text-sm leading-6 text-slate-300" data-i18n="snapshot.metric1">Inisiatif digital dan implementasi IT</div>
                                 </div>
                                 <div class="metric-card rounded-3xl border border-white/10 bg-white/[0.03] p-5">
                                     <div class="text-3xl font-bold text-white">30+</div>
-                                    <div class="mt-2 text-sm text-slate-300" data-i18n="snapshot.metric2">Klien dari berbagai sektor bisnis</div>
+                                    <div class="mt-2 text-sm leading-6 text-slate-300" data-i18n="snapshot.metric2">Klien dari berbagai sektor bisnis</div>
                                 </div>
                                 <div class="metric-card rounded-3xl border border-white/10 bg-white/[0.03] p-5">
                                     <div class="text-3xl font-bold text-white">5+</div>
-                                    <div class="mt-2 text-sm text-slate-300" data-i18n="snapshot.metric3">Tahun pengalaman delivery project</div>
+                                    <div class="mt-2 text-sm leading-6 text-slate-300" data-i18n="snapshot.metric3">Tahun pengalaman delivery project</div>
                                 </div>
                                 <div class="metric-card rounded-3xl border border-white/10 bg-white/[0.03] p-5">
                                     <div class="text-3xl font-bold text-white">24/7</div>
-                                    <div class="mt-2 text-sm text-slate-300" data-i18n="snapshot.metric4">Dukungan untuk operasional penting</div>
+                                    <div class="mt-2 text-sm leading-6 text-slate-300" data-i18n="snapshot.metric4">Dukungan untuk operasional penting</div>
                                 </div>
                             </div>
-                            <div class="mt-6 grid gap-4 lg:grid-cols-[1.15fr_0.85fr]">
-                                <div class="rounded-3xl border border-sky-300/15 bg-sky-300/5 p-5">
-                                    <p class="text-sm leading-7 text-slate-300" data-i18n="snapshot.desc">Kami fokus pada hasil bisnis: sistem yang stabil, workflow yang lebih cepat, dan fondasi teknologi yang siap dipakai untuk scale-up.</p>
+                            <div class="snapshot-support-grid mt-6 grid gap-4">
+                                <div class="snapshot-support-card rounded-3xl border border-sky-300/15 bg-sky-300/5 p-5">
+                                    <div class="flex items-start gap-4">
+                                        <div class="flex h-11 w-11 items-center justify-center rounded-2xl bg-sky-300/10 text-sky-200">
+                                            <i class="fas fa-bullseye"></i>
+                                        </div>
+                                        <div class="min-w-0">
+                                            <p class="text-xs uppercase tracking-[0.24em] text-sky-200/70">Business Focus</p>
+                                            <p class="mt-3 text-sm leading-7 text-slate-300" data-i18n="snapshot.desc">Kami fokus pada hasil bisnis: sistem yang stabil, workflow yang lebih cepat, dan fondasi teknologi yang siap dipakai untuk scale-up.</p>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="rounded-3xl border border-white/10 bg-white/[0.03] p-5">
-                                    <p class="text-xs uppercase tracking-[0.24em] text-sky-200/70" data-i18n="heroVisual.badge">Live Delivery Focus</p>
-                                    <p class="mt-3 text-sm leading-7 text-slate-300" data-i18n="heroVisual.desc">Kami merancang solusi digital dengan pendekatan visual, data, dan implementasi yang siap dipresentasikan ke calon klien maupun stakeholder internal.</p>
+                                <div class="snapshot-support-card rounded-3xl border border-white/10 bg-white/[0.03] p-5">
+                                    <div class="flex items-start gap-4">
+                                        <div class="flex h-11 w-11 items-center justify-center rounded-2xl bg-teal-300/10 text-teal-200">
+                                            <i class="fas fa-wave-square"></i>
+                                        </div>
+                                        <div class="min-w-0 flex-1">
+                                            <p class="text-xs uppercase tracking-[0.24em] text-sky-200/70" data-i18n="heroVisual.badge">Live Delivery Focus</p>
+                                            <p class="mt-3 text-sm leading-7 text-slate-300" data-i18n="heroVisual.desc">Kami merancang solusi digital dengan pendekatan visual, data, dan implementasi yang siap dipresentasikan ke calon klien maupun stakeholder internal.</p>
+                                        </div>
+                                    </div>
                                     <div class="mt-5 grid grid-cols-2 gap-3">
                                         <div class="rounded-[1.25rem] border border-white/10 bg-white/[0.03] p-4">
                                             <div class="text-2xl font-bold text-white">98%</div>
@@ -591,7 +609,7 @@
                             <p class="mt-6 max-w-2xl text-base leading-8 text-slate-300" data-i18n="contact.desc">Jika Anda butuh website company profile, aplikasi internal, atau infrastruktur IT yang lebih rapi, kami siap bantu dari tahap perencanaan sampai implementasi.</p>
                             <div class="mt-8 flex flex-col gap-4 sm:flex-row">
                                 <a href="https://wa.me/6281250653005" class="rounded-2xl bg-gradient-to-r from-teal-300 to-sky-400 px-7 py-4 text-center text-sm font-semibold text-slate-950 transition hover:brightness-110" data-i18n="contact.cta1">Chat via WhatsApp</a>
-                                <a href="mailto:official@fluxaborneo.tech" class="rounded-2xl border border-white/10 px-7 py-4 text-center text-sm font-semibold text-white transition hover:border-sky-300/30 hover:bg-white/5" data-i18n="contact.cta2">Kirim Email</a>
+                                <a href="mailto:official@fluxatritamaindonesia.com" class="rounded-2xl border border-white/10 px-7 py-4 text-center text-sm font-semibold text-white transition hover:border-sky-300/30 hover:bg-white/5" data-i18n="contact.cta2">Kirim Email</a>
                             </div>
                         </div>
 
@@ -601,7 +619,7 @@
                                     <i class="fas fa-envelope"></i>
                                 </div>
                                 <h3 class="text-lg font-bold text-white" data-i18n="contact.card1">Email</h3>
-                                <a href="mailto:official@fluxaborneo.tech" class="mt-2 inline-block text-sm text-slate-300 hover:text-white">official@fluxaborneo.tech</a>
+                                <a href="mailto:official@fluxatritamaindonesia.com" class="mt-2 inline-block text-sm text-slate-300 hover:text-white">official@fluxatritamaindonesia.com</a>
                             </div>
                             <div class="contact-card rounded-[1.75rem] border border-white/10 bg-white/[0.03] p-6">
                                 <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-teal-300/10 text-teal-200">
