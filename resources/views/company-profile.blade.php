@@ -1,0 +1,764 @@
+﻿<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">PT Fluxa Tritama Indonesia | Solusi Digital, Pengembangan Aplikasi & Infrastruktur Bisnis</title>
+    <meta id="pageDescription" name="description" content="PT Fluxa Tritama Indonesia menyediakan solusi digital, pengembangan aplikasi web dan mobile, infrastruktur jaringan, IT procurement, dan transformasi digital untuk bisnis di Indonesia.">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="author" content="PT Fluxa Tritama Indonesia">
+    <meta name="theme-color" content="#07111f">
+    <meta name="format-detection" content="telephone=no">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="PT Fluxa Tritama Indonesia">
+    <meta property="og:locale" content="id_ID">
+    <meta id="ogTitle" property="og:title" content="PT Fluxa Tritama Indonesia | Solusi Digital, Pengembangan Aplikasi & Infrastruktur Bisnis">
+    <meta id="ogDescription" property="og:description" content="PT Fluxa Tritama Indonesia menyediakan solusi digital, pengembangan aplikasi web dan mobile, infrastruktur jaringan, IT procurement, dan transformasi digital untuk bisnis di Indonesia.">
+    <meta property="og:image" content="{{ asset('assets/images/FLUXATRITAMAINDONESIA.png') }}">
+    <meta property="og:image:alt" content="PT Fluxa Tritama Indonesia">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta id="twitterTitle" name="twitter:title" content="PT Fluxa Tritama Indonesia | Solusi Digital, Pengembangan Aplikasi & Infrastruktur Bisnis">
+    <meta id="twitterDescription" name="twitter:description" content="PT Fluxa Tritama Indonesia menyediakan solusi digital, pengembangan aplikasi web dan mobile, infrastruktur jaringan, IT procurement, dan transformasi digital untuk bisnis di Indonesia.">
+    <meta name="twitter:image" content="{{ asset('assets/images/FLUXATRITAMAINDONESIA.png') }}">
+    <link rel="icon" type="image/svg+xml" href="{{ asset('assets/images/favicon.svg') }}">
+    <link rel="alternate icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="{{ asset('assets/css/styles.css') }}">
+    @verbatim
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@graph": [
+                {
+                    "@type": "Organization",
+                    "@id": "#organization",
+                    "name": "PT Fluxa Tritama Indonesia",
+                    "alternateName": "PT Fluxa Tritama Indonesia",
+                    "email": "official@fluxaborneo.tech",
+                    "telephone": "+62-812-5065-3005",
+                    "address": {
+                        "@type": "PostalAddress",
+                        "addressRegion": "Kalimantan",
+                        "addressCountry": "ID"
+                    }
+                },
+                {
+                    "@type": "WebSite",
+                    "@id": "#website",
+                    "name": "PT Fluxa Tritama Indonesia",
+                    "publisher": {
+                        "@id": "#organization"
+                    },
+                    "inLanguage": "id"
+                },
+                {
+                    "@type": "ProfessionalService",
+                    "@id": "#service",
+                    "name": "PT Fluxa Tritama Indonesia",
+                    "alternateName": "PT Fluxa Tritama Indonesia",
+                    "description": "Jasa IT, pengembangan aplikasi, infrastruktur jaringan, IT procurement, dan transformasi digital untuk bisnis.",
+                    "areaServed": "Indonesia",
+                    "availableLanguage": ["id", "en", "zh"],
+                    "provider": {
+                        "@id": "#organization"
+                    }
+                }
+            ]
+        }
+    </script>
+    @endverbatim
+</head>
+<body class="overflow-x-hidden" data-theme="dark">
+    <div class="pointer-events-none fixed inset-0 site-grid opacity-40"></div>
+
+    <nav class="site-nav fixed inset-x-0 top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex h-20 items-center justify-between">
+                <a href="#home" class="brand-lockup">
+                    <img
+                        src="{{ asset('assets/images/logo-white-transparent.png') }}"
+                        alt="PT Fluxa Tritama Indonesia"
+                        class="brand-wordmark brand-logo"
+                        data-logo-dark="{{ asset('assets/images/logo-white-transparent.png') }}"
+                        data-logo-light="{{ asset('assets/images/logo-black-transparent.png') }}"
+                    >
+                </a>
+
+                <div class="hidden xl:flex items-center gap-8 text-sm text-slate-300">
+                    <a href="#about" class="hover:text-white transition" data-i18n="nav.about">Tentang</a>
+                    <a href="#services" class="hover:text-white transition" data-i18n="nav.services">Layanan</a>
+                    <a href="#industries" class="hover:text-white transition" data-i18n="nav.industries">Industri</a>
+                    <a href="#portfolio" class="hover:text-white transition" data-i18n="nav.projects">Proyek</a>
+                    <a href="#process" class="hover:text-white transition" data-i18n="nav.process">Proses</a>
+                    <a href="#contact" class="hover:text-white transition" data-i18n="nav.contact">Kontak</a>
+                </div>
+
+                <div class="hidden xl:flex items-center gap-3">
+                    <div class="lang-switcher" role="group" aria-label="Language switcher">
+                        <button class="lang-btn is-active" type="button" data-lang="id">ID</button>
+                        <button class="lang-btn" type="button" data-lang="en">EN</button>
+                        <button class="lang-btn" type="button" data-lang="zh">中文</button>
+                    </div>
+                    <button id="themeToggle" class="theme-toggle" type="button" aria-label="Ganti tema">
+                        <i class="fas fa-moon theme-icon theme-icon-dark"></i>
+                        <i class="fas fa-sun theme-icon theme-icon-light"></i>
+                    </button>
+                    <a href="mailto:official@fluxaborneo.tech" class="rounded-full border border-white/10 px-4 py-2 text-sm text-slate-200 transition hover:border-sky-300/30 hover:bg-white/5" data-i18n="cta.email">Email Kami</a>
+                    <a href="https://wa.me/6281250653005" class="rounded-full bg-gradient-to-r from-teal-300 to-sky-400 px-5 py-2 text-sm font-semibold text-slate-950 transition hover:brightness-110" data-i18n="cta.consult">Konsultasi</a>
+                </div>
+
+                <div class="flex items-center gap-2 xl:hidden">
+                    <button id="themeToggleMobile" class="theme-toggle" type="button" aria-label="Ganti tema mobile">
+                        <i class="fas fa-moon theme-icon theme-icon-dark"></i>
+                        <i class="fas fa-sun theme-icon theme-icon-light"></i>
+                    </button>
+                    <button id="mobileMenuBtn" class="xl:hidden rounded-2xl border border-white/10 p-3 text-sky-200">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="mobileMenu" class="site-mobile-menu hidden xl:hidden">
+            <div class="px-4 py-5 space-y-4 text-sm text-slate-300">
+                <div class="lang-switcher" role="group" aria-label="Language switcher mobile">
+                    <button class="lang-btn is-active" type="button" data-lang="id">ID</button>
+                    <button class="lang-btn" type="button" data-lang="en">EN</button>
+                    <button class="lang-btn" type="button" data-lang="zh">中文</button>
+                </div>
+                <a href="#about" class="block" data-i18n="nav.about">Tentang</a>
+                <a href="#services" class="block" data-i18n="nav.services">Layanan</a>
+                <a href="#industries" class="block" data-i18n="nav.industries">Industri</a>
+                <a href="#portfolio" class="block" data-i18n="nav.projects">Proyek</a>
+                <a href="#process" class="block" data-i18n="nav.process">Proses</a>
+                <a href="#contact" class="block" data-i18n="nav.contact">Kontak</a>
+                <div class="flex flex-col gap-3 pt-3">
+                    <a href="mailto:official@fluxaborneo.tech" class="rounded-2xl border border-white/10 px-4 py-3 text-center" data-i18n="cta.email">Email Kami</a>
+                    <a href="https://wa.me/6281250653005" class="rounded-2xl bg-gradient-to-r from-teal-300 to-sky-400 px-4 py-3 text-center font-semibold text-slate-950" data-i18n="cta.consult">Konsultasi</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section id="home" class="relative pt-32 pb-20 sm:pt-36 sm:pb-24">
+            <div class="absolute inset-x-0 top-8 mx-auto h-[28rem] w-[28rem] rounded-full hero-orb opacity-60 blur-3xl"></div>
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+                <div class="grid gap-14 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
+                    <div>
+                        <div class="inline-flex items-center gap-2 rounded-full border border-teal-300/20 bg-teal-300/8 px-4 py-2 text-xs font-semibold uppercase tracking-[0.24em] text-teal-200">
+                            <span class="h-2 w-2 rounded-full bg-teal-300"></span>
+                            <span data-i18n="hero.badge">IT Solutions for Growing Business</span>
+                        </div>
+                        <h1 class="mt-8 max-w-4xl text-4xl font-bold leading-tight text-white sm:text-5xl lg:text-7xl">
+                            <span data-i18n="hero.title1">Solusi IT profesional untuk bisnis yang ingin</span>
+                            <span class="accent-text" data-i18n="hero.title2">tumbuh lebih cepat dan lebih terstruktur.</span>
+                        </h1>
+                        <p class="mt-6 max-w-2xl text-base leading-8 text-slate-300 sm:text-lg" data-i18n="hero.desc">PT Fluxa Tritama Indonesia membantu perusahaan membangun sistem digital, aplikasi bisnis, dan infrastruktur IT yang aman, efisien, serta mudah dikembangkan.</p>
+                        <div class="mt-8 flex flex-col gap-4 sm:flex-row">
+                            <a href="#contact" class="rounded-2xl bg-gradient-to-r from-teal-300 to-sky-400 px-7 py-4 text-center text-sm font-semibold text-slate-950 transition hover:brightness-110" data-i18n="hero.ctaPrimary">Diskusikan Kebutuhan</a>
+                            <a href="#services" class="rounded-2xl border border-white/10 px-7 py-4 text-center text-sm font-semibold text-white transition hover:border-sky-300/30 hover:bg-white/5" data-i18n="hero.ctaSecondary">Lihat Layanan</a>
+                        </div>
+                        <div class="mt-10 flex flex-wrap gap-3 text-sm text-slate-300">
+                            <div class="chip rounded-full px-4 py-2" data-i18n="hero.chip1">Web & Mobile Application</div>
+                            <div class="chip rounded-full px-4 py-2" data-i18n="hero.chip2">Infrastructure & Network</div>
+                            <div class="chip rounded-full px-4 py-2">IT Procurement</div>
+                            <div class="chip rounded-full px-4 py-2" data-i18n="hero.chip4">Business Automation</div>
+                        </div>
+                    </div>
+
+                    <div class="panel-strong soft-shadow rounded-[2rem] p-6 sm:p-8 hero-visual-card">
+                        <div class="flex items-center justify-between border-b border-white/10 pb-5">
+                            <div>
+                                <p class="text-sm uppercase tracking-[0.26em] text-sky-200/70" data-i18n="snapshot.badge">Company Snapshot</p>
+                                <h2 class="mt-2 display-font text-2xl font-bold text-white" data-i18n="snapshot.title">Why PT Fluxa Tritama Indonesia</h2>
+                            </div>
+                            <div class="rounded-2xl bg-teal-300/10 p-4 text-teal-200">
+                                <i class="fas fa-chart-line text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="mt-6 grid gap-4 sm:grid-cols-2">
+                            <div class="metric-card rounded-3xl border border-white/10 bg-white/[0.03] p-5">
+                                <div class="text-3xl font-bold text-white">50+</div>
+                                <div class="mt-2 text-sm text-slate-300" data-i18n="snapshot.metric1">Inisiatif digital dan implementasi IT</div>
+                            </div>
+                            <div class="metric-card rounded-3xl border border-white/10 bg-white/[0.03] p-5">
+                                <div class="text-3xl font-bold text-white">30+</div>
+                                <div class="mt-2 text-sm text-slate-300" data-i18n="snapshot.metric2">Klien dari berbagai sektor bisnis</div>
+                            </div>
+                            <div class="metric-card rounded-3xl border border-white/10 bg-white/[0.03] p-5">
+                                <div class="text-3xl font-bold text-white">5+</div>
+                                <div class="mt-2 text-sm text-slate-300" data-i18n="snapshot.metric3">Tahun pengalaman delivery project</div>
+                            </div>
+                            <div class="metric-card rounded-3xl border border-white/10 bg-white/[0.03] p-5">
+                                <div class="text-3xl font-bold text-white">24/7</div>
+                                <div class="mt-2 text-sm text-slate-300" data-i18n="snapshot.metric4">Dukungan untuk operasional penting</div>
+                            </div>
+                        </div>
+                        <div class="mt-6 rounded-3xl border border-sky-300/15 bg-sky-300/5 p-5">
+                            <p class="text-sm leading-7 text-slate-300" data-i18n="snapshot.desc">Kami fokus pada hasil bisnis: sistem yang stabil, workflow yang lebih cepat, dan fondasi teknologi yang siap dipakai untuk scale-up.</p>
+                        </div>
+                        <div class="mt-6 overflow-hidden rounded-[1.75rem] border border-white/10">
+                            <img src="{{ asset('assets/images/hero-team-photo.png') }}" alt="Tim PT Fluxa Tritama Indonesia sedang berdiskusi di ruang monitoring digital" class="hero-showcase-image">
+                        </div>
+                        <div class="mt-5 grid gap-4 sm:grid-cols-[1fr_auto]">
+                            <div class="rounded-[1.5rem] border border-white/10 bg-white/[0.03] p-5">
+                                <p class="text-xs uppercase tracking-[0.24em] text-sky-200/70" data-i18n="heroVisual.badge">Live Delivery Focus</p>
+                                <p class="mt-3 text-sm leading-7 text-slate-300" data-i18n="heroVisual.desc">Kami merancang solusi digital dengan pendekatan visual, data, dan implementasi yang siap dipresentasikan ke calon klien maupun stakeholder internal.</p>
+                            </div>
+                            <div class="grid grid-cols-2 gap-3 sm:w-[13rem]">
+                                <div class="rounded-[1.5rem] border border-white/10 bg-white/[0.03] p-4">
+                                    <div class="text-2xl font-bold text-white">98%</div>
+                                    <div class="mt-2 text-xs text-slate-300" data-i18n="heroVisual.metric1">Project visibility</div>
+                                </div>
+                                <div class="rounded-[1.5rem] border border-white/10 bg-white/[0.03] p-4">
+                                    <div class="text-2xl font-bold text-white">4.9</div>
+                                    <div class="mt-2 text-xs text-slate-300" data-i18n="heroVisual.metric2">Client rating</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="pb-8">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="panel rounded-[2rem] p-6 sm:p-8">
+                    <div class="grid gap-6 md:grid-cols-3">
+                        <div>
+                            <p class="text-sm uppercase tracking-[0.24em] text-sky-200/70" data-i18n="values.badge">Nilai Utama</p>
+                            <h2 class="mt-3 display-font text-2xl font-bold text-white" data-i18n="values.title">Partner teknologi yang tidak sekadar membangun, tapi membantu bisnis bergerak lebih cepat.</h2>
+                        </div>
+                        <div class="rounded-3xl border border-white/10 bg-white/[0.03] p-5">
+                            <div class="mb-3 flex h-12 w-12 items-center justify-center rounded-2xl bg-teal-300/10 text-teal-200">
+                                <i class="fas fa-shield-halved"></i>
+                            </div>
+                            <h3 class="text-lg font-bold text-white" data-i18n="values.card1Title">Security & Reliability</h3>
+                            <p class="mt-2 text-sm leading-7 text-slate-300" data-i18n="values.card1Desc">Arsitektur dan implementasi dibangun dengan standar keamanan dan kestabilan operasional.</p>
+                        </div>
+                        <div class="rounded-3xl border border-white/10 bg-white/[0.03] p-5">
+                            <div class="mb-3 flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-300/10 text-amber-200">
+                                <i class="fas fa-bolt"></i>
+                            </div>
+                            <h3 class="text-lg font-bold text-white" data-i18n="values.card2Title">Execution with Clarity</h3>
+                            <p class="mt-2 text-sm leading-7 text-slate-300" data-i18n="values.card2Desc">Roadmap, milestone, dan komunikasi project disusun jelas agar keputusan bisnis lebih cepat.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="py-16 sm:py-24">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
+                    <div class="panel-strong rounded-[2rem] p-8 sm:p-10 soft-shadow">
+                        <p class="text-sm uppercase tracking-[0.24em] text-sky-200/70" data-i18n="about.badge">Tentang Kami</p>
+                        <h2 class="mt-4 text-3xl font-bold text-white sm:text-4xl" data-i18n="about.title">PT Fluxa Tritama Indonesia hadir untuk memperkuat transformasi digital bisnis di Indonesia.</h2>
+                        <div class="section-divider mt-6 h-px w-28"></div>
+                        <p class="mt-6 text-base leading-8 text-slate-300" data-i18n="about.desc1">Kami adalah perusahaan IT yang membantu organisasi merancang, membangun, dan mengelola solusi teknologi yang benar-benar dipakai untuk operasional dan pertumbuhan bisnis.</p>
+                        <p class="mt-4 text-base leading-8 text-slate-300" data-i18n="about.desc2">Fokus kami ada pada kualitas delivery, kejelasan proses, dan solusi yang relevan dengan kebutuhan lapangan, mulai dari aplikasi internal hingga infrastruktur enterprise.</p>
+                    </div>
+
+                    <div class="grid gap-5 sm:grid-cols-2">
+                        <div class="service-card rounded-[1.75rem] border border-white/10 bg-white/[0.03] p-6">
+                            <div class="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-sky-300/10 text-sky-200">
+                                <i class="fas fa-laptop-code text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-white" data-i18n="about.card1Title">Business-Driven Build</h3>
+                            <p class="mt-3 text-sm leading-7 text-slate-300" data-i18n="about.card1Desc">Setiap solusi dibangun untuk menjawab kebutuhan proses, efisiensi, dan target bisnis yang konkret.</p>
+                        </div>
+                        <div class="service-card rounded-[1.75rem] border border-white/10 bg-white/[0.03] p-6">
+                            <div class="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-teal-300/10 text-teal-200">
+                                <i class="fas fa-diagram-project text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-white" data-i18n="about.card2Title">Structured Delivery</h3>
+                            <p class="mt-3 text-sm leading-7 text-slate-300" data-i18n="about.card2Desc">Workflow project dibuat terukur agar progres lebih transparan dan lebih mudah dikontrol.</p>
+                        </div>
+                        <div class="service-card rounded-[1.75rem] border border-white/10 bg-white/[0.03] p-6">
+                            <div class="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-amber-300/10 text-amber-200">
+                                <i class="fas fa-server text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-white" data-i18n="about.card3Title">Scalable Foundation</h3>
+                            <p class="mt-3 text-sm leading-7 text-slate-300" data-i18n="about.card3Desc">Infrastruktur dan sistem dirancang agar siap berkembang mengikuti kebutuhan bisnis berikutnya.</p>
+                        </div>
+                        <div class="service-card rounded-[1.75rem] border border-white/10 bg-white/[0.03] p-6">
+                            <div class="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-rose-300/10 text-rose-200">
+                                <i class="fas fa-headset text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-white" data-i18n="about.card4Title">Long-Term Support</h3>
+                            <p class="mt-3 text-sm leading-7 text-slate-300" data-i18n="about.card4Desc">Kami tidak berhenti di go-live. Dukungan lanjutan membantu sistem tetap sehat dan relevan.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="vision" class="py-16 sm:py-24">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
+                    <div class="panel-strong rounded-[2rem] p-8 sm:p-10 soft-shadow">
+                        <p class="text-sm uppercase tracking-[0.24em] text-sky-200/70" data-i18n="vision.badge">Visi & Misi</p>
+                        <h2 class="mt-4 text-3xl font-bold text-white sm:text-5xl" data-i18n="vision.title">Arah strategis PT Fluxa Tritama Indonesia dalam membangun solusi digital yang relevan dan bernilai.</h2>
+                        <div class="section-divider mt-6 h-px w-28"></div>
+                        <div class="mt-6 rounded-[1.75rem] border border-white/10 bg-white/[0.03] p-6">
+                            <p class="text-sm uppercase tracking-[0.24em] text-sky-200/70" data-i18n="vision.visionLabel">Visi</p>
+                            <p class="mt-3 text-base leading-8 text-slate-300" data-i18n="vision.visionText">Menjadi perusahaan teknologi terpercaya yang menghadirkan solusi digital inovatif, adaptif, dan bernilai untuk mendukung pertumbuhan bisnis di era digital.</p>
+                        </div>
+                    </div>
+
+                    <div class="panel rounded-[2rem] p-8 sm:p-10">
+                        <p class="text-sm uppercase tracking-[0.24em] text-sky-200/70" data-i18n="vision.missionLabel">Misi</p>
+                        <div class="mt-6 space-y-4">
+                            <div class="rounded-[1.5rem] border border-white/10 bg-white/[0.03] p-5">
+                                <h3 class="text-lg font-bold text-white" data-i18n="vision.mission1Title">Mengembangkan solusi digital yang tepat guna</h3>
+                                <p class="mt-2 text-sm leading-7 text-slate-300" data-i18n="vision.mission1Desc">Membangun website, aplikasi, sistem informasi, dan layanan teknologi yang sesuai dengan kebutuhan bisnis klien.</p>
+                            </div>
+                            <div class="rounded-[1.5rem] border border-white/10 bg-white/[0.03] p-5">
+                                <h3 class="text-lg font-bold text-white" data-i18n="vision.mission2Title">Memberikan layanan yang profesional dan berkelanjutan</h3>
+                                <p class="mt-2 text-sm leading-7 text-slate-300" data-i18n="vision.mission2Desc">Menjaga kualitas pekerjaan, komunikasi, serta dukungan teknis agar setiap solusi dapat digunakan secara optimal.</p>
+                            </div>
+                            <div class="rounded-[1.5rem] border border-white/10 bg-white/[0.03] p-5">
+                                <h3 class="text-lg font-bold text-white" data-i18n="vision.mission3Title">Mendorong transformasi digital bisnis</h3>
+                                <p class="mt-2 text-sm leading-7 text-slate-300" data-i18n="vision.mission3Desc">Membantu pelaku usaha, organisasi, dan instansi dalam meningkatkan efisiensi melalui teknologi.</p>
+                            </div>
+                            <div class="rounded-[1.5rem] border border-white/10 bg-white/[0.03] p-5">
+                                <h3 class="text-lg font-bold text-white" data-i18n="vision.mission4Title">Mengutamakan inovasi dan keandalan</h3>
+                                <p class="mt-2 text-sm leading-7 text-slate-300" data-i18n="vision.mission4Desc">Menghadirkan sistem yang modern, aman, mudah digunakan, dan dapat dikembangkan sesuai kebutuhan masa depan.</p>
+                            </div>
+                            <div class="rounded-[1.5rem] border border-white/10 bg-white/[0.03] p-5">
+                                <h3 class="text-lg font-bold text-white" data-i18n="vision.mission5Title">Membangun nilai melalui setiap solusi</h3>
+                                <p class="mt-2 text-sm leading-7 text-slate-300" data-i18n="vision.mission5Desc">Menjadikan setiap ide, proses, dan teknologi sebagai karya yang memberi manfaat nyata bagi pengguna dan klien.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="services" class="py-16 sm:py-24">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="max-w-3xl">
+                    <p class="text-sm uppercase tracking-[0.24em] text-sky-200/70" data-i18n="services.badge">Layanan</p>
+                    <h2 class="mt-4 text-3xl font-bold text-white sm:text-5xl" data-i18n="services.title">Solusi IT yang dirancang untuk kebutuhan operasional dan pertumbuhan bisnis.</h2>
+                    <p class="mt-5 text-base leading-8 text-slate-300" data-i18n="services.desc">Kami menggabungkan pengembangan software, infrastruktur, dan konsultasi implementasi untuk membantu bisnis berjalan lebih efektif.</p>
+                </div>
+
+                <div class="mt-12 grid gap-6 lg:grid-cols-3">
+                    <article class="service-card rounded-[2rem] border border-white/10 bg-white/[0.03] p-7 soft-shadow">
+                        <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-teal-300/10 text-teal-200">
+                            <i class="fas fa-code text-xl"></i>
+                        </div>
+                        <h3 class="mt-6 text-2xl font-bold text-white" data-i18n="services.card1Title">Application Development</h3>
+                        <p class="mt-4 text-sm leading-7 text-slate-300" data-i18n="services.card1Desc">Pengembangan aplikasi web, mobile, dan sistem internal untuk digitalisasi proses bisnis dan layanan pelanggan.</p>
+                        <div class="mt-5 flex flex-wrap gap-2 text-xs text-slate-200">
+                            <span class="chip rounded-full px-3 py-2">Company Website</span>
+                            <span class="chip rounded-full px-3 py-2">Internal System</span>
+                            <span class="chip rounded-full px-3 py-2">Mobile App</span>
+                        </div>
+                    </article>
+
+                    <article class="service-card rounded-[2rem] border border-white/10 bg-white/[0.03] p-7 soft-shadow">
+                        <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-sky-300/10 text-sky-200">
+                            <i class="fas fa-network-wired text-xl"></i>
+                        </div>
+                        <h3 class="mt-6 text-2xl font-bold text-white" data-i18n="services.card2Title">Infrastructure & Network</h3>
+                        <p class="mt-4 text-sm leading-7 text-slate-300" data-i18n="services.card2Desc">Perencanaan dan implementasi infrastruktur IT, jaringan, serta lingkungan operasional yang aman dan stabil.</p>
+                        <div class="mt-5 flex flex-wrap gap-2 text-xs text-slate-200">
+                            <span class="chip rounded-full px-3 py-2">LAN / WAN</span>
+                            <span class="chip rounded-full px-3 py-2">Server Setup</span>
+                            <span class="chip rounded-full px-3 py-2">Security Hardening</span>
+                        </div>
+                    </article>
+
+                    <article class="service-card rounded-[2rem] border border-white/10 bg-white/[0.03] p-7 soft-shadow">
+                        <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-amber-300/10 text-amber-200">
+                            <i class="fas fa-boxes-stacked text-xl"></i>
+                        </div>
+                        <h3 class="mt-6 text-2xl font-bold text-white" data-i18n="services.card3Title">IT Procurement</h3>
+                        <p class="mt-4 text-sm leading-7 text-slate-300" data-i18n="services.card3Desc">Pengadaan perangkat keras, perangkat lunak, dan kebutuhan teknis lain dengan pendekatan yang efisien dan tepat guna.</p>
+                        <div class="mt-5 flex flex-wrap gap-2 text-xs text-slate-200">
+                            <span class="chip rounded-full px-3 py-2">Hardware</span>
+                            <span class="chip rounded-full px-3 py-2">Software</span>
+                            <span class="chip rounded-full px-3 py-2">Deployment Support</span>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section id="media-showcase" class="py-16 sm:py-24">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid gap-8 lg:grid-cols-[0.95fr_1.05fr]">
+                    <div>
+                        <p class="text-sm uppercase tracking-[0.24em] text-sky-200/70" data-i18n="media.badge">Visual Showcase</p>
+                        <h2 class="mt-4 text-3xl font-bold text-white sm:text-5xl" data-i18n="media.title">Presentasi yang terlihat hidup dengan foto profesional dan video singkat yang langsung menjelaskan kapabilitas tim.</h2>
+                        <p class="mt-5 text-base leading-8 text-slate-300" data-i18n="media.desc">Section ini membantu calon klien melihat suasana kerja, pendekatan delivery, dan kualitas visual brand dalam satu alur yang lebih meyakinkan.</p>
+                        <div class="mt-8 grid gap-4 sm:grid-cols-2">
+                            <div class="rounded-[1.5rem] border border-white/10 bg-white/[0.03] p-5">
+                                <p class="text-xs uppercase tracking-[0.24em] text-teal-200" data-i18n="media.card1Badge">Foto</p>
+                                <h3 class="mt-3 text-xl font-bold text-white" data-i18n="media.card1Title">Corporate Tech Photo</h3>
+                                <p class="mt-2 text-sm leading-7 text-slate-300" data-i18n="media.card1Desc">Cocok untuk memperkuat persepsi profesional, modern, dan siap eksekusi.</p>
+                            </div>
+                            <div class="rounded-[1.5rem] border border-white/10 bg-white/[0.03] p-5">
+                                <p class="text-xs uppercase tracking-[0.24em] text-sky-200" data-i18n="media.card2Badge">Video</p>
+                                <h3 class="mt-3 text-xl font-bold text-white" data-i18n="media.card2Title">Short Motion Demo</h3>
+                                <p class="mt-2 text-sm leading-7 text-slate-300" data-i18n="media.card2Desc">Memberi ritme visual yang lebih kuat dibanding section statis biasa.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid gap-5">
+                        <div class="media-stage panel-strong rounded-[2rem] overflow-hidden soft-shadow">
+                            <img src="{{ asset('assets/images/hero-team-photo.png') }}" alt="Suasana kolaborasi tim PT Fluxa Tritama Indonesia" class="media-photo">
+                        </div>
+                        <div class="media-stage panel rounded-[2rem] overflow-hidden">
+                            <div class="video-shell">
+                                <video class="showcase-video" controls autoplay muted loop playsinline poster="{{ asset('assets/images/hero-team-photo.png') }}">
+                                    <source src="{{ asset('assets/media/office-demo.mp4') }}" type="video/mp4">
+                                </video>
+                                <div class="video-caption">
+                                    <span class="video-dot"></span>
+                                    <span data-i18n="media.videoCaption">Preview visual presentasi company profile</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="insights" class="py-16 sm:py-24">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid gap-8 lg:grid-cols-[0.85fr_1.15fr]">
+                    <div>
+                        <p class="text-sm uppercase tracking-[0.24em] text-sky-200/70" data-i18n="insight.badge">Performance Insight</p>
+                        <h2 class="mt-4 text-3xl font-bold text-white sm:text-5xl" data-i18n="insight.title">Tambahkan chart agar company profile terasa lebih berbasis data dan lebih kredibel saat dipresentasikan.</h2>
+                        <p class="mt-5 text-base leading-8 text-slate-300" data-i18n="insight.desc">Grafik ini bisa dipakai untuk menunjukkan pertumbuhan delivery, efektivitas implementasi, dan fokus prioritas layanan dalam bentuk yang cepat dipahami.</p>
+                        <div class="mt-8 grid gap-4 sm:grid-cols-3">
+                            <div class="rounded-[1.5rem] border border-white/10 bg-white/[0.03] p-5">
+                                <div class="text-2xl font-bold text-white">+42%</div>
+                                <div class="mt-2 text-sm text-slate-300" data-i18n="insight.stat1">Efisiensi workflow digital</div>
+                            </div>
+                            <div class="rounded-[1.5rem] border border-white/10 bg-white/[0.03] p-5">
+                                <div class="text-2xl font-bold text-white">12x</div>
+                                <div class="mt-2 text-sm text-slate-300" data-i18n="insight.stat2">Faster reporting cycle</div>
+                            </div>
+                            <div class="rounded-[1.5rem] border border-white/10 bg-white/[0.03] p-5">
+                                <div class="text-2xl font-bold text-white">99.2%</div>
+                                <div class="mt-2 text-sm text-slate-300" data-i18n="insight.stat3">Stability target</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel-strong rounded-[2rem] p-6 sm:p-8 soft-shadow">
+                        <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                            <div>
+                                <p class="text-xs uppercase tracking-[0.24em] text-sky-200/70" data-i18n="insight.chartBadge">Delivery Growth Overview</p>
+                                <h3 class="mt-2 text-2xl font-bold text-white" data-i18n="insight.chartTitle">Service Mix & Impact</h3>
+                            </div>
+                            <div class="rounded-full border border-white/10 bg-white/[0.03] px-4 py-2 text-xs text-slate-300" data-i18n="insight.chartNote">Demo chart untuk company profile</div>
+                        </div>
+                        <div class="mt-6 chart-shell">
+                            <canvas id="servicesChart" aria-label="Service impact chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="industries" class="py-16 sm:py-24">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="panel rounded-[2rem] p-8 sm:p-10">
+                    <div class="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+                        <div class="max-w-3xl">
+                            <p class="text-sm uppercase tracking-[0.24em] text-sky-200/70" data-i18n="industries.badge">Sektor yang Dilayani</p>
+                            <h2 class="mt-4 text-3xl font-bold text-white sm:text-4xl" data-i18n="industries.title">Relevan untuk berbagai jenis organisasi dan kebutuhan implementasi IT.</h2>
+                        </div>
+                        <p class="max-w-xl text-sm leading-7 text-slate-300" data-i18n="industries.desc">Pendekatan kami fleksibel untuk perusahaan yang sedang membenahi proses internal, membangun produk digital, atau memperkuat fondasi infrastrukturnya.</p>
+                    </div>
+
+                    <div class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                        <div class="industry-card rounded-[1.5rem] border border-white/10 bg-white/[0.03] p-5">
+                            <h3 class="text-lg font-bold text-white" data-i18n="industries.card1Title">Corporate & SME</h3>
+                            <p class="mt-2 text-sm leading-7 text-slate-300" data-i18n="industries.card1Desc">Digitalisasi workflow, dashboard operasional, dan sistem pendukung keputusan.</p>
+                        </div>
+                        <div class="industry-card rounded-[1.5rem] border border-white/10 bg-white/[0.03] p-5">
+                            <h3 class="text-lg font-bold text-white" data-i18n="industries.card2Title">Retail & Distribution</h3>
+                            <p class="mt-2 text-sm leading-7 text-slate-300" data-i18n="industries.card2Desc">Integrasi penjualan, inventory, reporting, dan monitoring aktivitas cabang.</p>
+                        </div>
+                        <div class="industry-card rounded-[1.5rem] border border-white/10 bg-white/[0.03] p-5">
+                            <h3 class="text-lg font-bold text-white" data-i18n="industries.card3Title">Education & Public Service</h3>
+                            <p class="mt-2 text-sm leading-7 text-slate-300" data-i18n="industries.card3Desc">Sistem informasi, portal layanan, dan tata kelola data yang lebih tertata.</p>
+                        </div>
+                        <div class="industry-card rounded-[1.5rem] border border-white/10 bg-white/[0.03] p-5">
+                            <h3 class="text-lg font-bold text-white" data-i18n="industries.card4Title">Industrial Operations</h3>
+                            <p class="mt-2 text-sm leading-7 text-slate-300" data-i18n="industries.card4Desc">Jaringan, monitoring, dan solusi penunjang operasional di lapangan.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="portfolio" class="py-16 sm:py-24">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="max-w-3xl">
+                    <p class="text-sm uppercase tracking-[0.24em] text-sky-200/70" data-i18n="portfolio.badge">Kapabilitas</p>
+                    <h2 class="mt-4 text-3xl font-bold text-white sm:text-5xl" data-i18n="portfolio.title">Contoh area solusi yang bisa kami kerjakan untuk bisnis Anda.</h2>
+                </div>
+
+                <div class="mt-12 grid gap-6 lg:grid-cols-3">
+                    <article class="project-card rounded-[2rem] border border-white/10 bg-white/[0.03] p-7">
+                        <div class="flex h-16 w-16 items-center justify-center rounded-3xl bg-sky-300/10 text-sky-200">
+                            <i class="fas fa-chart-line text-2xl"></i>
+                        </div>
+                        <h3 class="mt-6 text-2xl font-bold text-white" data-i18n="portfolio.card1Title">Executive Dashboard</h3>
+                        <p class="mt-4 text-sm leading-7 text-slate-300" data-i18n="portfolio.card1Desc">Dashboard ringkas untuk memantau KPI, operasional, penjualan, dan data penting lintas unit bisnis.</p>
+                    </article>
+
+                    <article class="project-card rounded-[2rem] border border-white/10 bg-white/[0.03] p-7">
+                        <div class="flex h-16 w-16 items-center justify-center rounded-3xl bg-teal-300/10 text-teal-200">
+                            <i class="fas fa-mobile-screen-button text-2xl"></i>
+                        </div>
+                        <h3 class="mt-6 text-2xl font-bold text-white" data-i18n="portfolio.card2Title">Customer-Facing Apps</h3>
+                        <p class="mt-4 text-sm leading-7 text-slate-300" data-i18n="portfolio.card2Desc">Aplikasi dan portal yang membantu bisnis meningkatkan layanan pelanggan dan pengalaman digital.</p>
+                    </article>
+
+                    <article class="project-card rounded-[2rem] border border-white/10 bg-white/[0.03] p-7">
+                        <div class="flex h-16 w-16 items-center justify-center rounded-3xl bg-amber-300/10 text-amber-200">
+                            <i class="fas fa-server text-2xl"></i>
+                        </div>
+                        <h3 class="mt-6 text-2xl font-bold text-white" data-i18n="portfolio.card3Title">Infrastructure Modernization</h3>
+                        <p class="mt-4 text-sm leading-7 text-slate-300" data-i18n="portfolio.card3Desc">Pembaruan jaringan, server, dan lingkungan IT agar lebih aman, tertata, dan siap menunjang pertumbuhan.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section id="process" class="py-16 sm:py-24">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid gap-12 lg:grid-cols-[0.9fr_1.1fr]">
+                    <div>
+                        <p class="text-sm uppercase tracking-[0.24em] text-sky-200/70" data-i18n="process.badge">Proses Kerja</p>
+                        <h2 class="mt-4 text-3xl font-bold text-white sm:text-5xl" data-i18n="process.title">Cara kami memastikan project tetap jelas, terarah, dan deliverable.</h2>
+                        <p class="mt-5 text-base leading-8 text-slate-300" data-i18n="process.desc">Struktur kerja yang rapi membantu mengurangi risiko miskomunikasi, mempercepat validasi, dan menjaga kualitas implementasi.</p>
+                    </div>
+
+                    <div class="space-y-5">
+                        <div class="timeline-step relative rounded-[1.75rem] border border-white/10 bg-white/[0.03] p-6 pl-16">
+                            <div class="absolute left-5 top-6 flex h-9 w-9 items-center justify-center rounded-full bg-teal-300 text-sm font-bold text-slate-950">01</div>
+                            <h3 class="text-xl font-bold text-white" data-i18n="process.step1Title">Discovery & Requirement Mapping</h3>
+                            <p class="mt-2 text-sm leading-7 text-slate-300" data-i18n="process.step1Desc">Kami memetakan kebutuhan bisnis, proses berjalan, dan target implementasi sebelum masuk ke tahap eksekusi.</p>
+                        </div>
+                        <div class="timeline-step relative rounded-[1.75rem] border border-white/10 bg-white/[0.03] p-6 pl-16">
+                            <div class="absolute left-5 top-6 flex h-9 w-9 items-center justify-center rounded-full bg-sky-300 text-sm font-bold text-slate-950">02</div>
+                            <h3 class="text-xl font-bold text-white" data-i18n="process.step2Title">Solution Design</h3>
+                            <p class="mt-2 text-sm leading-7 text-slate-300" data-i18n="process.step2Desc">Arsitektur solusi, alur kerja, dan prioritas implementasi disusun agar keputusan teknis tetap selaras dengan kebutuhan bisnis.</p>
+                        </div>
+                        <div class="timeline-step relative rounded-[1.75rem] border border-white/10 bg-white/[0.03] p-6 pl-16">
+                            <div class="absolute left-5 top-6 flex h-9 w-9 items-center justify-center rounded-full bg-amber-300 text-sm font-bold text-slate-950">03</div>
+                            <h3 class="text-xl font-bold text-white" data-i18n="process.step3Title">Build & Implementation</h3>
+                            <p class="mt-2 text-sm leading-7 text-slate-300" data-i18n="process.step3Desc">Tim menjalankan pengembangan, setup, dan konfigurasi dengan pendekatan yang terukur dan terdokumentasi.</p>
+                        </div>
+                        <div class="timeline-step relative rounded-[1.75rem] border border-white/10 bg-white/[0.03] p-6 pl-16">
+                            <div class="absolute left-5 top-6 flex h-9 w-9 items-center justify-center rounded-full bg-rose-300 text-sm font-bold text-slate-950">04</div>
+                            <h3 class="text-xl font-bold text-white" data-i18n="process.step4Title">Testing, Handover & Support</h3>
+                            <p class="mt-2 text-sm leading-7 text-slate-300" data-i18n="process.step4Desc">Solusi divalidasi, diserahterimakan dengan jelas, lalu didukung agar tetap stabil saat digunakan di lapangan.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="py-16 sm:py-24">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="panel-strong rounded-[2rem] p-8 sm:p-10 lg:p-12 soft-shadow">
+                    <div class="grid gap-8 lg:grid-cols-[1fr_0.95fr]">
+                        <div>
+                            <p class="text-sm uppercase tracking-[0.24em] text-sky-200/70" data-i18n="contact.badge">Kontak</p>
+                            <h2 class="mt-4 text-3xl font-bold text-white sm:text-5xl" data-i18n="contact.title">Bangun company profile dan sistem digital yang terlihat lebih profesional di mata calon klien.</h2>
+                            <p class="mt-6 max-w-2xl text-base leading-8 text-slate-300" data-i18n="contact.desc">Jika Anda butuh website company profile, aplikasi internal, atau infrastruktur IT yang lebih rapi, kami siap bantu dari tahap perencanaan sampai implementasi.</p>
+                            <div class="mt-8 flex flex-col gap-4 sm:flex-row">
+                                <a href="https://wa.me/6281250653005" class="rounded-2xl bg-gradient-to-r from-teal-300 to-sky-400 px-7 py-4 text-center text-sm font-semibold text-slate-950 transition hover:brightness-110" data-i18n="contact.cta1">Chat via WhatsApp</a>
+                                <a href="mailto:official@fluxaborneo.tech" class="rounded-2xl border border-white/10 px-7 py-4 text-center text-sm font-semibold text-white transition hover:border-sky-300/30 hover:bg-white/5" data-i18n="contact.cta2">Kirim Email</a>
+                            </div>
+                        </div>
+
+                        <div class="grid gap-4">
+                            <div class="contact-card rounded-[1.75rem] border border-white/10 bg-white/[0.03] p-6">
+                                <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-sky-300/10 text-sky-200">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <h3 class="text-lg font-bold text-white" data-i18n="contact.card1">Email</h3>
+                                <a href="mailto:official@fluxaborneo.tech" class="mt-2 inline-block text-sm text-slate-300 hover:text-white">official@fluxaborneo.tech</a>
+                            </div>
+                            <div class="contact-card rounded-[1.75rem] border border-white/10 bg-white/[0.03] p-6">
+                                <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-teal-300/10 text-teal-200">
+                                    <i class="fas fa-phone"></i>
+                                </div>
+                                <h3 class="text-lg font-bold text-white" data-i18n="contact.card2">Telepon / WhatsApp</h3>
+                                <a href="tel:+6281250653005" class="mt-2 inline-block text-sm text-slate-300 hover:text-white">+62 812-5065-3005</a>
+                            </div>
+                            <div class="contact-card rounded-[1.75rem] border border-white/10 bg-white/[0.03] p-6">
+                                <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-300/10 text-amber-200">
+                                    <i class="fas fa-location-dot"></i>
+                                </div>
+                                <h3 class="text-lg font-bold text-white" data-i18n="contact.card3">Lokasi</h3>
+                                <p class="mt-2 text-sm text-slate-300" data-i18n="contact.location">Kalimantan, Indonesia</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="partners" class="pb-16 sm:pb-24">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="panel rounded-[2rem] p-8 sm:p-10">
+                    <div class="max-w-3xl">
+                        <p class="text-sm uppercase tracking-[0.24em] text-sky-200/70" data-i18n="clients.title">Clients</p>
+                    </div>
+
+                    <div class="partner-marquee mt-8">
+                        <div class="partner-track">
+                            <div class="partner-track-group">
+                                <div class="partner-logo-stage">
+                                    <img src="{{ asset('assets/images/Clients/anugerah sarana hikmah.png') }}" alt="PT. Anugerah Sarana Hikmah" class="partner-logo">
+                                </div>
+                                <div class="partner-logo-stage">
+                                    <img src="{{ asset('assets/images/Clients/Samudra-Mulia-Abadi2.jpg') }}" alt="PT. Samudra Mulia Abadi" class="partner-logo">
+                                </div>
+                                <div class="partner-logo-stage">
+                                    <img src="{{ asset('assets/images/Clients/Logo-Adaro-Andalan-Indonesia-Color.png') }}" alt="Adaro Andalan Indonesia" class="partner-logo">
+                                </div>
+                                <div class="partner-logo-stage">
+                                    <img src="{{ asset('assets/images/Clients/medali-mart.png') }}" alt="Medali Mart" class="partner-logo">
+                                </div>
+                                <div class="partner-logo-stage">
+                                    <img src="{{ asset('assets/images/Clients/hasnurriung sinergi.png') }}" alt="Hasnur Riung Sinergi" class="partner-logo">
+                                </div>
+                                <div class="partner-logo-stage">
+                                    <img src="{{ asset('assets/images/Clients/kalingga_logo.png') }}" alt="Kalingga" class="partner-logo">
+                                </div>
+                                <div class="partner-logo-stage">
+                                    <img src="{{ asset('assets/images/Clients/Logo_Badan_Gizi_Nasional_(2024).png') }}" alt="Badan Gizi Nasional" class="partner-logo">
+                                </div>
+                                <div class="partner-logo-stage">
+                                    <img src="{{ asset('assets/images/Clients/akartelangmandiri.ico') }}" alt="Akarta Elang Mandiri" class="partner-logo">
+                                </div>
+                                <div class="partner-logo-stage">
+                                    <img src="{{ asset('assets/images/Clients/anugerah sarana hikmah.png') }}" alt="PT. Anugerah Sarana Hikmah" class="partner-logo">
+                                </div>
+                                <div class="partner-logo-stage">
+                                    <img src="{{ asset('assets/images/Clients/Samudra-Mulia-Abadi2.jpg') }}" alt="PT. Samudra Mulia Abadi" class="partner-logo">
+                                </div>
+                                <div class="partner-logo-stage">
+                                    <img src="{{ asset('assets/images/Clients/Logo-Adaro-Andalan-Indonesia-Color.png') }}" alt="Adaro Andalan Indonesia" class="partner-logo">
+                                </div>
+                                <div class="partner-logo-stage">
+                                    <img src="{{ asset('assets/images/Clients/medali-mart.png') }}" alt="Medali Mart" class="partner-logo">
+                                </div>
+                            </div>
+                            <div class="partner-track-group" aria-hidden="true">
+                                <div class="partner-logo-stage">
+                                    <img src="{{ asset('assets/images/Clients/anugerah sarana hikmah.png') }}" alt="" class="partner-logo">
+                                </div>
+                                <div class="partner-logo-stage">
+                                    <img src="{{ asset('assets/images/Clients/Samudra-Mulia-Abadi2.jpg') }}" alt="" class="partner-logo">
+                                </div>
+                                <div class="partner-logo-stage">
+                                    <img src="{{ asset('assets/images/Clients/Logo-Adaro-Andalan-Indonesia-Color.png') }}" alt="" class="partner-logo">
+                                </div>
+                                <div class="partner-logo-stage">
+                                    <img src="{{ asset('assets/images/Clients/medali-mart.png') }}" alt="" class="partner-logo">
+                                </div>
+                                <div class="partner-logo-stage">
+                                    <img src="{{ asset('assets/images/Clients/hasnurriung sinergi.png') }}" alt="" class="partner-logo">
+                                </div>
+                                <div class="partner-logo-stage">
+                                    <img src="{{ asset('assets/images/Clients/kalingga_logo.png') }}" alt="" class="partner-logo">
+                                </div>
+                                <div class="partner-logo-stage">
+                                    <img src="{{ asset('assets/images/Clients/Logo_Badan_Gizi_Nasional_(2024).png') }}" alt="" class="partner-logo">
+                                </div>
+                                <div class="partner-logo-stage">
+                                    <img src="{{ asset('assets/images/Clients/akartelangmandiri.ico') }}" alt="" class="partner-logo">
+                                </div>
+                                <div class="partner-logo-stage">
+                                    <img src="{{ asset('assets/images/Clients/anugerah sarana hikmah.png') }}" alt="" class="partner-logo">
+                                </div>
+                                <div class="partner-logo-stage">
+                                    <img src="{{ asset('assets/images/Clients/Samudra-Mulia-Abadi2.jpg') }}" alt="" class="partner-logo">
+                                </div>
+                                <div class="partner-logo-stage">
+                                    <img src="{{ asset('assets/images/Clients/Logo-Adaro-Andalan-Indonesia-Color.png') }}" alt="" class="partner-logo">
+                                </div>
+                                <div class="partner-logo-stage">
+                                    <img src="{{ asset('assets/images/Clients/medali-mart.png') }}" alt="" class="partner-logo">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div class="chatbot-shell">
+        <button id="chatbotToggle" class="chatbot-toggle" type="button" aria-label="Buka chatbot">
+            <i class="fas fa-comments"></i>
+        </button>
+        <div id="chatbotPanel" class="chatbot-panel hidden">
+            <div class="chatbot-header">
+                <div>
+                    <p class="text-xs uppercase tracking-[0.24em] text-sky-200/70" data-i18n="chatbot.badge">Chatbot Demo</p>
+                    <h3 class="mt-1 text-lg font-bold text-white" data-i18n="chatbot.title">Fluxa Assistant</h3>
+                </div>
+                <button id="chatbotClose" class="chatbot-close" type="button" aria-label="Tutup chatbot">
+                    <i class="fas fa-xmark"></i>
+                </button>
+            </div>
+            <div id="chatbotMessages" class="chatbot-messages">
+                <div class="chatbot-bubble chatbot-bubble-bot" data-i18n="chatbot.welcome">Halo, saya siap bantu menjelaskan layanan PT Fluxa Tritama Indonesia. Anda bisa tanya soal website, aplikasi, infrastruktur, atau konsultasi awal.</div>
+            </div>
+            <div class="chatbot-quick-actions">
+                <button class="chatbot-quick-btn" type="button" data-chatbot-prompt="layanan" data-i18n="chatbot.quick1">Layanan apa saja?</button>
+                <button class="chatbot-quick-btn" type="button" data-chatbot-prompt="website" data-i18n="chatbot.quick2">Bisa buat website?</button>
+                <button class="chatbot-quick-btn" type="button" data-chatbot-prompt="konsultasi" data-i18n="chatbot.quick3">Cara konsultasi?</button>
+            </div>
+            <form id="chatbotForm" class="chatbot-form">
+                <input id="chatbotInput" type="text" class="chatbot-input" placeholder="Tulis pertanyaan Anda..." data-chatbot-placeholder="Tulis pertanyaan Anda...">
+                <button class="chatbot-send" type="submit">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <footer class="site-footer border-t border-white/10 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
+                <div class="brand-lockup">
+                    <img
+                        src="{{ asset('assets/images/logo-white-transparent.png') }}"
+                        alt="PT Fluxa Tritama Indonesia"
+                        class="brand-wordmark brand-logo brand-logo-footer"
+                        data-logo-dark="{{ asset('assets/images/logo-white-transparent.png') }}"
+                        data-logo-light="{{ asset('assets/images/logo-black-transparent.png') }}"
+                    >
+                </div>
+                <p class="text-sm text-slate-400">
+                    <span data-i18n="footer.taglinePrefix">PT Fluxa Tritama Indonesia menghadirkan layanan teknologi dan solusi digital untuk kebutuhan bisnis modern.</span>
+                    <span data-i18n="footer.taglineSuffix">.</span>
+                </p>
+                <p class="text-sm text-slate-500">&copy; <span id="year"></span> PT Fluxa Tritama Indonesia. <span data-i18n="footer.copySuffix">All rights reserved.</span></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{{ asset('assets/js/main.js') }}"></script>
+</body>
+</html>
+
