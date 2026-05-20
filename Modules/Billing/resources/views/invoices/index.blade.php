@@ -1,119 +1,221 @@
 @extends('layouts.portal')
 @section('title', 'Invoice')
-@section('page-title', 'Daftar Invoice')
-
-@section('topbar-actions')
-    <a href="{{ route('billing.invoices.create') }}" class="btn-primary text-white text-xs px-3 py-1.5 rounded-lg font-medium flex items-center gap-1.5">
-        <i class="fa-solid fa-plus text-xs"></i> Buat Invoice
-    </a>
-@endsection
+@section('page-title', 'Invoice Diterbitkan')
 
 @section('content')
-<div class="mt-4">
-    {{-- Summary cards --}}
-    <div class="grid grid-cols-2 sm:grid-cols-5 gap-3 mb-5">
-        @php
-            $total    = $invoices->count();
-            $draft    = $invoices->where('status','draft')->count();
-            $pending  = $invoices->where('status','pending_approval')->count();
-            $approved = $invoices->where('status','approved')->count();
-            $paid     = $invoices->where('status','paid')->count();
-        @endphp
-        <div class="stat-card p-4">
-            <p class="text-xs text-slate-400 mb-1">Total</p>
-            <p class="text-2xl font-bold text-white">{{ $total }}</p>
-        </div>
-        <div class="stat-card p-4">
-            <p class="text-xs text-slate-400 mb-1">Draft</p>
-            <p class="text-2xl font-bold text-slate-400">{{ $draft }}</p>
-        </div>
-        <div class="stat-card p-4">
-            <p class="text-xs text-amber-400 mb-1">Menunggu</p>
-            <p class="text-2xl font-bold text-amber-400">{{ $pending }}</p>
-        </div>
-        <div class="stat-card p-4">
-            <p class="text-xs text-blue-400 mb-1">Disetujui</p>
-            <p class="text-2xl font-bold text-blue-400">{{ $approved }}</p>
-        </div>
-        <div class="stat-card p-4">
-            <p class="text-xs text-emerald-400 mb-1">Lunas</p>
-            <p class="text-2xl font-bold text-emerald-400">{{ $paid }}</p>
+@php
+    $totalNilai = $invoices->sum('total');
+    $lunas      = $invoices->where('status', 'paid')->count();
+    $aktif      = $invoices->where('status', 'approved')->count();
+@endphp
+
+{{-- Summary cards --}}
+<div class="row mb-4">
+    <div class="col-sm mb-3">
+        <div class="fluxa-stat">
+            <div class="fluxa-stat-icon" style="background:#eff6ff;">
+                <i class="fas fa-file-invoice-dollar" style="color:#2563eb;"></i>
+            </div>
+            <div>
+                <div class="fluxa-stat-value">{{ $invoices->count() }}</div>
+                <div class="fluxa-stat-label">Total Diterbitkan</div>
+            </div>
         </div>
     </div>
-
-    @if(Auth::user()->isDirector() && $pending > 0)
-    <div class="mb-4 p-3 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center gap-3 text-sm text-amber-300">
-        <i class="fa-solid fa-bell"></i>
-        <span>Ada <strong>{{ $pending }}</strong> invoice menunggu persetujuan Anda.</span>
+    <div class="col-sm mb-3">
+        <div class="fluxa-stat">
+            <div class="fluxa-stat-icon" style="background:#eff6ff;">
+                <i class="fas fa-stamp" style="color:#2563eb;"></i>
+            </div>
+            <div>
+                <div class="fluxa-stat-value" style="color:#2563eb;">{{ $aktif }}</div>
+                <div class="fluxa-stat-label">Aktif</div>
+            </div>
+        </div>
     </div>
-    @endif
+    <div class="col-sm mb-3">
+        <div class="fluxa-stat">
+            <div class="fluxa-stat-icon" style="background:#f0fdf4;">
+                <i class="fas fa-circle-check" style="color:#16a34a;"></i>
+            </div>
+            <div>
+                <div class="fluxa-stat-value" style="color:#16a34a;">{{ $lunas }}</div>
+                <div class="fluxa-stat-label">Lunas</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm mb-3">
+        <div class="fluxa-stat">
+            <div class="fluxa-stat-icon" style="background:#f0fdf4;">
+                <i class="fas fa-chart-line" style="color:#059669;"></i>
+            </div>
+            <div>
+                <div class="fluxa-stat-value" style="color:#059669;font-size:14px;">
+                    Rp {{ number_format($totalNilai, 0, ',', '.') }}
+                </div>
+                <div class="fluxa-stat-label">Total Nilai</div>
+            </div>
+        </div>
+    </div>
+</div>
 
-    <div class="card overflow-hidden">
-        <div class="overflow-x-auto">
-            <table class="w-full text-sm">
+{{-- ── PENDING APPROVAL (Director only) ── --}}
+@if(Auth::user()->isDirector() && $pendingInvoices->count() > 0)
+<div class="card mb-4" style="border-left:3px solid #d97706!important;">
+    <div class="card-header d-flex align-items-center justify-content-between" style="background:#fffbeb;">
+        <div class="d-flex align-items-center" style="gap:8px;">
+            <i class="fas fa-clock" style="color:#d97706;font-size:13px;"></i>
+            <h6 class="card-title mb-0" style="color:#92400e;">
+                Menunggu Persetujuan Final
+                <span style="background:#d97706;color:#fff;border-radius:99px;font-size:10px;padding:1px 8px;margin-left:4px;">
+                    {{ $pendingInvoices->count() }}
+                </span>
+            </h6>
+        </div>
+        <small style="color:#92400e;font-size:11px;">Setujui untuk menerbitkan ke data pendapatan</small>
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
                 <thead>
-                    <tr class="border-b border-white/5 text-slate-500 text-xs">
-                        <th class="text-left px-4 py-3 font-medium">No. Invoice</th>
-                        <th class="text-left px-4 py-3 font-medium">Klien</th>
-                        <th class="text-left px-4 py-3 font-medium">Judul</th>
-                        @if(Auth::user()->isDirector())
-                        <th class="text-left px-4 py-3 font-medium">Dibuat oleh</th>
-                        @endif
-                        <th class="text-right px-4 py-3 font-medium">Total</th>
-                        <th class="text-center px-4 py-3 font-medium">Status</th>
-                        <th class="text-left px-4 py-3 font-medium">Tgl Invoice</th>
-                        <th class="px-4 py-3"></th>
+                    <tr>
+                        <th>No. Invoice</th>
+                        <th>Klien</th>
+                        <th class="d-none d-md-table-cell">Judul Proyek</th>
+                        <th class="d-none d-lg-table-cell">Dibuat oleh</th>
+                        <th class="text-right">Total</th>
+                        <th style="width:160px;"></th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-white/5">
-                    @forelse($invoices as $inv)
-                    <tr class="table-row">
-                        <td class="px-4 py-3">
-                            <a href="{{ route('billing.invoices.show', $inv) }}" class="text-blue-400 hover:underline font-mono text-xs">
+                <tbody>
+                    @foreach($pendingInvoices as $inv)
+                    <tr>
+                        <td>
+                            <a href="{{ route('billing.invoices.show', $inv) }}"
+                               style="font-family:monospace;font-size:12px;font-weight:700;color:#d97706;">
                                 {{ $inv->invoice_number }}
                             </a>
                         </td>
-                        <td class="px-4 py-3 text-slate-300">{{ $inv->client->name }}</td>
-                        <td class="px-4 py-3 text-slate-400 text-xs">{{ Str::limit($inv->title, 40) }}</td>
-                        @if(Auth::user()->isDirector())
-                        <td class="px-4 py-3 text-slate-500 text-xs">{{ $inv->creator->name }}</td>
-                        @endif
-                        <td class="px-4 py-3 text-right text-white font-medium text-xs">
+                        <td style="font-weight:600;color:#334155;">{{ $inv->client->name }}</td>
+                        <td class="d-none d-md-table-cell" style="font-size:12px;color:#64748b;">
+                            {{ Str::limit($inv->title, 36) }}
+                        </td>
+                        <td class="d-none d-lg-table-cell" style="font-size:12px;color:#64748b;">
+                            {{ $inv->creator->name }}
+                        </td>
+                        <td class="text-right" style="font-weight:600;color:#334155;white-space:nowrap;">
                             Rp {{ number_format($inv->total, 0, ',', '.') }}
                         </td>
-                        <td class="px-4 py-3 text-center">
-                            @php $color = $inv->status_color @endphp
-                            <span class="text-[11px] px-2 py-0.5 rounded-full
-                                {{ $color === 'emerald' ? 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/25' : '' }}
-                                {{ $color === 'blue'    ? 'bg-blue-500/15    text-blue-400    border border-blue-500/25'    : '' }}
-                                {{ $color === 'amber'   ? 'bg-amber-500/15   text-amber-400   border border-amber-500/25'   : '' }}
-                                {{ $color === 'red'     ? 'bg-red-500/15     text-red-400     border border-red-500/25'     : '' }}
-                                {{ $color === 'slate'   ? 'bg-slate-500/15   text-slate-400   border border-slate-500/25'   : '' }}">
-                                {{ $inv->status_label }}
-                            </span>
-                        </td>
-                        <td class="px-4 py-3 text-slate-500 text-xs">
-                            {{ $inv->invoice_date->format('d/m/Y') }}
-                        </td>
-                        <td class="px-4 py-3 text-right">
-                            <a href="{{ route('billing.invoices.show', $inv) }}"
-                               class="text-slate-400 hover:text-blue-400 text-xs px-2 py-1 rounded hover:bg-blue-500/10 transition-colors">
-                                <i class="fa-solid fa-eye"></i>
-                            </a>
+                        <td>
+                            <div class="d-flex justify-content-end" style="gap:4px;">
+                                <form method="POST" action="{{ route('billing.invoices.approve', $inv) }}" class="d-inline">
+                                    @csrf
+                                    <button type="submit" class="btn btn-sm btn-fluxa-success" style="font-size:11px;padding:3px 10px;">
+                                        <i class="fas fa-circle-check mr-1"></i> Setujui
+                                    </button>
+                                </form>
+                                <a href="{{ route('billing.invoices.show', $inv) }}"
+                                   class="btn btn-icon btn-fluxa-secondary" title="Lihat Detail">
+                                    <i class="fas fa-eye" style="font-size:11px;"></i>
+                                </a>
+                            </div>
                         </td>
                     </tr>
-                    @empty
-                    <tr>
-                        <td colspan="8" class="px-4 py-12 text-center text-slate-500">
-                            <i class="fa-solid fa-file-invoice-dollar text-3xl mb-3 block opacity-30"></i>
-                            Belum ada invoice.
-                            <a href="{{ route('billing.invoices.create') }}" class="text-blue-400 ml-1 hover:underline">Buat sekarang</a>
-                        </td>
-                    </tr>
-                    @endforelse
+                    @endforeach
                 </tbody>
             </table>
         </div>
+    </div>
+</div>
+@endif
+
+{{-- ── PUBLISHED INVOICES ── --}}
+<div class="card">
+    <div class="card-header d-flex align-items-center justify-content-between">
+        <div class="d-flex align-items-center" style="gap:8px;">
+            <i class="fas fa-file-invoice-dollar" style="color:#2563eb;font-size:13px;"></i>
+            <h6 class="card-title mb-0">
+                Invoice Diterbitkan
+                <span style="color:#94a3b8;font-weight:400;">({{ $invoices->count() }})</span>
+            </h6>
+        </div>
+    </div>
+    <div class="card-body p-0">
+        @if($invoices->isEmpty())
+        <div class="empty-state">
+            <div class="empty-state-icon"><i class="fas fa-file-invoice-dollar"></i></div>
+            <p>Belum ada invoice yang diterbitkan</p>
+            <small>Invoice akan muncul di sini setelah disetujui oleh Director</small>
+        </div>
+        @else
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead>
+                    <tr>
+                        <th>No. Invoice</th>
+                        <th>Klien</th>
+                        <th class="d-none d-md-table-cell">Judul Proyek</th>
+                        @if(Auth::user()->isDirector())
+                        <th class="d-none d-lg-table-cell">Dibuat oleh</th>
+                        @endif
+                        <th class="text-right">Total</th>
+                        <th class="text-center">Status</th>
+                        <th class="d-none d-sm-table-cell">Tgl Terbit</th>
+                        <th style="width:40px;"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($invoices as $inv)
+                    @php
+                        $isPaid = $inv->status === 'paid';
+                    @endphp
+                    <tr>
+                        <td>
+                            <a href="{{ route('billing.invoices.show', $inv) }}"
+                               style="font-family:monospace;font-size:12px;font-weight:700;color:#2563eb;">
+                                {{ $inv->invoice_number }}
+                            </a>
+                        </td>
+                        <td style="font-weight:600;color:#334155;">{{ $inv->client->name }}</td>
+                        <td class="d-none d-md-table-cell">
+                            <span style="font-size:12px;color:#64748b;">
+                                {{ Str::limit($inv->title, 40) }}
+                            </span>
+                        </td>
+                        @if(Auth::user()->isDirector())
+                        <td class="d-none d-lg-table-cell">
+                            <span style="font-size:12px;color:#64748b;">{{ $inv->creator->name }}</span>
+                        </td>
+                        @endif
+                        <td class="text-right">
+                            <span style="font-size:12px;font-weight:700;color:#1e293b;white-space:nowrap;">
+                                Rp {{ number_format($inv->total, 0, ',', '.') }}
+                            </span>
+                        </td>
+                        <td class="text-center">
+                            @if($isPaid)
+                            <span class="pill pill-paid">Lunas</span>
+                            @else
+                            <span class="pill pill-approved">Aktif</span>
+                            @endif
+                        </td>
+                        <td class="d-none d-sm-table-cell">
+                            <span style="font-size:12px;color:#94a3b8;">
+                                {{ $inv->approved_at ? $inv->approved_at->format('d/m/Y') : $inv->invoice_date->format('d/m/Y') }}
+                            </span>
+                        </td>
+                        <td>
+                            <a href="{{ route('billing.invoices.show', $inv) }}"
+                               class="btn btn-icon btn-fluxa-secondary" title="Lihat Detail">
+                                <i class="fas fa-eye" style="font-size:11px;"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+        @endif
     </div>
 </div>
 @endsection

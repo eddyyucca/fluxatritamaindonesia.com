@@ -3,309 +3,340 @@
 @section('page-title', 'Detail Quotation')
 
 @section('topbar-actions')
-    <div class="flex items-center gap-2 no-print">
+<li class="nav-item">
+    <div class="d-flex align-items-center" style="gap:6px;">
         @if($quotation->status === 'draft')
-            <a href="{{ route('billing.quotations.edit', $quotation) }}"
-               class="text-slate-400 hover:text-white text-xs px-3 py-1.5 rounded-lg border border-white/10 hover:border-white/20 transition-colors">
-                <i class="fa-solid fa-pen mr-1"></i> Edit
+            <a href="{{ route('billing.quotations.edit', $quotation) }}" class="btn btn-sm btn-fluxa-secondary">
+                <i class="fas fa-pen mr-1"></i> Edit
             </a>
-            <form method="POST" action="{{ route('billing.quotations.submit', $quotation) }}" class="inline">
+            <form method="POST" action="{{ route('billing.quotations.submit', $quotation) }}" class="d-inline">
                 @csrf
-                <button type="submit" class="btn-primary text-white text-xs px-3 py-1.5 rounded-lg font-medium">
-                    <i class="fa-solid fa-paper-plane mr-1"></i> Ajukan Persetujuan
+                <button type="submit" class="btn btn-sm btn-fluxa-primary">
+                    <i class="fas fa-paper-plane mr-1"></i> Ajukan Persetujuan
                 </button>
             </form>
         @endif
         @if($quotation->status === 'sent' && Auth::user()->isDirector())
-            <form method="POST" action="{{ route('billing.quotations.approve', $quotation) }}" class="inline">
+            <a href="{{ route('billing.quotations.edit', $quotation) }}" class="btn btn-sm btn-fluxa-secondary">
+                <i class="fas fa-pen mr-1"></i> Edit
+            </a>
+            <form method="POST" action="{{ route('billing.quotations.approve', $quotation) }}" class="d-inline">
                 @csrf
-                <button type="submit" class="btn-success text-white text-xs px-3 py-1.5 rounded-lg font-medium">
-                    <i class="fa-solid fa-check mr-1"></i> Setujui
+                <button type="submit" class="btn btn-sm btn-fluxa-success">
+                    <i class="fas fa-check mr-1"></i> Setujui
                 </button>
             </form>
-            <form method="POST" action="{{ route('billing.quotations.reject', $quotation) }}" class="inline"
-                  onsubmit="return confirm('Tolak quotation ini?')">
+            <form method="POST" action="{{ route('billing.quotations.reject', $quotation) }}" class="d-inline"
+                  data-confirm="Tolak quotation ini?" data-confirm-icon="warning" data-confirm-btn="Ya, Tolak">
                 @csrf
-                <button type="submit" class="btn-danger text-white text-xs px-3 py-1.5 rounded-lg font-medium">
-                    <i class="fa-solid fa-xmark mr-1"></i> Tolak
+                <button type="submit" class="btn btn-sm btn-fluxa-danger">
+                    <i class="fas fa-xmark mr-1"></i> Tolak
+                </button>
+            </form>
+        @endif
+        @if(in_array($quotation->status, ['approved', 'rejected']) && Auth::user()->isDirector())
+            <a href="{{ route('billing.quotations.edit', $quotation) }}" class="btn btn-sm btn-fluxa-secondary">
+                <i class="fas fa-pen mr-1"></i> Edit
+            </a>
+            <form method="POST" action="{{ route('billing.quotations.revert', $quotation) }}" class="d-inline"
+                  data-confirm="Kembalikan quotation ini ke Draft?" data-confirm-icon="question" data-confirm-btn="Ya, Kembalikan">
+                @csrf
+                <button type="submit" class="btn btn-sm btn-fluxa-secondary" style="color:#d97706!important;">
+                    <i class="fas fa-rotate-left mr-1"></i> Kembalikan ke Draft
                 </button>
             </form>
         @endif
         @if($quotation->status === 'approved')
-            <a href="{{ route('billing.invoices.create', ['from_quotation' => $quotation->id]) }}"
-               class="btn-primary text-white text-xs px-3 py-1.5 rounded-lg font-medium">
-                <i class="fa-solid fa-file-invoice-dollar mr-1"></i> Buat Invoice
+            @if($quotation->invoices->count())
+            {{-- Invoice sudah ada --}}
+            <a href="{{ route('billing.invoices.show', $quotation->invoices->first()) }}"
+               class="btn btn-sm btn-fluxa-secondary">
+                <i class="fas fa-file-invoice-dollar mr-1"></i> Lihat Invoice
             </a>
+            @else
+            {{-- Terbitkan 1 klik --}}
+            <form method="POST" action="{{ route('billing.quotations.to-invoice', $quotation) }}" class="d-inline"
+                  data-confirm="Konfirmasi penerbitan Invoice berdasarkan Quotation {{ $quotation->quotation_number }}. Invoice akan memerlukan persetujuan final Director sebelum resmi diterbitkan."
+                  data-confirm-icon="question" data-confirm-btn="Ya, Terbitkan Invoice">
+                @csrf
+                <button type="submit" class="btn btn-sm btn-fluxa-primary">
+                    <i class="fas fa-file-invoice-dollar mr-1"></i> Terbitkan sebagai Invoice
+                </button>
+            </form>
+            @endif
         @endif
-        <a href="{{ route('billing.quotations.print', $quotation) }}" target="_blank"
-           class="text-slate-400 hover:text-white text-xs px-3 py-1.5 rounded-lg border border-white/10 hover:border-white/20 transition-colors">
-            <i class="fa-solid fa-print mr-1"></i> Cetak
+        <a href="{{ route('billing.quotations.print', $quotation) }}" target="_blank" class="btn btn-sm btn-fluxa-secondary">
+            <i class="fas fa-print mr-1"></i> Cetak
         </a>
         @if($quotation->status === 'draft')
-        <form method="POST" action="{{ route('billing.quotations.destroy', $quotation) }}" class="inline"
-              onsubmit="return confirm('Hapus quotation ini?')">
+        <form method="POST" action="{{ route('billing.quotations.destroy', $quotation) }}" class="d-inline"
+              data-confirm="Hapus quotation ini secara permanen?" data-confirm-icon="warning" data-confirm-btn="Ya, Hapus">
             @csrf @method('DELETE')
-            <button type="submit" class="text-red-400 hover:text-red-300 text-xs px-2 py-1.5 rounded-lg hover:bg-red-500/10 transition-colors">
-                <i class="fa-solid fa-trash"></i>
+            <button type="submit" class="btn btn-icon btn-fluxa-secondary" title="Hapus" style="color:#ef4444!important;">
+                <i class="fas fa-trash" style="font-size:11px;"></i>
             </button>
         </form>
         @endif
     </div>
+</li>
 @endsection
 
 @section('content')
-<div class="mt-4">
 
-    {{-- Status bar --}}
-    @php $color = $quotation->status_color @endphp
-    <div class="mb-4 p-3 rounded-lg flex items-center justify-between no-print
-        {{ $color === 'emerald' ? 'bg-emerald-500/10 border border-emerald-500/20' : '' }}
-        {{ $color === 'amber'   ? 'bg-amber-500/10   border border-amber-500/20'   : '' }}
-        {{ $color === 'red'     ? 'bg-red-500/10     border border-red-500/20'     : '' }}
-        {{ $color === 'slate'   ? 'bg-slate-500/10   border border-slate-500/20'   : '' }}">
-        <div class="flex items-center gap-2">
-            <i class="fa-solid
-                {{ $color === 'emerald' ? 'fa-circle-check text-emerald-400' : '' }}
-                {{ $color === 'amber'   ? 'fa-clock text-amber-400'           : '' }}
-                {{ $color === 'red'     ? 'fa-circle-xmark text-red-400'      : '' }}
-                {{ $color === 'slate'   ? 'fa-file text-slate-400'             : '' }}"></i>
-            <span class="text-sm font-medium
-                {{ $color === 'emerald' ? 'text-emerald-300' : '' }}
-                {{ $color === 'amber'   ? 'text-amber-300'   : '' }}
-                {{ $color === 'red'     ? 'text-red-300'     : '' }}
-                {{ $color === 'slate'   ? 'text-slate-300'   : '' }}">
-                Status: {{ $quotation->status_label }}
-            </span>
+{{-- Status bar --}}
+@php
+    $color = $quotation->status_color;
+    $alertMap = ['emerald'=>'alert-success','amber'=>'alert-warning','red'=>'alert-danger','slate'=>'alert-secondary','blue'=>'alert-info'];
+    $iconMap  = ['emerald'=>'fa-circle-check','amber'=>'fa-clock','red'=>'fa-circle-xmark','slate'=>'fa-file','blue'=>'fa-stamp'];
+@endphp
+<div class="alert {{ $alertMap[$color] ?? 'alert-secondary' }} d-flex align-items-center justify-content-between mb-4" style="gap:12px;">
+    <div class="d-flex align-items-center" style="gap:10px;">
+        <i class="fas {{ $iconMap[$color] ?? 'fa-file' }}"></i>
+        <div>
+            <strong>Status: {{ $quotation->status_label }}</strong>
             @if($quotation->approved_at)
-            <span class="text-slate-500 text-xs">
-                — {{ $quotation->approved_at->isoFormat('D MMMM YYYY, HH:mm') }}
-                oleh {{ $quotation->approver->name ?? '—' }}
+            <span style="font-size:12px;opacity:.75;margin-left:8px;">
+                — {{ $quotation->approved_at->isoFormat('D MMMM YYYY') }} oleh {{ $quotation->approver->name ?? '—' }}
             </span>
             @endif
         </div>
-        @if(Auth::user()->isDirector() || $quotation->created_by === Auth::id())
-        <div class="text-xs text-slate-500">
-            Dibuat: {{ $quotation->creator->name }} · {{ $quotation->created_at->isoFormat('D MMM YYYY') }}
-        </div>
-        @endif
     </div>
+    <span style="font-size:11px;opacity:.7;white-space:nowrap;">
+        {{ $quotation->creator->name }} · {{ $quotation->created_at->isoFormat('D MMM YYYY') }}
+    </span>
+</div>
 
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
+<div class="row">
 
-        {{-- Document Preview --}}
-        <div class="lg:col-span-2">
-            <div class="card p-0 overflow-hidden" id="document-print">
-                {{-- Document header --}}
-                <div style="background: linear-gradient(135deg, #07111f 0%, #0f1e35 100%); border-bottom: 1px solid rgba(255,255,255,0.08);">
-                    <div class="p-6 flex items-start justify-between">
-                        <div>
-                            <img src="{{ asset('assets/images/logo-white-transparent.png') }}" alt="Fluxa" class="h-9 mb-3 opacity-90">
-                            <p class="text-white font-bold text-sm">PT FLUXA TRITAMA INDONESIA</p>
-                            <p class="text-slate-400 text-xs mt-0.5">Tapin, RT 011, RW 004, Suato Tatakan</p>
-                            <p class="text-slate-400 text-xs">Tapin Selatan, Kalimantan Selatan 71181</p>
-                            <p class="text-slate-400 text-xs mt-0.5">0812-5065-3005 · official@fluxaborneo.tech</p>
-                        </div>
-                        <div class="text-right">
-                            <p class="text-2xl font-black text-white tracking-tight">QUOTATION</p>
-                            <p class="text-blue-400 font-mono text-sm mt-1">{{ $quotation->quotation_number }}</p>
-                            <p class="text-slate-400 text-xs mt-1">Tanggal: {{ $quotation->created_at->format('d/m/Y') }}</p>
-                            @if($quotation->valid_until)
-                            <p class="text-slate-400 text-xs">Berlaku s/d: {{ $quotation->valid_until->format('d/m/Y') }}</p>
-                            @endif
-                        </div>
+    {{-- ── DOCUMENT PREVIEW ── --}}
+    <div class="col-lg-8 mb-4">
+        <div class="card">
+
+            {{-- Doc header (dark) --}}
+            <div style="background:linear-gradient(135deg,#0f172a 0%,#1e293b 100%);border-radius:12px 12px 0 0;">
+                <div class="p-4 d-flex align-items-start justify-content-between" style="gap:16px;">
+                    <div>
+                        <img src="{{ asset('assets/images/logo-white-transparent.png') }}"
+                             alt="Fluxa" style="height:34px;margin-bottom:10px;opacity:.9;">
+                        <p style="color:#fff;font-weight:700;font-size:13px;margin-bottom:4px;">PT FLUXA TRITAMA INDONESIA</p>
+                        <p style="color:#94a3b8;font-size:11px;line-height:1.6;margin-bottom:0;">
+                            Tapin, RT 011, RW 004, Suato Tatakan<br>
+                            Tapin Selatan, Kalimantan Selatan 71181<br>
+                            0812-5065-3005 · official@fluxa.co.id
+                        </p>
+                    </div>
+                    <div class="text-right flex-shrink-0">
+                        <p style="font-size:24px;font-weight:900;color:#fff;letter-spacing:-0.5px;margin-bottom:4px;">QUOTATION</p>
+                        <p style="color:#60a5fa;font-family:monospace;font-size:13px;font-weight:700;margin-bottom:6px;">{{ $quotation->quotation_number }}</p>
+                        <p style="font-size:11px;color:#94a3b8;margin-bottom:2px;">Tanggal: {{ $quotation->created_at->format('d/m/Y') }}</p>
+                        @if($quotation->valid_until)
+                        <p style="font-size:11px;color:#94a3b8;margin-bottom:0;">Berlaku s/d: {{ $quotation->valid_until->format('d/m/Y') }}</p>
+                        @endif
                     </div>
                 </div>
+            </div>
 
-                <div class="p-6">
-                    {{-- Client & Title --}}
-                    <div class="grid grid-cols-2 gap-6 mb-6">
-                        <div>
-                            <p class="text-[10px] text-slate-500 font-semibold uppercase tracking-widest mb-1">Ditujukan Kepada</p>
-                            <p class="text-white font-bold">{{ $quotation->client->name }}</p>
+            {{-- Doc content --}}
+            <div class="card-body">
+
+                {{-- Client & Project --}}
+                <div class="row mb-4">
+                    <div class="col-md-6 mb-3 mb-md-0">
+                        <div style="background:#f8fafc;border-radius:10px;padding:16px;height:100%;">
+                            <p style="font-size:9px;color:#94a3b8;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;">Ditujukan Kepada</p>
+                            <p style="color:#1e293b;font-weight:700;font-size:14px;margin-bottom:4px;">{{ $quotation->client->name }}</p>
                             @if($quotation->client->address)
-                            <p class="text-slate-400 text-xs mt-0.5">{{ $quotation->client->address }}</p>
+                            <p style="color:#64748b;font-size:12px;margin-bottom:2px;">{{ $quotation->client->address }}</p>
                             @endif
                             @if($quotation->client->city)
-                            <p class="text-slate-400 text-xs">{{ $quotation->client->city }}</p>
+                            <p style="color:#64748b;font-size:12px;margin-bottom:2px;">{{ $quotation->client->city }}</p>
                             @endif
                             @if($quotation->client->email)
-                            <p class="text-slate-400 text-xs mt-0.5">{{ $quotation->client->email }}</p>
+                            <p style="color:#94a3b8;font-size:11px;margin-bottom:0;">{{ $quotation->client->email }}</p>
                             @endif
                         </div>
-                        <div>
-                            <p class="text-[10px] text-slate-500 font-semibold uppercase tracking-widest mb-1">Proyek</p>
-                            <p class="text-white font-semibold">{{ $quotation->title }}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <div style="background:#f8fafc;border-radius:10px;padding:16px;height:100%;">
+                            <p style="font-size:9px;color:#94a3b8;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;">Proyek</p>
+                            <p style="color:#1e293b;font-weight:600;font-size:14px;margin-bottom:4px;">{{ $quotation->title }}</p>
                             @if($quotation->description)
-                            <p class="text-slate-400 text-xs mt-1">{{ $quotation->description }}</p>
+                            <p style="color:#64748b;font-size:12px;margin-bottom:0;">{{ $quotation->description }}</p>
                             @endif
                         </div>
                     </div>
+                </div>
 
-                    {{-- Items table --}}
-                    <div class="mb-6">
-                        <table class="w-full text-sm">
-                            <thead>
-                                <tr class="bg-blue-500/10 border border-blue-500/15 rounded-t">
-                                    <th class="text-left px-3 py-2.5 text-xs text-blue-300 font-semibold rounded-tl">No</th>
-                                    <th class="text-left px-3 py-2.5 text-xs text-blue-300 font-semibold">Deskripsi</th>
-                                    <th class="text-center px-3 py-2.5 text-xs text-blue-300 font-semibold">Qty</th>
-                                    <th class="text-right px-3 py-2.5 text-xs text-blue-300 font-semibold">Harga Satuan</th>
-                                    <th class="text-right px-3 py-2.5 text-xs text-blue-300 font-semibold rounded-tr">Jumlah</th>
-                                </tr>
-                            </thead>
-                            <tbody class="divide-y divide-white/5">
-                                @foreach($quotation->items as $i => $item)
-                                <tr>
-                                    <td class="px-3 py-2.5 text-slate-500 text-xs">{{ $i + 1 }}</td>
-                                    <td class="px-3 py-2.5 text-slate-200">{{ $item->description }}</td>
-                                    <td class="px-3 py-2.5 text-center text-slate-400 text-xs">{{ $item->quantity }}</td>
-                                    <td class="px-3 py-2.5 text-right text-slate-300 text-xs">Rp {{ number_format($item->unit_price, 0, ',', '.') }}</td>
-                                    <td class="px-3 py-2.5 text-right text-white font-medium text-xs">Rp {{ number_format($item->amount, 0, ',', '.') }}</td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                            <tfoot>
-                                <tr class="border-t-2 border-blue-500/30">
-                                    <td colspan="3"></td>
-                                    <td class="px-3 py-3 text-right text-slate-400 text-sm font-semibold">TOTAL</td>
-                                    <td class="px-3 py-3 text-right text-white text-base font-black">
-                                        Rp {{ number_format($quotation->total, 0, ',', '.') }}
-                                    </td>
-                                </tr>
-                            </tfoot>
-                        </table>
-                    </div>
-
-                    {{-- Payment info --}}
-                    <div class="bg-blue-500/5 border border-blue-500/15 rounded-lg p-4 mb-6">
-                        <p class="text-xs font-semibold text-blue-300 mb-2 uppercase tracking-wide">Informasi Pembayaran</p>
-                        <div class="grid grid-cols-3 gap-2 text-xs">
-                            <div><span class="text-slate-500">Bank</span><br><span class="text-white font-medium">MANDIRI</span></div>
-                            <div><span class="text-slate-500">No. Rekening</span><br><span class="text-white font-medium font-mono">031 00 2387227 1</span></div>
-                            <div><span class="text-slate-500">Atas Nama</span><br><span class="text-white font-medium">PT Fluxa Tritama Indonesia</span></div>
-                        </div>
-                    </div>
-
-                    {{-- T&C --}}
-                    @if($quotation->terms_and_conditions)
-                    <div class="border-t border-white/5 pt-5 mb-5">
-                        <p class="text-xs font-semibold text-white mb-3 uppercase tracking-wide">Syarat & Ketentuan</p>
-                        <div class="text-xs text-slate-400 space-y-2 leading-relaxed">
-                            @foreach(explode("\n\n", $quotation->terms_and_conditions) as $para)
-                                @php
-                                    $para = preg_replace('/\*\*(.*?)\*\*/', '<span class="text-slate-200 font-semibold">$1</span>', $para);
-                                    $para = nl2br(e($para));
-                                    // Undo escaping on our span tags
-                                    $para = preg_replace('/\*\*(.*?)\*\*/', '<span class="text-slate-200 font-semibold">$1</span>', $para);
-                                @endphp
-                                <div class="border-l-2 border-blue-500/20 pl-3">
-                                    {!! nl2br(preg_replace('/\*\*(.*?)\*\*/', '<span class="text-slate-200 font-semibold">$1</span>', e(trim($para)))) !!}
-                                </div>
+                {{-- Items table --}}
+                <div class="table-responsive mb-4" style="border:1px solid #e2e8f0;border-radius:10px;overflow:hidden;">
+                    <table class="table mb-0" style="font-size:13px;">
+                        <thead>
+                            <tr style="background:#1e293b;">
+                                <th style="color:#cbd5e1;border:none;width:40px;">No</th>
+                                <th style="color:#cbd5e1;border:none;">Deskripsi</th>
+                                <th style="color:#cbd5e1;border:none;text-align:center;width:56px;">Qty</th>
+                                <th style="color:#cbd5e1;border:none;text-align:right;">Harga Satuan</th>
+                                <th style="color:#cbd5e1;border:none;text-align:right;">Jumlah</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($quotation->items as $i => $item)
+                            <tr>
+                                <td style="color:#94a3b8;text-align:center;">{{ $i + 1 }}</td>
+                                <td style="color:#334155;">{{ $item->description }}</td>
+                                <td style="color:#64748b;text-align:center;">{{ $item->quantity }}</td>
+                                <td style="color:#64748b;text-align:right;white-space:nowrap;">Rp {{ number_format($item->unit_price, 0, ',', '.') }}</td>
+                                <td style="color:#1e293b;font-weight:600;text-align:right;white-space:nowrap;">Rp {{ number_format($item->amount, 0, ',', '.') }}</td>
+                            </tr>
                             @endforeach
-                        </div>
-                    </div>
-                    @endif
+                        </tbody>
+                        <tfoot style="border-top:2px solid #cbd5e1;background:#f8fafc;">
+                            <tr>
+                                <td colspan="3"></td>
+                                <td style="text-align:right;font-weight:700;color:#475569;font-size:13px;">TOTAL</td>
+                                <td style="text-align:right;font-weight:900;color:#1e293b;font-size:16px;white-space:nowrap;">
+                                    Rp {{ number_format($quotation->total, 0, ',', '.') }}
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
 
-                    {{-- Footer with QR --}}
-                    <div class="border-t border-white/5 pt-4 flex items-end justify-between">
-                        <div class="text-xs text-slate-500">
-                            <p>Disiapkan oleh: <span class="text-slate-300">{{ $quotation->creator->name }}</span></p>
-                            <p class="mt-1">{{ $quotation->creator->position ?? 'PT Fluxa Tritama Indonesia' }}</p>
-                            @if($quotation->status === 'approved')
-                            <div class="mt-3 p-2 rounded bg-emerald-500/10 border border-emerald-500/20">
-                                <p class="text-emerald-400 font-semibold text-[10px] uppercase tracking-wide">✓ DISETUJUI</p>
-                                <p class="text-emerald-300 text-[10px]">{{ $quotation->approver->name ?? '' }} · {{ $quotation->approved_at?->format('d/m/Y') }}</p>
-                            </div>
-                            @endif
+                {{-- Quotation Notice (penawaran, bukan tagihan) --}}
+                <div style="background:#fffbeb;border:1px solid #fde68a;border-radius:10px;padding:16px;" class="mb-4">
+                    <p style="font-size:10px;font-weight:700;color:#92400e;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;">
+                        <i class="fas fa-circle-info mr-1"></i> Keterangan Penawaran
+                    </p>
+                    <p style="font-size:12px;color:#78350f;margin-bottom:0;line-height:1.7;">
+                        Dokumen ini merupakan <strong>surat penawaran harga</strong>, bukan tagihan atau permintaan pembayaran.
+                        Pembayaran hanya dilakukan setelah penawaran ini disetujui oleh kedua belah pihak dan invoice resmi telah diterbitkan.
+                    </p>
+                </div>
+
+                {{-- T&C --}}
+                @if($quotation->terms_and_conditions)
+                <div style="border-top:1px solid #f1f5f9;padding-top:16px;" class="mb-4">
+                    <p style="font-size:10px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px;">Syarat & Ketentuan</p>
+                    <div style="font-size:12px;color:#475569;line-height:1.7;">
+                        @foreach(explode("\n\n", $quotation->terms_and_conditions) as $para)
+                        <div style="border-left:2px solid #fde68a;padding-left:10px;margin-bottom:8px;">
+                            {!! nl2br(preg_replace('/\*\*(.*?)\*\*/', '<strong style="color:#1e293b;">$1</strong>', e(trim($para)))) !!}
                         </div>
-                        <div class="text-center">
-                            <div id="qrcode" class="inline-block rounded-lg overflow-hidden bg-white p-2"></div>
-                            <p class="text-slate-600 text-[10px] mt-1">Scan untuk verifikasi</p>
+                        @endforeach
+                    </div>
+                </div>
+                @endif
+
+                {{-- Footer: creator + QR --}}
+                <div class="d-flex align-items-end justify-content-between" style="border-top:1px solid #f1f5f9;padding-top:16px;gap:16px;">
+                    <div style="font-size:12px;color:#64748b;">
+                        <p style="margin-bottom:2px;">Disiapkan oleh: <strong style="color:#334155;">{{ $quotation->creator->name }}</strong></p>
+                        <p style="margin-bottom:0;">{{ $quotation->creator->position ?? 'PT Fluxa Tritama Indonesia' }}</p>
+                        @if($quotation->status === 'approved')
+                        <div style="margin-top:10px;padding:8px 12px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;">
+                            <p style="font-size:10px;font-weight:700;color:#166534;text-transform:uppercase;margin-bottom:2px;">✓ Disetujui Director</p>
+                            <p style="font-size:10px;color:#16a34a;margin-bottom:0;">{{ $quotation->approver->name ?? '' }} · {{ $quotation->approved_at?->format('d/m/Y') }}</p>
                         </div>
+                        @endif
+                    </div>
+                    <div class="text-center flex-shrink-0">
+                        <div id="qrcode" style="display:inline-block;border-radius:10px;overflow:hidden;border:1px solid #e2e8f0;padding:6px;background:#fff;"></div>
+                        <p style="font-size:10px;color:#94a3b8;margin-top:4px;margin-bottom:0;">Scan untuk verifikasi</p>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
-        {{-- Right sidebar: internal info --}}
-        <div class="space-y-4 no-print">
-            {{-- Profit split --}}
-            @if(Auth::user()->isDirector() || $quotation->created_by === Auth::id())
-            <div class="card p-5">
-                <h3 class="text-sm font-semibold text-white mb-4 flex items-center gap-2">
-                    <i class="fa-solid fa-chart-pie text-blue-400"></i> Pembagian Keuntungan
-                </h3>
-                <div class="space-y-3">
-                    <div class="flex justify-between items-center py-2 border-b border-white/5">
-                        <span class="text-slate-400 text-sm">Total Proyek</span>
-                        <span class="text-white font-bold">Rp {{ number_format($quotation->total, 0, ',', '.') }}</span>
-                    </div>
-                    <div class="flex justify-between items-center py-2 border-b border-white/5">
-                        <div>
-                            <span class="text-amber-400 text-sm">Keuntungan PT</span>
-                            <span class="text-slate-500 text-xs ml-1">({{ $quotation->pt_profit_percent }}%)</span>
-                        </div>
-                        <span class="text-amber-400 font-semibold">Rp {{ number_format($quotation->pt_profit_amount, 0, ',', '.') }}</span>
-                    </div>
-                    <div class="flex justify-between items-center py-2">
-                        <span class="text-emerald-400 text-sm">
-                            {{ Auth::user()->isDirector() ? 'Bagian ' . ($quotation->creator->name ?? 'Staff') : 'Bagian Anda' }}
-                        </span>
-                        <span class="text-emerald-400 font-bold text-base">Rp {{ number_format($quotation->user_amount, 0, ',', '.') }}</span>
-                    </div>
+    {{-- ── RIGHT SIDEBAR ── --}}
+    <div class="col-lg-4">
+
+        {{-- Profit split --}}
+        @if(Auth::user()->isDirector() || $quotation->created_by === Auth::id())
+        <div class="card mb-3">
+            <div class="card-header d-flex align-items-center" style="gap:8px;">
+                <i class="fas fa-chart-pie" style="color:#2563eb;font-size:13px;"></i>
+                <h6 class="card-title mb-0">Pembagian Keuntungan</h6>
+            </div>
+            <div class="card-body p-0">
+                <div style="padding:12px 16px;border-bottom:1px solid #f1f5f9;display:flex;justify-content:space-between;align-items:center;">
+                    <span style="font-size:13px;color:#64748b;">Total Proyek</span>
+                    <span style="font-weight:700;color:#1e293b;font-size:13px;">Rp {{ number_format($quotation->total, 0, ',', '.') }}</span>
+                </div>
+                <div style="padding:12px 16px;border-bottom:1px solid #f1f5f9;display:flex;justify-content:space-between;align-items:center;">
+                    <span style="font-size:13px;color:#92400e;font-weight:500;">Keuntungan PT <span style="font-size:11px;color:#94a3b8;">({{ $quotation->pt_profit_percent }}%)</span></span>
+                    <span style="font-weight:600;color:#92400e;font-size:13px;">Rp {{ number_format($quotation->pt_profit_amount, 0, ',', '.') }}</span>
+                </div>
+                <div style="padding:12px 16px;display:flex;justify-content:space-between;align-items:center;">
+                    <span style="font-size:13px;color:#166534;font-weight:500;">
+                        {{ Auth::user()->isDirector() ? 'Bagian ' . ($quotation->creator->name ?? 'Staff') : 'Bagian Anda' }}
+                    </span>
+                    <span style="font-weight:700;color:#166534;font-size:15px;">Rp {{ number_format($quotation->user_amount, 0, ',', '.') }}</span>
                 </div>
             </div>
-            @endif
+        </div>
+        @endif
 
-            {{-- Quick info --}}
-            <div class="card p-5 text-xs space-y-3">
-                <h3 class="text-sm font-semibold text-white mb-1">Informasi Dokumen</h3>
-                <div class="flex justify-between text-slate-400">
-                    <span>No. Quotation</span>
-                    <span class="text-white font-mono">{{ $quotation->quotation_number }}</span>
+        {{-- Document info --}}
+        <div class="card mb-3">
+            <div class="card-header">
+                <h6 class="card-title mb-0">Informasi Dokumen</h6>
+            </div>
+            <div class="card-body" style="font-size:12px;">
+                <div class="d-flex justify-content-between align-items-start mb-2" style="gap:8px;">
+                    <span style="color:#64748b;flex-shrink:0;">No. Quotation</span>
+                    <span style="font-family:monospace;font-weight:700;color:#1e293b;text-align:right;">{{ $quotation->quotation_number }}</span>
                 </div>
-                <div class="flex justify-between text-slate-400">
-                    <span>Klien</span>
-                    <span class="text-white">{{ $quotation->client->name }}</span>
+                <div class="d-flex justify-content-between align-items-start mb-2" style="gap:8px;">
+                    <span style="color:#64748b;flex-shrink:0;">Klien</span>
+                    <span style="color:#334155;text-align:right;">{{ $quotation->client->name }}</span>
                 </div>
-                <div class="flex justify-between text-slate-400">
-                    <span>Tanggal Dibuat</span>
-                    <span class="text-white">{{ $quotation->created_at->format('d/m/Y') }}</span>
+                <div class="d-flex justify-content-between mb-2">
+                    <span style="color:#64748b;">Tanggal Dibuat</span>
+                    <span style="color:#334155;">{{ $quotation->created_at->format('d/m/Y') }}</span>
                 </div>
                 @if($quotation->valid_until)
-                <div class="flex justify-between text-slate-400">
-                    <span>Berlaku s/d</span>
-                    <span class="{{ $quotation->valid_until->isPast() ? 'text-red-400' : 'text-white' }}">
+                <div class="d-flex justify-content-between mb-2">
+                    <span style="color:#64748b;">Berlaku s/d</span>
+                    <span style="{{ $quotation->valid_until->isPast() ? 'color:#dc2626;font-weight:700;' : 'color:#334155;' }}">
                         {{ $quotation->valid_until->format('d/m/Y') }}
-                        {{ $quotation->valid_until->isPast() ? '(Kedaluwarsa)' : '' }}
+                        @if($quotation->valid_until->isPast()) <br><small>(Kedaluwarsa)</small> @endif
                     </span>
                 </div>
                 @endif
-                <div class="flex justify-between text-slate-400">
-                    <span>Dibuat oleh</span>
-                    <span class="text-white">{{ $quotation->creator->name }}</span>
+                <div class="d-flex justify-content-between">
+                    <span style="color:#64748b;">Dibuat oleh</span>
+                    <span style="color:#334155;">{{ $quotation->creator->name }}</span>
                 </div>
-
                 @if($quotation->invoices->count())
-                <div class="border-t border-white/5 pt-3">
-                    <p class="text-slate-500 mb-2">Invoice terkait:</p>
+                <div style="border-top:1px solid #f1f5f9;margin-top:10px;padding-top:10px;">
+                    <p style="color:#64748b;font-weight:600;margin-bottom:6px;">Invoice terkait:</p>
                     @foreach($quotation->invoices as $inv)
-                    <a href="{{ route('billing.invoices.show', $inv) }}" class="block text-blue-400 hover:underline font-mono">
+                    <a href="{{ route('billing.invoices.show', $inv) }}"
+                       style="display:block;color:#2563eb;font-family:monospace;font-size:12px;">
                         {{ $inv->invoice_number }}
                     </a>
                     @endforeach
                 </div>
                 @endif
             </div>
+        </div>
 
-            {{-- Verification URL --}}
-            <div class="card p-4">
-                <p class="text-xs text-slate-500 mb-2">Link Verifikasi</p>
-                <p class="text-[11px] text-blue-400 font-mono break-all">{{ route('verify.quotation', $quotation->qr_token) }}</p>
+        {{-- Verification link --}}
+        <div class="card">
+            <div class="card-body" style="padding:14px 16px;">
+                <p style="font-size:11px;font-weight:600;color:#64748b;margin-bottom:6px;">
+                    <i class="fas fa-link mr-1" style="color:#94a3b8;"></i> Link Verifikasi
+                </p>
+                <p style="font-size:11px;color:#2563eb;font-family:monospace;word-break:break-all;margin-bottom:0;line-height:1.6;">
+                    {{ route('verify.quotation', $quotation->qr_token) }}
+                </p>
             </div>
         </div>
+
     </div>
 </div>
+
 @endsection
 
 @push('scripts')
@@ -313,10 +344,8 @@
 <script>
 new QRCode(document.getElementById("qrcode"), {
     text: "{{ route('verify.quotation', $quotation->qr_token) }}",
-    width: 80,
-    height: 80,
-    colorDark: "#000000",
-    colorLight: "#ffffff",
+    width: 80, height: 80,
+    colorDark: "#000000", colorLight: "#ffffff",
     correctLevel: QRCode.CorrectLevel.M
 });
 </script>

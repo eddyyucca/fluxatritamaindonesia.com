@@ -198,6 +198,26 @@ class QuotationController extends Controller
             ->with('success', 'Quotation telah ditolak.');
     }
 
+    public function revert(Quotation $quotation)
+    {
+        if (!Auth::user()->isDirector()) {
+            abort(403);
+        }
+
+        if (!in_array($quotation->status, ['sent', 'approved', 'rejected'])) {
+            return back()->with('error', 'Quotation ini tidak bisa dikembalikan ke draft.');
+        }
+
+        $quotation->update([
+            'status'      => 'draft',
+            'approved_by' => null,
+            'approved_at' => null,
+        ]);
+
+        return redirect()->route('billing.quotations.show', $quotation)
+            ->with('success', 'Quotation berhasil dikembalikan ke Draft untuk diedit ulang.');
+    }
+
     public function destroy(Quotation $quotation)
     {
         $user = Auth::user();
@@ -220,11 +240,9 @@ class QuotationController extends Controller
         if (!$user->isDirector() && $q->created_by !== $user->id) {
             abort(403);
         }
-        if (!in_array($q->status, ['draft'])) {
-            // Director can still reject/approve; others cannot edit non-draft
-            if (!$user->isDirector()) {
-                abort(403, 'Quotation yang sudah diajukan tidak dapat diedit.');
-            }
+        // Non-director can only edit drafts
+        if (!in_array($q->status, ['draft']) && !$user->isDirector()) {
+            abort(403, 'Quotation yang sudah diajukan tidak dapat diedit.');
         }
     }
 }

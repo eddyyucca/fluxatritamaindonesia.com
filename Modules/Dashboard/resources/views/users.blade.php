@@ -3,58 +3,66 @@
 @section('page-title', 'Manajemen Pengguna')
 
 @section('topbar-actions')
-    <a href="{{ route('dashboard.users.create') }}" class="btn-primary text-white text-xs px-3 py-1.5 rounded-lg font-medium flex items-center gap-1.5">
-        <i class="fa-solid fa-user-plus text-xs"></i> Tambah Pengguna
+<li class="nav-item d-flex align-items-center">
+    <a href="{{ route('dashboard.users.create') }}" class="btn btn-sm btn-fluxa-primary">
+        <i class="fas fa-user-plus mr-1"></i> Tambah Pengguna
     </a>
+</li>
 @endsection
 
 @section('content')
-<div class="mt-4">
-    <div class="card overflow-hidden">
-        <div class="p-4 border-b border-white/5">
-            <h2 class="text-sm font-semibold text-white flex items-center gap-2">
-                <i class="fa-solid fa-users-gear text-blue-400"></i>
-                Daftar Pengguna <span class="text-slate-500 font-normal">({{ $users->count() }})</span>
-            </h2>
+<div class="card">
+    <div class="card-header d-flex align-items-center justify-content-between">
+        <div class="d-flex align-items-center" style="gap:8px;">
+            <i class="fas fa-users-gear" style="color:#2563eb;font-size:13px;"></i>
+            <h6 class="card-title mb-0">Daftar Pengguna <span style="color:#94a3b8;font-weight:400;">({{ $users->count() }})</span></h6>
         </div>
-        <div class="overflow-x-auto">
-            <table class="w-full text-sm">
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
                 <thead>
-                    <tr class="border-b border-white/5 text-slate-500 text-xs">
-                        <th class="text-left px-4 py-3 font-medium">Nama</th>
-                        <th class="text-left px-4 py-3 font-medium">Email</th>
-                        <th class="text-left px-4 py-3 font-medium">Jabatan</th>
-                        <th class="text-center px-4 py-3 font-medium">Peran</th>
-                        <th class="text-left px-4 py-3 font-medium">Bergabung</th>
-                        <th class="px-4 py-3"></th>
+                    <tr>
+                        <th>Nama</th>
+                        <th>Email</th>
+                        <th class="d-none d-md-table-cell">Jabatan</th>
+                        <th class="text-center">Peran</th>
+                        <th class="d-none d-sm-table-cell">Bergabung</th>
+                        <th style="width:110px;"></th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-white/5">
+                <tbody>
                     @foreach($users as $u)
-                    <tr class="table-row">
-                        <td class="px-4 py-3">
-                            <div class="flex items-center gap-3">
-                                <div class="avatar w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0">
-                                    <span class="text-white font-bold text-xs">{{ strtoupper(substr($u->name, 0, 1)) }}</span>
+                    <tr>
+                        <td>
+                            <div class="d-flex align-items-center" style="gap:10px;">
+                                <div class="user-avatar-circle" style="width:32px;height:32px;font-size:12px;flex-shrink:0;">
+                                    {{ strtoupper(substr($u->name, 0, 1)) }}
                                 </div>
-                                <span class="text-white font-medium">{{ $u->name }}</span>
-                                @if($u->id === Auth::id())
-                                <span class="text-[10px] px-1.5 py-0.5 rounded bg-blue-500/15 text-blue-400">(Anda)</span>
-                                @endif
+                                <div>
+                                    <span style="font-weight:600;color:#1e293b;">{{ $u->name }}</span>
+                                    @if($u->id === Auth::id())
+                                    <span style="font-size:9px;background:#dbeafe;color:#1e40af;padding:1px 6px;border-radius:99px;margin-left:4px;font-weight:700;">Anda</span>
+                                    @endif
+                                </div>
                             </div>
                         </td>
-                        <td class="px-4 py-3 text-slate-400 text-xs">{{ $u->email }}</td>
-                        <td class="px-4 py-3 text-slate-400 text-xs">{{ $u->position ?? '—' }}</td>
-                        <td class="px-4 py-3 text-center">
+                        <td style="color:#64748b;font-size:12px;">{{ $u->email }}</td>
+                        <td class="d-none d-md-table-cell" style="color:#64748b;font-size:12px;">{{ $u->position ?? '—' }}</td>
+                        <td class="text-center">
                             @if($u->isDirector())
-                            <span class="text-[11px] px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-400 border border-amber-500/25">Director</span>
+                            <span class="pill" style="background:#fef3c7;color:#92400e;border:1px solid #fde68a;">Director</span>
                             @else
-                            <span class="text-[11px] px-2 py-0.5 rounded-full bg-slate-500/15 text-slate-400 border border-slate-500/25">Staff</span>
+                            <span class="pill pill-draft">Staff</span>
                             @endif
                         </td>
-                        <td class="px-4 py-3 text-slate-500 text-xs">{{ $u->created_at->format('d/m/Y') }}</td>
-                        <td class="px-4 py-3 text-right">
-                            {{-- Can't delete yourself or the only director --}}
+                        <td class="d-none d-sm-table-cell" style="color:#94a3b8;font-size:12px;">{{ $u->created_at->format('d/m/Y') }}</td>
+                        <td>
+                            <div class="d-flex" style="gap:4px;">
+                                <a href="{{ route('users.reset-password', $u) }}" class="btn btn-icon btn-fluxa-secondary" title="Reset Password">
+                                    <i class="fas fa-key" style="font-size:11px;color:#d97706;"></i>
+                                </a>
+                            </div>
                         </td>
                     </tr>
                     @endforeach

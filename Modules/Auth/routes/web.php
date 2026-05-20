@@ -11,5 +11,14 @@ Route::middleware('web')->group(function () {
 
     Route::middleware('auth')->group(function () {
         Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+        // Profile
+        Route::get('/profile', [AuthController::class, 'editProfile'])->name('profile.edit');
+        Route::put('/profile', [AuthController::class, 'updateProfile'])->name('profile.update');
+        Route::put('/profile/password', [AuthController::class, 'changePassword'])->name('profile.password');
+
+        // Director: reset password pengguna lain
+        Route::get('/users/{user}/reset-password', [AuthController::class, 'resetPasswordForm'])->name('users.reset-password');
+        Route::put('/users/{user}/reset-password', [AuthController::class, 'resetPassword'])->name('users.reset-password.update');
     });
 });

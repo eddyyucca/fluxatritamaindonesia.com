@@ -3,284 +3,306 @@
 @section('page-title', 'Dashboard')
 
 @section('content')
-<div class="mt-4 space-y-5">
 
-    {{-- Welcome banner --}}
-    <div class="card p-5 flex items-center justify-between">
+{{-- Welcome Banner --}}
+<div class="welcome-banner mb-4">
+    <div class="d-flex align-items-center justify-content-between">
         <div>
-            <h2 class="text-lg font-bold text-white mb-0.5">
-                Halo, {{ explode(' ', $user->name)[0] }}!
-            </h2>
-            <p class="text-slate-400 text-sm">
-                {{ $user->isDirector() ? 'Selamat datang kembali, Director. Berikut ringkasan bisnis Anda.' : 'Selamat datang! Berikut ringkasan aktivitas dan penghasilan Anda.' }}
+            <p style="color:#bfdbfe;font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-bottom:4px;">
+                {{ $user->isDirector() ? 'Director View' : 'Staff View' }}
             </p>
-            @if(!$user->isDirector())
-            <p class="text-slate-500 text-xs mt-1">{{ $user->position ?? 'Staff PT Fluxa Tritama Indonesia' }}</p>
+            <h4 class="mb-1 font-weight-bold" style="color:#fff;">
+                Selamat datang, {{ explode(' ', $user->name)[0] }}!
+            </h4>
+            <p style="color:#bfdbfe;font-size:13px;margin-bottom:0;">
+                {{ $user->isDirector()
+                    ? 'Berikut ringkasan bisnis PT Fluxa Tritama Indonesia.'
+                    : 'Berikut ringkasan aktivitas dan penghasilan Anda.' }}
+            </p>
+            @if(!$user->isDirector() && $user->position)
+            <p style="color:rgba(191,219,254,0.6);font-size:11px;margin-top:4px;margin-bottom:0;">{{ $user->position }}</p>
             @endif
         </div>
-        <div class="avatar w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0">
-            <span class="text-white font-black text-lg">{{ strtoupper(substr($user->name, 0, 1)) }}</span>
+        <div class="d-none d-sm-flex align-items-center justify-content-center flex-shrink-0"
+             style="width:54px;height:54px;border-radius:14px;background:rgba(255,255,255,0.15);">
+            <span style="color:#fff;font-size:22px;font-weight:900;">{{ strtoupper(substr($user->name, 0, 1)) }}</span>
         </div>
     </div>
-
-    @if($user->isDirector())
-    {{-- ── DIRECTOR DASHBOARD ── --}}
-
-    {{-- Pending approvals alert --}}
-    @php $totalPending = ($stats['pending_quotations'] ?? 0) + ($stats['pending_invoices'] ?? 0); @endphp
-    @if($totalPending > 0)
-    <div class="p-4 rounded-xl bg-amber-500/10 border border-amber-500/25 flex items-start gap-3">
-        <i class="fa-solid fa-bell text-amber-400 mt-0.5"></i>
-        <div>
-            <p class="text-amber-300 font-semibold text-sm">Perlu Perhatian Segera</p>
-            <div class="text-amber-400/80 text-xs mt-1 space-y-0.5">
-                @if($stats['pending_quotations'] > 0)
-                <p>• <a href="{{ route('billing.quotations.index') }}" class="hover:underline">{{ $stats['pending_quotations'] }} quotation</a> menunggu persetujuan</p>
-                @endif
-                @if($stats['pending_invoices'] > 0)
-                <p>• <a href="{{ route('billing.invoices.index') }}" class="hover:underline">{{ $stats['pending_invoices'] }} invoice</a> menunggu persetujuan Director</p>
-                @endif
-            </div>
-        </div>
-    </div>
-    @endif
-
-    {{-- KPI Cards --}}
-    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <div class="stat-card p-5">
-            <div class="flex items-center justify-between mb-3">
-                <span class="text-slate-400 text-xs">Total Quotation</span>
-                <div class="w-8 h-8 rounded-lg bg-blue-500/15 flex items-center justify-center">
-                    <i class="fa-solid fa-file-contract text-blue-400 text-xs"></i>
-                </div>
-            </div>
-            <p class="text-2xl font-bold text-white">{{ $stats['total_quotations'] }}</p>
-            @if($stats['pending_quotations'])
-            <p class="text-xs text-amber-400 mt-1">{{ $stats['pending_quotations'] }} menunggu persetujuan</p>
-            @else
-            <p class="text-xs text-slate-500 mt-1">Semua terproses</p>
-            @endif
-        </div>
-        <div class="stat-card p-5">
-            <div class="flex items-center justify-between mb-3">
-                <span class="text-slate-400 text-xs">Total Invoice</span>
-                <div class="w-8 h-8 rounded-lg bg-violet-500/15 flex items-center justify-center">
-                    <i class="fa-solid fa-file-invoice-dollar text-violet-400 text-xs"></i>
-                </div>
-            </div>
-            <p class="text-2xl font-bold text-white">{{ $stats['total_invoices'] }}</p>
-            <p class="text-xs text-emerald-400 mt-1">{{ $stats['paid_invoices'] }} lunas</p>
-        </div>
-        <div class="stat-card p-5">
-            <div class="flex items-center justify-between mb-3">
-                <span class="text-slate-400 text-xs">Keuntungan PT</span>
-                <div class="w-8 h-8 rounded-lg bg-amber-500/15 flex items-center justify-center">
-                    <i class="fa-solid fa-building-columns text-amber-400 text-xs"></i>
-                </div>
-            </div>
-            <p class="text-xl font-bold text-amber-400">Rp {{ number_format($stats['pt_profit_total'], 0, ',', '.') }}</p>
-            <p class="text-xs text-slate-500 mt-1">Bulan ini: Rp {{ number_format($stats['monthly_pt_profit'], 0, ',', '.') }}</p>
-        </div>
-        <div class="stat-card p-5">
-            <div class="flex items-center justify-between mb-3">
-                <span class="text-slate-400 text-xs">Total Revenue</span>
-                <div class="w-8 h-8 rounded-lg bg-emerald-500/15 flex items-center justify-center">
-                    <i class="fa-solid fa-money-bill-trend-up text-emerald-400 text-xs"></i>
-                </div>
-            </div>
-            <p class="text-xl font-bold text-emerald-400">Rp {{ number_format($stats['total_revenue'], 0, ',', '.') }}</p>
-            <p class="text-xs text-slate-500 mt-1">Bulan ini: Rp {{ number_format($stats['monthly_revenue'], 0, ',', '.') }}</p>
-        </div>
-    </div>
-
-    {{-- Second row --}}
-    <div class="grid grid-cols-2 gap-4">
-        <div class="stat-card p-5">
-            <div class="flex items-center justify-between mb-3">
-                <span class="text-slate-400 text-xs">Total Staff</span>
-                <div class="w-8 h-8 rounded-lg bg-indigo-500/15 flex items-center justify-center">
-                    <i class="fa-solid fa-users text-indigo-400 text-xs"></i>
-                </div>
-            </div>
-            <p class="text-2xl font-bold text-white">{{ $stats['total_staff'] }}</p>
-            <a href="{{ route('dashboard.users') }}" class="text-xs text-blue-400 mt-1 block hover:underline">Kelola Pengguna →</a>
-        </div>
-        <div class="stat-card p-5">
-            <div class="flex items-center justify-between mb-3">
-                <span class="text-slate-400 text-xs">Total Klien</span>
-                <div class="w-8 h-8 rounded-lg bg-teal-500/15 flex items-center justify-center">
-                    <i class="fa-solid fa-building text-teal-400 text-xs"></i>
-                </div>
-            </div>
-            <p class="text-2xl font-bold text-white">{{ $stats['total_clients'] }}</p>
-            <a href="{{ route('billing.clients.index') }}" class="text-xs text-blue-400 mt-1 block hover:underline">Lihat Klien →</a>
-        </div>
-    </div>
-
-    @else
-    {{-- ── USER DASHBOARD ── --}}
-
-    {{-- Pending alert --}}
-    @if($stats['my_pending_quotations'] > 0 || $stats['my_pending_invoices'] > 0)
-    <div class="p-4 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-start gap-3">
-        <i class="fa-solid fa-clock text-blue-400 mt-0.5"></i>
-        <div>
-            <p class="text-blue-300 font-semibold text-sm">Menunggu Persetujuan Director</p>
-            <div class="text-blue-400/80 text-xs mt-1 space-y-0.5">
-                @if($stats['my_pending_quotations'] > 0)
-                <p>• {{ $stats['my_pending_quotations'] }} quotation Anda menunggu disetujui</p>
-                @endif
-                @if($stats['my_pending_invoices'] > 0)
-                <p>• {{ $stats['my_pending_invoices'] }} invoice Anda menunggu persetujuan</p>
-                @endif
-            </div>
-        </div>
-    </div>
-    @endif
-
-    {{-- My earnings --}}
-    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <div class="stat-card p-5">
-            <div class="flex items-center justify-between mb-3">
-                <span class="text-slate-400 text-xs">Quotation Saya</span>
-                <div class="w-8 h-8 rounded-lg bg-blue-500/15 flex items-center justify-center">
-                    <i class="fa-solid fa-file-contract text-blue-400 text-xs"></i>
-                </div>
-            </div>
-            <p class="text-2xl font-bold text-white">{{ $stats['my_quotations'] }}</p>
-            <a href="{{ route('billing.quotations.index') }}" class="text-xs text-blue-400 mt-1 block hover:underline">Lihat semua →</a>
-        </div>
-        <div class="stat-card p-5">
-            <div class="flex items-center justify-between mb-3">
-                <span class="text-slate-400 text-xs">Invoice Saya</span>
-                <div class="w-8 h-8 rounded-lg bg-violet-500/15 flex items-center justify-center">
-                    <i class="fa-solid fa-file-invoice-dollar text-violet-400 text-xs"></i>
-                </div>
-            </div>
-            <p class="text-2xl font-bold text-white">{{ $stats['my_invoices'] }}</p>
-            <p class="text-xs text-emerald-400 mt-1">{{ $stats['my_paid_invoices'] }} lunas</p>
-        </div>
-        <div class="stat-card p-5 lg:col-span-2">
-            <div class="flex items-center justify-between mb-3">
-                <span class="text-slate-400 text-xs">Total Revenue Proyek Saya</span>
-                <div class="w-8 h-8 rounded-lg bg-emerald-500/15 flex items-center justify-center">
-                    <i class="fa-solid fa-money-bill-trend-up text-emerald-400 text-xs"></i>
-                </div>
-            </div>
-            <p class="text-xl font-bold text-white">Rp {{ number_format($stats['my_total_revenue'], 0, ',', '.') }}</p>
-            <p class="text-xs text-slate-500 mt-1">Bulan ini: Rp {{ number_format($stats['my_monthly_revenue'], 0, ',', '.') }}</p>
-        </div>
-    </div>
-
-    {{-- Earnings breakdown --}}
-    <div class="card p-5">
-        <h3 class="text-sm font-semibold text-white mb-4 flex items-center gap-2">
-            <i class="fa-solid fa-chart-pie text-blue-400"></i> Rincian Penghasilan (Invoice Lunas)
-        </h3>
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div class="p-4 rounded-xl bg-emerald-500/8 border border-emerald-500/20">
-                <p class="text-xs text-emerald-400 mb-1">Bagian Anda (89%)</p>
-                <p class="text-xl font-bold text-emerald-400">Rp {{ number_format($stats['my_user_amount'], 0, ',', '.') }}</p>
-                <p class="text-xs text-slate-500 mt-1">Bulan ini: Rp {{ number_format($stats['my_monthly_share'], 0, ',', '.') }}</p>
-            </div>
-            <div class="p-4 rounded-xl bg-amber-500/8 border border-amber-500/20">
-                <p class="text-xs text-amber-400 mb-1">Potongan PT (11%)</p>
-                <p class="text-xl font-bold text-amber-400">Rp {{ number_format($stats['my_pt_deduction'], 0, ',', '.') }}</p>
-                <p class="text-xs text-slate-500 mt-1">Dari total proyek Anda</p>
-            </div>
-            <div class="p-4 rounded-xl bg-blue-500/8 border border-blue-500/20">
-                <p class="text-xs text-blue-400 mb-1">Info Akun PT</p>
-                <p class="text-sm font-semibold text-white mt-1">Bank Mandiri</p>
-                <p class="text-xs text-slate-400 font-mono">031 00 2387227 1</p>
-                <p class="text-xs text-slate-500">PT Fluxa Tritama Indonesia</p>
-            </div>
-        </div>
-    </div>
-    @endif
-
-    {{-- Recent documents --}}
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
-
-        {{-- Recent Quotations --}}
-        <div class="card overflow-hidden">
-            <div class="p-4 border-b border-white/5 flex items-center justify-between">
-                <h3 class="text-sm font-semibold text-white flex items-center gap-2">
-                    <i class="fa-solid fa-file-contract text-blue-400 text-xs"></i> Quotation Terbaru
-                </h3>
-                <a href="{{ route('billing.quotations.index') }}" class="text-blue-400 text-xs hover:underline">Lihat semua</a>
-            </div>
-            <div class="divide-y divide-white/5">
-                @forelse($recentQuotations as $q)
-                <a href="{{ route('billing.quotations.show', $q) }}" class="flex items-center justify-between px-4 py-3 hover:bg-white/3 transition-colors">
-                    <div>
-                        <p class="text-xs font-mono text-blue-400">{{ $q->quotation_number }}</p>
-                        <p class="text-sm text-white">{{ $q->client->name }}</p>
-                        @if($user->isDirector())
-                        <p class="text-xs text-slate-500">{{ $q->creator->name }}</p>
-                        @endif
-                    </div>
-                    <div class="text-right">
-                        <p class="text-xs text-white font-medium">Rp {{ number_format($q->total, 0, ',', '.') }}</p>
-                        @php $c = $q->status_color @endphp
-                        <span class="text-[10px] px-1.5 py-0.5 rounded
-                            {{ $c === 'emerald' ? 'text-emerald-400' : '' }}
-                            {{ $c === 'amber'   ? 'text-amber-400'   : '' }}
-                            {{ $c === 'red'     ? 'text-red-400'     : '' }}
-                            {{ $c === 'slate'   ? 'text-slate-500'   : '' }}">
-                            {{ $q->status_label }}
-                        </span>
-                    </div>
-                </a>
-                @empty
-                <div class="px-4 py-8 text-center text-slate-500 text-sm">
-                    <i class="fa-solid fa-file-contract opacity-30 text-2xl mb-2 block"></i>
-                    Belum ada quotation
-                </div>
-                @endforelse
-            </div>
-        </div>
-
-        {{-- Recent Invoices --}}
-        <div class="card overflow-hidden">
-            <div class="p-4 border-b border-white/5 flex items-center justify-between">
-                <h3 class="text-sm font-semibold text-white flex items-center gap-2">
-                    <i class="fa-solid fa-file-invoice-dollar text-violet-400 text-xs"></i> Invoice Terbaru
-                </h3>
-                <a href="{{ route('billing.invoices.index') }}" class="text-blue-400 text-xs hover:underline">Lihat semua</a>
-            </div>
-            <div class="divide-y divide-white/5">
-                @forelse($recentInvoices as $inv)
-                <a href="{{ route('billing.invoices.show', $inv) }}" class="flex items-center justify-between px-4 py-3 hover:bg-white/3 transition-colors">
-                    <div>
-                        <p class="text-xs font-mono text-violet-400">{{ $inv->invoice_number }}</p>
-                        <p class="text-sm text-white">{{ $inv->client->name }}</p>
-                        @if($user->isDirector())
-                        <p class="text-xs text-slate-500">{{ $inv->creator->name }}</p>
-                        @endif
-                    </div>
-                    <div class="text-right">
-                        <p class="text-xs text-white font-medium">Rp {{ number_format($inv->total, 0, ',', '.') }}</p>
-                        @php $c = $inv->status_color @endphp
-                        <span class="text-[10px] px-1.5 py-0.5 rounded
-                            {{ $c === 'emerald' ? 'text-emerald-400' : '' }}
-                            {{ $c === 'blue'    ? 'text-blue-400'    : '' }}
-                            {{ $c === 'amber'   ? 'text-amber-400'   : '' }}
-                            {{ $c === 'red'     ? 'text-red-400'     : '' }}
-                            {{ $c === 'slate'   ? 'text-slate-500'   : '' }}">
-                            {{ $inv->status_label }}
-                        </span>
-                    </div>
-                </a>
-                @empty
-                <div class="px-4 py-8 text-center text-slate-500 text-sm">
-                    <i class="fa-solid fa-file-invoice-dollar opacity-30 text-2xl mb-2 block"></i>
-                    Belum ada invoice
-                </div>
-                @endforelse
-            </div>
-        </div>
-
-    </div>
-
 </div>
+
+@if($user->isDirector())
+{{-- ── DIRECTOR DASHBOARD ── --}}
+
+@php $totalPending = ($stats['pending_quotations'] ?? 0) + ($stats['pending_invoices'] ?? 0); @endphp
+@if($totalPending > 0)
+<div class="alert alert-warning d-flex align-items-start mb-4" style="gap:12px;">
+    <i class="fas fa-bell flex-shrink-0 mt-1"></i>
+    <div>
+        <strong>Perlu Persetujuan Anda</strong>
+        <div class="mt-1" style="font-size:12px;">
+            @if($stats['pending_quotations'] > 0)
+            <div>• <a href="{{ route('billing.quotations.index') }}" class="font-weight-bold">{{ $stats['pending_quotations'] }} quotation</a> menunggu persetujuan</div>
+            @endif
+            @if($stats['pending_invoices'] > 0)
+            <div>• <a href="{{ route('billing.invoices.index') }}" class="font-weight-bold">{{ $stats['pending_invoices'] }} invoice</a> menunggu persetujuan Director</div>
+            @endif
+        </div>
+    </div>
+</div>
+@endif
+
+{{-- KPI Row 1 --}}
+<div class="row mb-2">
+    <div class="col-6 col-lg-3 mb-3">
+        <div class="fluxa-stat">
+            <div class="fluxa-stat-icon" style="background:#eff6ff;">
+                <i class="fas fa-file-contract" style="color:#2563eb;"></i>
+            </div>
+            <div>
+                <div class="fluxa-stat-value">{{ $stats['total_quotations'] }}</div>
+                <div class="fluxa-stat-label">Total Quotation</div>
+                @if($stats['pending_quotations'])
+                <div class="fluxa-stat-sub" style="color:#d97706;"><i class="fas fa-clock" style="font-size:9px;"></i> {{ $stats['pending_quotations'] }} menunggu</div>
+                @else
+                <div class="fluxa-stat-sub" style="color:#16a34a;">Semua terproses</div>
+                @endif
+            </div>
+        </div>
+    </div>
+    <div class="col-6 col-lg-3 mb-3">
+        <div class="fluxa-stat">
+            <div class="fluxa-stat-icon" style="background:#f5f3ff;">
+                <i class="fas fa-file-invoice-dollar" style="color:#7c3aed;"></i>
+            </div>
+            <div>
+                <div class="fluxa-stat-value">{{ $stats['total_invoices'] }}</div>
+                <div class="fluxa-stat-label">Total Invoice</div>
+                <div class="fluxa-stat-sub" style="color:#16a34a;"><i class="fas fa-check" style="font-size:9px;"></i> {{ $stats['paid_invoices'] }} sudah lunas</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-6 col-lg-3 mb-3">
+        <div class="fluxa-stat">
+            <div class="fluxa-stat-icon" style="background:#fffbeb;">
+                <i class="fas fa-building-columns" style="color:#d97706;"></i>
+            </div>
+            <div>
+                <div class="fluxa-stat-value" style="font-size:17px;color:#d97706;">Rp {{ number_format($stats['pt_profit_total'], 0, ',', '.') }}</div>
+                <div class="fluxa-stat-label">Keuntungan PT</div>
+                <div class="fluxa-stat-sub">Bln ini: Rp {{ number_format($stats['monthly_pt_profit'], 0, ',', '.') }}</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-6 col-lg-3 mb-3">
+        <div class="fluxa-stat">
+            <div class="fluxa-stat-icon" style="background:#f0fdf4;">
+                <i class="fas fa-money-bill-trend-up" style="color:#16a34a;"></i>
+            </div>
+            <div>
+                <div class="fluxa-stat-value" style="font-size:17px;color:#16a34a;">Rp {{ number_format($stats['total_revenue'], 0, ',', '.') }}</div>
+                <div class="fluxa-stat-label">Total Revenue</div>
+                <div class="fluxa-stat-sub">Bln ini: Rp {{ number_format($stats['monthly_revenue'], 0, ',', '.') }}</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{-- KPI Row 2 --}}
+<div class="row mb-2">
+    <div class="col-md-6 mb-3">
+        <div class="fluxa-stat">
+            <div class="fluxa-stat-icon" style="background:#eef2ff;width:48px;height:48px;">
+                <i class="fas fa-users" style="color:#4f46e5;font-size:18px;"></i>
+            </div>
+            <div>
+                <div class="fluxa-stat-value">{{ $stats['total_staff'] }}</div>
+                <div class="fluxa-stat-label">Total Staff</div>
+                <a href="{{ route('dashboard.users') }}" style="font-size:11px;color:#2563eb;font-weight:600;">Kelola pengguna →</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 mb-3">
+        <div class="fluxa-stat">
+            <div class="fluxa-stat-icon" style="background:#f0fdfa;width:48px;height:48px;">
+                <i class="fas fa-building" style="color:#0d9488;font-size:18px;"></i>
+            </div>
+            <div>
+                <div class="fluxa-stat-value">{{ $stats['total_clients'] }}</div>
+                <div class="fluxa-stat-label">Total Klien</div>
+                <a href="{{ route('billing.clients.index') }}" style="font-size:11px;color:#2563eb;font-weight:600;">Lihat semua klien →</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@else
+{{-- ── STAFF DASHBOARD ── --}}
+
+@if($stats['my_pending_quotations'] > 0 || $stats['my_pending_invoices'] > 0)
+<div class="alert alert-info d-flex align-items-start mb-4" style="gap:12px;">
+    <i class="fas fa-clock flex-shrink-0 mt-1"></i>
+    <div>
+        <strong>Menunggu Persetujuan Director</strong>
+        <div class="mt-1" style="font-size:12px;">
+            @if($stats['my_pending_quotations'] > 0)
+            <div>• {{ $stats['my_pending_quotations'] }} quotation menunggu disetujui</div>
+            @endif
+            @if($stats['my_pending_invoices'] > 0)
+            <div>• {{ $stats['my_pending_invoices'] }} invoice menunggu persetujuan</div>
+            @endif
+        </div>
+    </div>
+</div>
+@endif
+
+<div class="row mb-2">
+    <div class="col-6 mb-3">
+        <div class="fluxa-stat">
+            <div class="fluxa-stat-icon" style="background:#eff6ff;">
+                <i class="fas fa-file-contract" style="color:#2563eb;"></i>
+            </div>
+            <div>
+                <div class="fluxa-stat-value">{{ $stats['my_quotations'] }}</div>
+                <div class="fluxa-stat-label">Quotation Saya</div>
+                <a href="{{ route('billing.quotations.index') }}" style="font-size:11px;color:#2563eb;font-weight:600;">Lihat semua →</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-6 mb-3">
+        <div class="fluxa-stat">
+            <div class="fluxa-stat-icon" style="background:#f5f3ff;">
+                <i class="fas fa-file-invoice-dollar" style="color:#7c3aed;"></i>
+            </div>
+            <div>
+                <div class="fluxa-stat-value">{{ $stats['my_invoices'] }}</div>
+                <div class="fluxa-stat-label">Invoice Saya</div>
+                <div class="fluxa-stat-sub" style="color:#16a34a;">{{ $stats['my_paid_invoices'] }} sudah lunas</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 mb-3">
+        <div class="fluxa-stat">
+            <div class="fluxa-stat-icon" style="background:#f0fdf4;width:48px;height:48px;">
+                <i class="fas fa-money-bill-trend-up" style="color:#16a34a;font-size:18px;"></i>
+            </div>
+            <div>
+                <div class="fluxa-stat-value" style="font-size:20px;">Rp {{ number_format($stats['my_total_revenue'], 0, ',', '.') }}</div>
+                <div class="fluxa-stat-label">Total Revenue Proyek Saya</div>
+                <div class="fluxa-stat-sub">Bln ini: Rp {{ number_format($stats['my_monthly_revenue'], 0, ',', '.') }}</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{-- Earnings breakdown --}}
+<div class="card mb-4">
+    <div class="card-header d-flex align-items-center" style="gap:8px;">
+        <i class="fas fa-chart-pie" style="color:#2563eb;"></i>
+        <h6 class="card-title mb-0">Rincian Penghasilan (dari invoice lunas)</h6>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-4 mb-3 mb-md-0">
+                <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:16px;">
+                    <p style="font-size:11px;font-weight:700;color:#166534;margin-bottom:6px;"><i class="fas fa-circle-check" style="color:#22c55e;font-size:9px;"></i> Bagian Anda (89%)</p>
+                    <p style="font-size:18px;font-weight:800;color:#166534;margin-bottom:2px;">Rp {{ number_format($stats['my_user_amount'], 0, ',', '.') }}</p>
+                    <p style="font-size:11px;color:#16a34a;margin-bottom:0;">Bln ini: Rp {{ number_format($stats['my_monthly_share'], 0, ',', '.') }}</p>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3 mb-md-0">
+                <div style="background:#fffbeb;border:1px solid #fde68a;border-radius:10px;padding:16px;">
+                    <p style="font-size:11px;font-weight:700;color:#92400e;margin-bottom:6px;"><i class="fas fa-building-columns" style="color:#f59e0b;font-size:9px;"></i> Potongan PT (11%)</p>
+                    <p style="font-size:18px;font-weight:800;color:#92400e;margin-bottom:2px;">Rp {{ number_format($stats['my_pt_deduction'], 0, ',', '.') }}</p>
+                    <p style="font-size:11px;color:#d97706;margin-bottom:0;">Dari total proyek Anda</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:16px;">
+                    <p style="font-size:11px;font-weight:700;color:#475569;margin-bottom:6px;"><i class="fas fa-university" style="color:#94a3b8;font-size:9px;"></i> Rekening PT</p>
+                    <p style="font-size:13px;font-weight:700;color:#334155;margin-bottom:2px;">Bank Mandiri</p>
+                    <p style="font-family:monospace;font-size:11px;color:#475569;margin-bottom:2px;">031 00 2387227 1</p>
+                    <p style="font-size:11px;color:#94a3b8;margin-bottom:0;">PT Fluxa Tritama Indonesia</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endif
+
+{{-- Recent Documents --}}
+<div class="row">
+    <div class="col-lg-6 mb-4">
+        <div class="card h-100">
+            <div class="card-header d-flex align-items-center justify-content-between">
+                <h6 class="card-title mb-0 d-flex align-items-center" style="gap:8px;">
+                    <i class="fas fa-file-contract" style="color:#2563eb;font-size:13px;"></i> Quotation Terbaru
+                </h6>
+                <a href="{{ route('billing.quotations.index') }}" style="font-size:11px;color:#2563eb;font-weight:600;">Lihat semua</a>
+            </div>
+            @forelse($recentQuotations as $q)
+            @php $c = $q->status_color; $pMap=['emerald'=>'pill-paid','amber'=>'pill-pending','red'=>'pill-rejected','slate'=>'pill-draft','blue'=>'pill-approved']; @endphp
+            <a href="{{ route('billing.quotations.show', $q) }}"
+               class="d-flex align-items-center justify-content-between px-3 py-2"
+               style="border-bottom:1px solid #f1f5f9;text-decoration:none;transition:background .15s;"
+               onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background=''">
+                <div style="min-width:0;flex:1;">
+                    <p style="font-family:monospace;color:#2563eb;font-size:11px;font-weight:700;margin:0;">{{ $q->quotation_number }}</p>
+                    <p style="color:#334155;font-weight:600;font-size:13px;margin:0;" class="text-truncate">{{ $q->client->name }}</p>
+                    @if($user->isDirector())
+                    <p style="font-size:11px;color:#94a3b8;margin:0;">oleh {{ $q->creator->name }}</p>
+                    @endif
+                </div>
+                <div class="text-right ml-3 flex-shrink-0">
+                    <p style="font-size:11px;font-weight:600;color:#334155;margin:0;">Rp {{ number_format($q->total, 0, ',', '.') }}</p>
+                    <span class="pill {{ $pMap[$c] ?? 'pill-draft' }}" style="margin-top:3px;display:inline-block;">{{ $q->status_label }}</span>
+                </div>
+            </a>
+            @empty
+            <div class="empty-state">
+                <div class="empty-state-icon"><i class="fas fa-file-contract"></i></div>
+                <p>Belum ada quotation</p>
+                <small><a href="{{ route('billing.quotations.create') }}">Buat quotation pertama</a></small>
+            </div>
+            @endforelse
+        </div>
+    </div>
+
+    <div class="col-lg-6 mb-4">
+        <div class="card h-100">
+            <div class="card-header d-flex align-items-center justify-content-between">
+                <h6 class="card-title mb-0 d-flex align-items-center" style="gap:8px;">
+                    <i class="fas fa-file-invoice-dollar" style="color:#7c3aed;font-size:13px;"></i> Invoice Terbaru
+                </h6>
+                <a href="{{ route('billing.invoices.index') }}" style="font-size:11px;color:#2563eb;font-weight:600;">Lihat semua</a>
+            </div>
+            @forelse($recentInvoices as $inv)
+            @php $c = $inv->status_color; @endphp
+            <a href="{{ route('billing.invoices.show', $inv) }}"
+               class="d-flex align-items-center justify-content-between px-3 py-2"
+               style="border-bottom:1px solid #f1f5f9;text-decoration:none;transition:background .15s;"
+               onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background=''">
+                <div style="min-width:0;flex:1;">
+                    <p style="font-family:monospace;color:#7c3aed;font-size:11px;font-weight:700;margin:0;">{{ $inv->invoice_number }}</p>
+                    <p style="color:#334155;font-weight:600;font-size:13px;margin:0;" class="text-truncate">{{ $inv->client->name }}</p>
+                    @if($user->isDirector())
+                    <p style="font-size:11px;color:#94a3b8;margin:0;">oleh {{ $inv->creator->name }}</p>
+                    @endif
+                </div>
+                <div class="text-right ml-3 flex-shrink-0">
+                    <p style="font-size:11px;font-weight:600;color:#334155;margin:0;">Rp {{ number_format($inv->total, 0, ',', '.') }}</p>
+                    @php $pMap=['emerald'=>'pill-paid','amber'=>'pill-pending','red'=>'pill-rejected','slate'=>'pill-draft','blue'=>'pill-approved']; @endphp
+                    <span class="pill {{ $pMap[$c] ?? 'pill-draft' }}" style="margin-top:3px;display:inline-block;">{{ $inv->status_label }}</span>
+                </div>
+            </a>
+            @empty
+            <div class="empty-state">
+                <div class="empty-state-icon"><i class="fas fa-file-invoice-dollar"></i></div>
+                <p>Belum ada invoice</p>
+                <small><a href="{{ route('billing.invoices.create') }}">Buat invoice pertama</a></small>
+            </div>
+            @endforelse
+        </div>
+    </div>
+</div>
+
 @endsection

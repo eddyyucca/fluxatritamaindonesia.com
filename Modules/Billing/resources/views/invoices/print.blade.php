@@ -23,7 +23,7 @@
             display: flex; align-items: center; gap: 8px;
         }
         .btn-back {
-            position: fixed; top: 20px; right: 160px;
+            position: fixed; top: 20px; right: 170px;
             background: #374151; color: #fff; border: none;
             padding: 10px 18px; border-radius: 8px;
             font-size: 13px; font-weight: 600; cursor: pointer;
@@ -42,271 +42,104 @@
             overflow: hidden;
         }
 
-        /* Subtle decorative arc on right side */
         .page-deco {
-            position: absolute;
-            top: -20mm;
-            right: -18mm;
-            width: 70mm;
-            height: 80mm;
-            border-radius: 50%;
+            position: absolute; top: -20mm; right: -18mm;
+            width: 70mm; height: 80mm; border-radius: 50%;
             border: 18mm solid rgba(0,188,212,0.06);
             pointer-events: none;
         }
 
         /* ── HEADER ── */
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 12px;
-        }
+        .header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
+        .company-block { flex: 0 0 44%; }
+        .company-logo { height: 42px; display: block; margin-bottom: 7px; }
+        .company-name { font-size: 9.5pt; font-weight: 800; color: #1a1a2e; letter-spacing: 0.02em; }
+        .company-address { font-size: 7pt; color: #666; line-height: 1.65; margin-top: 3px; }
 
-        /* LEFT: logo + company info */
-        .company-block {
-            flex: 0 0 44%;
-        }
-        .company-logo {
-            height: 42px;
-            display: block;
-            margin-bottom: 7px;
-        }
-        .company-name {
-            font-size: 9.5pt;
-            font-weight: 800;
-            color: #1a1a2e;
-            letter-spacing: 0.02em;
-        }
-        .company-address {
-            font-size: 7pt;
-            color: #666;
-            line-height: 1.65;
-            margin-top: 3px;
-        }
+        .invoice-right-block { flex: 0 0 54%; text-align: right; }
+        .invoice-label { font-size: 32pt; font-weight: 900; color: #1a1a2e; letter-spacing: -1.5px; line-height: 1; text-transform: uppercase; }
+        .invoice-number { font-size: 11pt; font-weight: 700; color: #1a1a2e; margin-top: 2px; letter-spacing: 0.01em; }
+        .invoice-meta { font-size: 7.5pt; color: #666; margin-top: 5px; line-height: 1.75; }
+        .invoiced-label { font-size: 7pt; font-weight: 800; color: #999; text-transform: uppercase; letter-spacing: 0.1em; margin-top: 10px; margin-bottom: 1px; }
+        .invoiced-name { font-size: 16pt; font-weight: 900; color: #1a1a2e; letter-spacing: -0.4px; line-height: 1.1; }
+        .invoiced-address { font-size: 7pt; color: #666; margin-top: 2px; line-height: 1.6; }
 
-        /* RIGHT: invoice title + invoiced to */
-        .invoice-right-block {
-            flex: 0 0 54%;
-            text-align: right;
-        }
-        .invoice-label {
-            font-size: 32pt;
-            font-weight: 900;
-            color: #1a1a2e;
-            letter-spacing: -1.5px;
-            line-height: 1;
-            text-transform: uppercase;
-        }
-        .invoice-number {
-            font-size: 11pt;
-            font-weight: 700;
-            color: #1a1a2e;
-            margin-top: 2px;
-            letter-spacing: 0.01em;
-        }
-        .invoice-meta {
-            font-size: 7.5pt;
-            color: #666;
-            margin-top: 5px;
-            line-height: 1.75;
-        }
-        .invoiced-label {
-            font-size: 7pt;
-            font-weight: 800;
-            color: #999;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin-top: 10px;
-            margin-bottom: 1px;
-        }
-        .invoiced-name {
-            font-size: 16pt;
-            font-weight: 900;
-            color: #1a1a2e;
-            letter-spacing: -0.4px;
-            line-height: 1.1;
-        }
-        .invoiced-address {
-            font-size: 7pt;
-            color: #666;
-            margin-top: 2px;
-            line-height: 1.6;
-        }
-
-        /* Divider */
-        .header-divider {
-            border: none;
-            border-top: 1.5px solid #1a1a2e;
-            margin-bottom: 0;
-        }
+        .header-divider { border: none; border-top: 1.5px solid #1a1a2e; margin-bottom: 0; }
 
         /* ── ITEMS TABLE ── */
-        .items-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 0;
-        }
-        .items-table thead tr {
-            background-color: #1a1a2e;
-        }
+        .items-table { width: 100%; border-collapse: collapse; margin-top: 0; }
+        .items-table thead tr { background-color: #1a1a2e; }
         .items-table thead th {
-            color: #fff;
-            font-size: 8.5pt;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.07em;
-            padding: 8px 10px;
-            border: 1px solid #1a1a2e;
+            color: #fff; font-size: 8.5pt; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 0.07em;
+            padding: 8px 10px; border: 1px solid #1a1a2e;
         }
         .items-table thead th.col-no    { text-align: center; width: 38px; }
         .items-table thead th.col-detail { text-align: center; }
         .items-table thead th.col-price { text-align: right; width: 110px; }
-
-        .items-table tbody td {
-            padding: 6px 10px;
-            font-size: 9pt;
-            color: #333;
-            vertical-align: top;
-            border: 1px solid #d1d5db;
-        }
+        .items-table tbody td { padding: 6px 10px; font-size: 9pt; color: #333; vertical-align: top; border: 1px solid #d1d5db; }
         .items-table tbody td.col-no    { text-align: center; color: #888; font-size: 8.5pt; }
         .items-table tbody td.col-price { text-align: right; font-weight: 600; white-space: nowrap; }
 
         /* ── PAYMENT + TOTAL ── */
         .payment-total-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            padding: 10px 0 10px;
-            border-top: 1px solid #d1d5db;
+            display: flex; justify-content: space-between; align-items: flex-start;
+            padding: 10px 0 10px; border-top: 1px solid #d1d5db;
         }
-        .payment-title {
-            font-size: 7.5pt;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.06em;
-            margin-bottom: 5px;
-        }
-        .payment-row {
-            font-size: 8pt;
-            color: #333;
-            line-height: 1.9;
-            display: flex;
-            gap: 5px;
-        }
+        .payment-title { font-size: 7.5pt; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 5px; }
+        .payment-row { font-size: 8pt; color: #333; line-height: 1.9; display: flex; gap: 5px; }
         .payment-row .lbl { font-weight: 700; min-width: 90px; }
 
         .total-block { text-align: right; align-self: center; }
-        .total-label-text {
-            font-size: 11pt;
-            font-weight: 700;
-            color: #1a1a2e;
-            display: block;
-            margin-bottom: 2px;
-        }
-        .total-amount-text {
-            font-size: 20pt;
-            font-weight: 900;
-            color: #1a1a2e;
-            letter-spacing: -0.5px;
-        }
+        .total-label-text { font-size: 11pt; font-weight: 700; color: #1a1a2e; display: block; margin-bottom: 2px; }
+        .total-amount-text { font-size: 20pt; font-weight: 900; color: #1a1a2e; letter-spacing: -0.5px; }
 
         /* ── T&C ── */
-        .tnc-section {
-            border-top: 2px solid #1a1a2e;
-            padding-top: 7px;
-            margin-top: 2px;
-        }
-        .tnc-heading {
-            font-size: 8.5pt;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-bottom: 8px;
-        }
-        .tnc-item {
-            margin-bottom: 6px;
-        }
-        .tnc-item-title {
-            font-size: 7.5pt;
-            font-weight: 800;
-            margin-bottom: 1px;
-        }
-        .tnc-item-body {
-            font-size: 7pt;
-            color: #444;
-            line-height: 1.6;
-            text-align: justify;
-        }
+        .tnc-section { border-top: 2px solid #1a1a2e; padding-top: 7px; margin-top: 2px; }
+        .tnc-heading { font-size: 8.5pt; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; }
+        .tnc-item { margin-bottom: 6px; }
+        .tnc-item-title { font-size: 7.5pt; font-weight: 800; margin-bottom: 1px; }
+        .tnc-item-body { font-size: 7pt; color: #444; line-height: 1.6; text-align: justify; }
 
-        /* ── SIGNATURE + QR ── */
+        /* ── SIGNATURE + QR area ── */
         .sig-area {
             display: flex;
             justify-content: space-between;
             align-items: flex-end;
-            margin-top: 12px;
-            margin-bottom: 10px;
+            margin-top: 14px;
+            margin-bottom: 8px;
+            gap: 20px;
         }
-        .sig-left {}
+        .sig-left { flex: 1; }
         .sig-name { font-size: 8pt; font-weight: 700; color: #333; }
         .sig-role { font-size: 7pt; color: #888; margin-top: 1px; }
+        .sig-line { border-bottom: 1px solid #bbb; margin: 24px 0 4px 0; width: 120px; }
+
         .approval-stamp {
-            display: inline-block;
-            border: 2px solid #059669;
-            border-radius: 4px;
-            padding: 3px 7px;
-            text-align: center;
-            margin-top: 5px;
+            display: inline-block; border: 2px solid #059669;
+            border-radius: 4px; padding: 3px 7px; text-align: center; margin-top: 5px;
         }
         .stamp-title { font-size: 7pt; font-weight: 800; color: #059669; text-transform: uppercase; letter-spacing: 0.08em; }
         .stamp-name  { font-size: 6pt; color: #047857; margin-top: 1px; }
-        .qr-block { text-align: center; }
+
+        .sig-right { flex-shrink: 0; text-align: center; min-width: 90px; }
+        .sig-right .sig-line-right { border-bottom: 1px solid #bbb; margin: 0 0 4px 0; }
         .qr-caption { font-size: 6pt; color: #888; margin-top: 3px; }
+        .qr-label   { font-size: 6.5pt; color: #666; font-weight: 600; margin-bottom: 4px; }
 
         /* ── FOOTER ── */
         .footer-contacts {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 24px;
-            padding: 7px 0;
-            border-top: 1px solid #e5e7eb;
+            display: flex; justify-content: center; align-items: center;
+            gap: 24px; padding: 7px 0; border-top: 1px solid #e5e7eb;
         }
-        .footer-contact-item {
-            display: flex; align-items: center;
-            gap: 6px; font-size: 7.5pt; color: #333; font-weight: 600;
-        }
-        .footer-icon {
-            width: 20px; height: 20px; border-radius: 50%;
-            background: #1a1a2e;
-            display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-        }
+        .footer-contact-item { display: flex; align-items: center; gap: 6px; font-size: 7.5pt; color: #333; font-weight: 600; }
+        .footer-icon { width: 20px; height: 20px; border-radius: 50%; background: #1a1a2e; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
         .footer-icon svg { width: 11px; height: 11px; fill: #fff; }
 
-        /* Two-tone decorative footer bar */
-        .footer-bar {
-            height: 32px;
-            display: flex;
-            margin: 0 -14mm;
-            overflow: hidden;
-        }
-        .footer-bar-teal {
-            flex: 0 0 35%;
-            background: linear-gradient(90deg, #00bcd4 0%, #00909e 100%);
-        }
-        .footer-bar-dark {
-            flex: 1;
-            background: #1e2235;
-            position: relative;
-            overflow: hidden;
-        }
-        /* Ornamental pattern on dark side */
-        .footer-bar-dark svg {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-        }
+        .footer-bar { height: 32px; display: flex; margin: 0 -14mm; overflow: hidden; }
+        .footer-bar-teal { flex: 0 0 35%; background: linear-gradient(90deg, #00bcd4 0%, #00909e 100%); }
+        .footer-bar-dark { flex: 1; background: #1e2235; position: relative; overflow: hidden; }
+        .footer-bar-dark svg { position: absolute; inset: 0; width: 100%; height: 100%; }
 
         @media print {
             body { background: #fff; }
@@ -324,13 +157,10 @@
 
     <div class="page" id="page">
 
-        {{-- Decorative arc --}}
         <div class="page-deco"></div>
 
         {{-- ── HEADER ── --}}
         <div class="header">
-
-            {{-- LEFT: company --}}
             <div class="company-block">
                 <img src="{{ asset('assets/images/FLUXATRITAMAINDONESIA.png') }}"
                      alt="PT Fluxa Tritama Indonesia" class="company-logo">
@@ -342,7 +172,6 @@
                 </div>
             </div>
 
-            {{-- RIGHT: invoice title + invoiced to --}}
             <div class="invoice-right-block">
                 <div class="invoice-label">INVOICE</div>
                 <div class="invoice-number">#{{ $invoice->invoice_number }}</div>
@@ -417,7 +246,7 @@
         {{-- ── TERM & CONDITION ── --}}
         @if($invoice->terms_and_conditions)
         <div class="tnc-section">
-            <div class="tnc-heading">TERM &amp; CONDITION — GARANSI &amp; SUPPORT WEBSITE</div>
+            <div class="tnc-heading">TERM & CONDITION — GARANSI & SUPPORT WEBSITE</div>
             @php
                 $sections = [];
                 $raw = array_filter(explode("\n\n", $invoice->terms_and_conditions));
@@ -439,13 +268,16 @@
         </div>
         @endif
 
-        {{-- ── SIGNATURE + QR ── --}}
+        {{-- ── SIGNATURE + QR (seperti area tanda tangan) ── --}}
         <div class="sig-area">
+            {{-- Left: creator --}}
             <div class="sig-left">
                 <div class="sig-name">{{ $invoice->creator->name }}</div>
                 <div class="sig-role">{{ $invoice->creator->position ?? 'PT Fluxa Tritama Indonesia' }}</div>
+                <div class="sig-line"></div>
+                <div style="font-size:7pt;color:#888;">Disiapkan oleh</div>
                 @if(in_array($invoice->status, ['approved', 'paid']))
-                <div class="approval-stamp" style="margin-top:6px;">
+                <div class="approval-stamp" style="margin-top:8px;">
                     <div class="stamp-title">✓ Disetujui Director</div>
                     <div class="stamp-name">{{ $invoice->approver->name ?? '' }} · {{ $invoice->approved_at?->format('d/m/Y') }}</div>
                 </div>
@@ -456,9 +288,13 @@
                 </div>
                 @endif
             </div>
-            <div class="qr-block">
+
+            {{-- Right: QR sebagai tanda tangan digital --}}
+            <div class="sig-right">
+                <div class="qr-label">Tanda Tangan Digital</div>
                 <div id="qrcode"></div>
-                <div class="qr-caption">Scan untuk verifikasi</div>
+                <div class="sig-line-right"></div>
+                <div class="qr-caption">Scan untuk verifikasi keaslian</div>
             </div>
         </div>
 
@@ -480,7 +316,7 @@
                 <div class="footer-icon">
                     <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
                 </div>
-                official@fluxaborneo.tech
+                official@fluxa.co.id
             </div>
         </div>
 
@@ -491,19 +327,14 @@
                 <svg viewBox="0 0 400 32" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
                     <defs>
                         <pattern id="floral" x="0" y="0" width="32" height="32" patternUnits="userSpaceOnUse">
-                            <!-- Outer diamond -->
                             <polygon points="16,2 30,16 16,30 2,16" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="0.8"/>
-                            <!-- Inner circle -->
                             <circle cx="16" cy="16" r="5" fill="none" stroke="rgba(255,255,255,0.22)" stroke-width="0.8"/>
-                            <!-- Center dot -->
                             <circle cx="16" cy="16" r="1.5" fill="rgba(255,255,255,0.3)"/>
-                            <!-- Corner petals -->
                             <circle cx="2"  cy="2"  r="2" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="0.7"/>
                             <circle cx="30" cy="2"  r="2" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="0.7"/>
                             <circle cx="2"  cy="30" r="2" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="0.7"/>
                             <circle cx="30" cy="30" r="2" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="0.7"/>
-                            <!-- Cross lines -->
-                            <line x1="16" y1="7" x2="16" y2="11" stroke="rgba(255,255,255,0.18)" stroke-width="0.6"/>
+                            <line x1="16" y1="7"  x2="16" y2="11" stroke="rgba(255,255,255,0.18)" stroke-width="0.6"/>
                             <line x1="16" y1="21" x2="16" y2="25" stroke="rgba(255,255,255,0.18)" stroke-width="0.6"/>
                             <line x1="7"  y1="16" x2="11" y2="16" stroke="rgba(255,255,255,0.18)" stroke-width="0.6"/>
                             <line x1="21" y1="16" x2="25" y2="16" stroke="rgba(255,255,255,0.18)" stroke-width="0.6"/>
@@ -521,7 +352,7 @@
         window.addEventListener('DOMContentLoaded', function () {
             new QRCode(document.getElementById('qrcode'), {
                 text: "{{ route('verify.invoice', $invoice->qr_token) }}",
-                width: 68, height: 68,
+                width: 76, height: 76,
                 colorDark: '#000000', colorLight: '#ffffff',
                 correctLevel: QRCode.CorrectLevel.M
             });

@@ -4,6 +4,7 @@ namespace Modules\Dashboard\App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Position;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -123,6 +124,45 @@ class DashboardController extends Controller
         }
 
         return redirect()->route('dashboard.organization')->with('success', 'Struktur organisasi berhasil diperbarui.');
+    }
+
+    public function positions()
+    {
+        if (!Auth::user()->isDirector()) {
+            abort(403);
+        }
+        $positions = Position::orderBy('name')->get();
+        return view('dashboard::positions', compact('positions'));
+    }
+
+    public function storePosition(Request $request)
+    {
+        if (!Auth::user()->isDirector()) abort(403);
+        $data = $request->validate([
+            'name'        => ['required', 'string', 'max:100', 'unique:positions,name'],
+            'description' => ['nullable', 'string', 'max:255'],
+        ]);
+        Position::create($data);
+        return redirect()->route('dashboard.positions')->with('success', 'Jabatan berhasil ditambahkan.');
+    }
+
+    public function updatePosition(Request $request, Position $position)
+    {
+        if (!Auth::user()->isDirector()) abort(403);
+        $data = $request->validate([
+            'name'        => ['required', 'string', 'max:100', 'unique:positions,name,' . $position->id],
+            'description' => ['nullable', 'string', 'max:255'],
+            'is_active'   => ['boolean'],
+        ]);
+        $position->update($data);
+        return redirect()->route('dashboard.positions')->with('success', 'Jabatan berhasil diperbarui.');
+    }
+
+    public function destroyPosition(Position $position)
+    {
+        if (!Auth::user()->isDirector()) abort(403);
+        $position->delete();
+        return redirect()->route('dashboard.positions')->with('success', 'Jabatan berhasil dihapus.');
     }
 
     private function directorStats(): array

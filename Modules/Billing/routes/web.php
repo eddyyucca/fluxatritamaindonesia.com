@@ -34,6 +34,8 @@ Route::middleware(['web', 'auth'])->prefix('billing')->name('billing.')->group(f
     Route::post('/quotations/{quotation}/submit', [QuotationController::class, 'submit'])->name('quotations.submit');
     Route::post('/quotations/{quotation}/approve', [QuotationController::class, 'approve'])->name('quotations.approve');
     Route::post('/quotations/{quotation}/reject', [QuotationController::class, 'reject'])->name('quotations.reject');
+    Route::post('/quotations/{quotation}/revert', [QuotationController::class, 'revert'])->name('quotations.revert');
+    Route::post('/quotations/{quotation}/to-invoice', [InvoiceController::class, 'storeFromQuotation'])->name('quotations.to-invoice');
     Route::delete('/quotations/{quotation}', [QuotationController::class, 'destroy'])->name('quotations.destroy');
 
     // Invoices

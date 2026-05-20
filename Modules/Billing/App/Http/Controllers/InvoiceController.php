@@ -18,11 +18,24 @@ class InvoiceController extends Controller
     {
         $user = Auth::user();
 
+        // Hanya tampilkan invoice yang sudah diterbitkan (approved / paid)
         $invoices = $user->isDirector()
-            ? Invoice::with(['client', 'creator'])->latest()->get()
-            : Invoice::where('created_by', $user->id)->with(['client', 'creator'])->latest()->get();
+            ? Invoice::with(['client', 'creator'])
+                ->whereIn('status', ['approved', 'paid'])
+                ->latest()->get()
+            : Invoice::where('created_by', $user->id)
+                ->with(['client', 'creator'])
+                ->whereIn('status', ['approved', 'paid'])
+                ->latest()->get();
 
-        return view('billing::invoices.index', compact('user', 'invoices'));
+        // Invoice menunggu persetujuan (khusus Director)
+        $pendingInvoices = $user->isDirector()
+            ? Invoice::with(['client', 'creator'])
+                ->where('status', 'pending_approval')
+                ->latest()->get()
+            : collect();
+
+        return view('billing::invoices.index', compact('user', 'invoices', 'pendingInvoices'));
     }
 
     public function create(Request $request)
@@ -38,14 +51,64 @@ class InvoiceController extends Controller
             : Quotation::where('created_by', $user->id)->where('status', 'approved')
                 ->with('client')->orderBy('quotation_number')->get();
 
-        $fromQuotation = null;
-        if ($request->filled('from_quotation')) {
-            $fromQuotation = Quotation::with(['client', 'items'])
-                ->findOrFail($request->from_quotation);
+        $defaultTnc = self::DEFAULT_TNC;
+        return view('billing::invoices.create', compact('user', 'clients', 'quotations', 'defaultTnc'));
+    }
+
+    /**
+     * Terbitkan Invoice langsung dari Quotation yang sudah disetujui.
+     * Semua data dikopi otomatis — tidak ada form yang perlu diisi.
+     */
+    public function storeFromQuotation(Request $request, Quotation $quotation)
+    {
+        $user = Auth::user();
+
+        // Pastikan quotation sudah approved
+        if ($quotation->status !== 'approved') {
+            return back()->with('error', 'Hanya Quotation yang sudah disetujui yang bisa diterbitkan sebagai Invoice.');
         }
 
-        $defaultTnc = self::DEFAULT_TNC;
-        return view('billing::invoices.create', compact('user', 'clients', 'quotations', 'fromQuotation', 'defaultTnc'));
+        // Cek apakah invoice sudah ada dari quotation ini
+        if ($quotation->invoices()->exists()) {
+            $existing = $quotation->invoices()->first();
+            return redirect()->route('billing.invoices.show', $existing)
+                ->with('warning', 'Invoice dari Quotation ini sudah ada: ' . $existing->invoice_number);
+        }
+
+        $quotation->load(['client', 'items']);
+
+        // Buat invoice dengan semua data dari quotation
+        $invoice = Invoice::create([
+            'quotation_id'         => $quotation->id,
+            'client_id'            => $quotation->client_id,
+            'created_by'           => Auth::id(),
+            'title'                => $quotation->title,
+            'description'          => $quotation->description,
+            'terms_and_conditions' => $quotation->terms_and_conditions,
+            'notes'                => $quotation->notes,
+            'invoice_date'         => now()->toDateString(),
+            'due_date'             => null,
+            'pt_profit_percent'    => $quotation->pt_profit_percent,
+            'status'               => 'draft',
+        ]);
+
+        // Kopi semua item dari quotation
+        foreach ($quotation->items as $item) {
+            InvoiceItem::create([
+                'invoice_id'  => $invoice->id,
+                'description' => $item->description,
+                'quantity'    => $item->quantity,
+                'unit_price'  => $item->unit_price,
+                'amount'      => $item->amount,
+            ]);
+        }
+
+        $invoice->load('items');
+        $invoice->calculateTotals();
+        $invoice->save();
+
+        return redirect()->route('billing.invoices.show', $invoice)
+            ->with('success', 'Invoice ' . $invoice->invoice_number . ' berhasil diterbitkan dari Quotation ' . $quotation->quotation_number . '. Ajukan ke Director untuk persetujuan final.');
     }
 
     public function store(Request $request)

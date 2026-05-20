@@ -142,7 +142,7 @@
         </div>
 
         <p class="text-center text-slate-600 text-xs mt-6">
-            &copy; {{ date('Y') }} PT Fluxa Tritama Indonesia · fluxaborneo.tech
+            &copy; {{ date('Y') }} PT Fluxa Tritama Indonesia
         </p>
     </div>
 </body>

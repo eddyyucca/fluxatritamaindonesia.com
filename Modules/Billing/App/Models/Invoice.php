@@ -86,8 +86,8 @@ class Invoice extends Model
     {
         return match ($this->status) {
             'draft'            => 'Draft',
-            'pending_approval' => 'Menunggu Persetujuan',
-            'approved'         => 'Disetujui',
+            'pending_approval' => 'Menunggu Persetujuan Final Director',
+            'approved'         => 'Diterbitkan (Aktif)',
             'rejected'         => 'Ditolak',
             'paid'             => 'Lunas',
             default            => ucfirst($this->status),

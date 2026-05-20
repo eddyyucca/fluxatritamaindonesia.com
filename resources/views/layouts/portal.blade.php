@@ -1,171 +1,601 @@
 <!DOCTYPE html>
-<html lang="id" class="scroll-smooth">
+<html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#1e2a3a">
     <title>@yield('title', 'Portal') — PT Fluxa Tritama Indonesia</title>
-    <meta name="theme-color" content="#07111f">
-    <link rel="icon" type="image/svg+xml" href="{{ asset('assets/images/favicon.ico') }}">
-    <script src="https://cdn.tailwindcss.com"></script>
+
+    {{-- Fonts --}}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    {{-- Font Awesome 6 --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="{{ asset('assets/css/styles.css') }}">
+
+    {{-- Bootstrap 4 --}}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+
+    {{-- AdminLTE 3 --}}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2.0/dist/css/adminlte.min.css">
+
+    {{-- SweetAlert2 --}}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
     <style>
-        body { background: #07111f; }
-        .sidebar { background: rgba(255,255,255,0.03); border-right: 1px solid rgba(255,255,255,0.07); }
-        .nav-item { color: rgba(148,163,184,0.8); transition: background 0.15s, color 0.15s; border-radius: 8px; }
-        .nav-item:hover { background: rgba(59,130,246,0.12); color: #93c5fd; }
-        .nav-item.active { background: rgba(59,130,246,0.15); color: #93c5fd; border-left: 3px solid #3b82f6; }
-        .nav-section { color: #475569; font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; padding: 0.5rem 0.5rem 0.25rem; }
-        .card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; }
-        .topbar { background: rgba(7,17,31,0.85); border-bottom: 1px solid rgba(255,255,255,0.07); backdrop-filter: blur(12px); }
-        .avatar { background: linear-gradient(135deg,#1d4ed8,#7c3aed); }
-        .badge-role { background: rgba(124,58,237,0.15); border: 1px solid rgba(124,58,237,0.3); color: #a78bfa; }
-        .badge-director { background: rgba(234,179,8,0.15); border: 1px solid rgba(234,179,8,0.3); color: #fbbf24; }
-        .stat-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius:12px; transition: border-color 0.2s, transform 0.2s; }
-        .stat-card:hover { border-color: rgba(59,130,246,0.3); transform: translateY(-2px); }
-        .btn-primary { background: linear-gradient(135deg,#1d4ed8,#3b82f6); transition: opacity 0.2s; }
-        .btn-primary:hover { opacity: 0.88; }
-        .btn-success { background: linear-gradient(135deg,#065f46,#10b981); }
-        .btn-danger  { background: linear-gradient(135deg,#7f1d1d,#ef4444); }
-        .input-field { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); color: #e2e8f0; transition: border-color 0.2s; }
-        .input-field:focus { outline: none; border-color: #3b82f6; background: rgba(59,130,246,0.08); }
-        .input-field::placeholder { color: rgba(148,163,184,0.45); }
-        .table-row:hover { background: rgba(255,255,255,0.03); }
-        .sidebar-collapsed { width: 4rem; }
-        @media print { .no-print { display: none !important; } body { background: #fff !important; } }
+        /* ══════════════════════════════════════
+           GLOBAL
+        ══════════════════════════════════════ */
+        * { font-family: 'Inter', sans-serif !important; }
+        /* Restore FontAwesome icon font (overridden by wildcard above) */
+        .fa, .fas, .far, .fal, .fab, .fad, .fat,
+        [class^="fa-"], [class*=" fa-"],
+        .fa-solid, .fa-regular, .fa-light, .fa-brands, .fa-thin, .fa-duotone,
+        .nav-icon {
+            font-family: "Font Awesome 6 Free" !important;
+            font-weight: 900;
+        }
+        .fab, .fa-brands { font-family: "Font Awesome 6 Brands" !important; font-weight: 400; }
+        body.hold-transition .wrapper { transition: none !important; }
+
+        /* ══════════════════════════════════════
+           LOADING SCREEN
+        ══════════════════════════════════════ */
+        #loading-screen {
+            position: fixed; inset: 0; z-index: 99999;
+            background: #ffffff;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+        #loading-screen.fade-out { opacity: 0; visibility: hidden; }
+
+        .ls-logo { height: 52px; margin-bottom: 28px; animation: lsPulse 1.8s ease-in-out infinite; }
+        @keyframes lsPulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.75;transform:scale(.97)} }
+
+        .ls-spinner {
+            width: 44px; height: 44px;
+            border: 4px solid #e2e8f0;
+            border-top-color: #2563eb;
+            border-radius: 50%;
+            animation: lsSpin 0.75s linear infinite;
+        }
+        @keyframes lsSpin { to { transform: rotate(360deg); } }
+
+        .ls-bar-wrap {
+            width: 160px; height: 3px;
+            background: #e2e8f0; border-radius: 99px;
+            margin-top: 20px; overflow: hidden;
+        }
+        .ls-bar {
+            height: 100%; width: 0; border-radius: 99px;
+            background: linear-gradient(90deg, #2563eb, #7c3aed);
+            animation: lsBar 1.2s ease-in-out forwards;
+        }
+        @keyframes lsBar { 0%{width:0} 60%{width:80%} 100%{width:100%} }
+
+        .ls-text {
+            margin-top: 14px; font-size: 12px;
+            font-weight: 500; color: #94a3b8; letter-spacing: .04em;
+        }
+
+        /* ══════════════════════════════════════
+           SIDEBAR
+        ══════════════════════════════════════ */
+        .main-sidebar, .main-sidebar::before {
+            background: #1e2a3a !important;
+            box-shadow: 2px 0 8px rgba(0,0,0,0.15) !important;
+        }
+        .main-sidebar .brand-link {
+            background: #19253300 !important;
+            border-bottom: 1px solid rgba(255,255,255,0.07) !important;
+            padding: 14px 16px !important;
+        }
+        .main-sidebar .brand-text { font-size: 14px !important; font-weight: 700 !important; color: #fff !important; letter-spacing: 0.02em !important; margin-left: 8px !important; }
+
+        /* Nav items */
+        .sidebar-dark-primary .nav-sidebar > .nav-item > .nav-link {
+            color: rgba(148,163,184,0.85) !important;
+            border-radius: 8px !important;
+            margin: 1px 4px !important;
+            font-size: 0.8rem !important;
+            font-weight: 500 !important;
+            transition: background 0.15s, color 0.15s !important;
+        }
+        .sidebar-dark-primary .nav-sidebar > .nav-item > .nav-link:hover {
+            background: rgba(255,255,255,0.07) !important;
+            color: #e2e8f0 !important;
+        }
+        .sidebar-dark-primary .nav-sidebar > .nav-item > .nav-link.active {
+            background: linear-gradient(135deg, #2563eb, #3b82f6) !important;
+            color: #fff !important;
+            box-shadow: 0 4px 10px rgba(37,99,235,0.35) !important;
+        }
+        .nav-sidebar .nav-item > .nav-link .nav-icon {
+            color: inherit !important; width: 1.4rem !important;
+            font-size: 0.78rem !important; margin-right: 6px !important;
+        }
+        /* Sub-items */
+        .sidebar-dark-primary .nav-treeview .nav-link {
+            color: rgba(148,163,184,0.7) !important;
+            font-size: 0.775rem !important;
+            padding-left: 2.2rem !important;
+        }
+        .sidebar-dark-primary .nav-treeview .nav-link:hover { color: #e2e8f0 !important; }
+
+        /* Nav section headers */
+        .nav-header {
+            color: #475569 !important;
+            font-size: 0.6rem !important;
+            font-weight: 700 !important;
+            letter-spacing: 0.12em !important;
+            text-transform: uppercase !important;
+            padding: 14px 16px 4px !important;
+        }
+
+        /* User panel at bottom of sidebar */
+        .sidebar-user-panel {
+            border-top: 1px solid rgba(255,255,255,0.06) !important;
+            padding: 10px 12px !important;
+        }
+        .user-avatar-circle {
+            width: 34px; height: 34px; border-radius: 50%;
+            background: linear-gradient(135deg, #1d4ed8, #7c3aed);
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 13px; color: #fff; flex-shrink: 0;
+        }
+        .user-name-text { font-size: 12px; font-weight: 600; color: #e2e8f0; }
+        .user-role-badge {
+            display: inline-block; font-size: 9px; font-weight: 700;
+            padding: 1px 7px; border-radius: 99px; text-transform: uppercase; letter-spacing: .04em;
+        }
+        .user-role-director { background: #fef3c7; color: #92400e; border: 1px solid #fde68a; }
+        .user-role-staff    { background: #ede9fe; color: #5b21b6; border: 1px solid #ddd6fe; }
+        .btn-logout {
+            background: none; border: none; cursor: pointer; width: 100%;
+            display: flex; align-items: center; gap: 8px; padding: 7px 10px; border-radius: 8px;
+            font-size: 11px; color: rgba(148,163,184,0.75); margin-top: 4px;
+            transition: background 0.15s, color 0.15s;
+        }
+        .btn-logout:hover { background: rgba(239,68,68,0.12); color: #fca5a5; }
+
+        /* ══════════════════════════════════════
+           TOP NAVBAR
+        ══════════════════════════════════════ */
+        .main-header {
+            background: #ffffff !important;
+            border-bottom: 1px solid #e2e8f0 !important;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.06) !important;
+            z-index: 1030 !important;
+        }
+        .main-header .navbar-nav .nav-link { color: #64748b !important; }
+        .page-title-text { font-size: 15px; font-weight: 700; color: #1e293b; line-height: 1.2; }
+        .page-date-text  { font-size: 11px; color: #94a3b8; }
+
+        /* ══════════════════════════════════════
+           CONTENT AREA
+        ══════════════════════════════════════ */
+        .content-wrapper {
+            background: #f1f5f9 !important;
+            min-height: calc(100vh - 57px) !important;
+        }
+        .content-header { padding: 20px 24px 0 !important; }
+        .content { padding: 16px 24px 24px !important; }
+
+        /* ══════════════════════════════════════
+           CARDS — custom white, elevated
+        ══════════════════════════════════════ */
+        .card {
+            border: 1px solid #e2e8f0 !important;
+            border-radius: 12px !important;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.06) !important;
+        }
+        .card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.09) !important; transition: box-shadow 0.25s; }
+        .card-header {
+            background: #ffffff !important;
+            border-bottom: 1px solid #f1f5f9 !important;
+            border-radius: 12px 12px 0 0 !important;
+            padding: 14px 20px !important;
+        }
+        .card-title { font-size: 14px !important; font-weight: 700 !important; color: #1e293b !important; }
+        .card-body { padding: 20px !important; }
+        .card-footer { background: #f8fafc !important; border-top: 1px solid #f1f5f9 !important; border-radius: 0 0 12px 12px !important; }
+
+        /* Flat info-box (stat card) */
+        .fluxa-stat {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+            transition: box-shadow 0.2s, transform 0.2s;
+        }
+        .fluxa-stat:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.1); transform: translateY(-2px); }
+        .fluxa-stat-icon {
+            width: 50px; height: 50px; border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 20px; flex-shrink: 0;
+        }
+        .fluxa-stat-value { font-size: 26px; font-weight: 800; color: #1e293b; line-height: 1; }
+        .fluxa-stat-label { font-size: 12px; color: #64748b; font-weight: 500; margin-top: 3px; }
+        .fluxa-stat-sub   { font-size: 11px; color: #94a3b8; margin-top: 4px; }
+
+        /* ══════════════════════════════════════
+           TABLE
+        ══════════════════════════════════════ */
+        .table thead th {
+            background: #f8fafc !important;
+            color: #64748b !important;
+            font-size: 11px !important;
+            font-weight: 700 !important;
+            text-transform: uppercase !important;
+            letter-spacing: .06em !important;
+            border-bottom: 2px solid #e2e8f0 !important;
+            border-top: none !important;
+            padding: 12px 16px !important;
+        }
+        .table tbody td {
+            font-size: 13px !important;
+            color: #334155 !important;
+            padding: 12px 16px !important;
+            vertical-align: middle !important;
+            border-color: #f1f5f9 !important;
+        }
+        .table-hover tbody tr:hover { background: #f8fafc !important; }
+
+        /* ══════════════════════════════════════
+           BADGES — status pills
+        ══════════════════════════════════════ */
+        .pill { display:inline-block; padding:3px 10px; border-radius:99px; font-size:11px; font-weight:700; white-space:nowrap; }
+        .pill-draft    { background:#f1f5f9; color:#64748b; border:1px solid #e2e8f0; }
+        .pill-pending  { background:#fef9c3; color:#854d0e; border:1px solid #fde047; }
+        .pill-approved { background:#dbeafe; color:#1e40af; border:1px solid #bfdbfe; }
+        .pill-paid     { background:#dcfce7; color:#166534; border:1px solid #bbf7d0; }
+        .pill-rejected { background:#fee2e2; color:#991b1b; border:1px solid #fecaca; }
+
+        /* ══════════════════════════════════════
+           BUTTONS
+        ══════════════════════════════════════ */
+        .btn { border-radius: 8px !important; font-weight: 600 !important; font-size: 13px !important; }
+        .btn-sm { font-size: 12px !important; padding: 5px 12px !important; }
+        .btn-xs { font-size: 11px !important; padding: 3px 10px !important; border-radius: 6px !important; }
+        .btn-fluxa-primary { background: linear-gradient(135deg,#2563eb,#3b82f6) !important; color:#fff !important; border:none !important; box-shadow:0 2px 8px rgba(37,99,235,.3) !important; }
+        .btn-fluxa-primary:hover { opacity: .9 !important; color:#fff !important; }
+        .btn-fluxa-success { background: linear-gradient(135deg,#16a34a,#22c55e) !important; color:#fff !important; border:none !important; }
+        .btn-fluxa-success:hover { opacity:.9 !important; color:#fff !important; }
+        .btn-fluxa-danger  { background: linear-gradient(135deg,#dc2626,#ef4444) !important; color:#fff !important; border:none !important; }
+        .btn-fluxa-danger:hover  { opacity:.9 !important; color:#fff !important; }
+        .btn-fluxa-secondary { background:#fff !important; color:#475569 !important; border:1px solid #e2e8f0 !important; }
+        .btn-fluxa-secondary:hover { background:#f8fafc !important; }
+
+        /* Icon-only action buttons */
+        .btn-icon { width:30px; height:30px; padding:0 !important; display:inline-flex !important; align-items:center; justify-content:center; border-radius:8px !important; font-size:12px !important; }
+
+        /* ══════════════════════════════════════
+           FORMS
+        ══════════════════════════════════════ */
+        .form-control, .form-select, select.form-control {
+            border-radius: 8px !important;
+            border: 1px solid #d1d5db !important;
+            font-size: 13px !important;
+            color: #1e293b !important;
+            background: #fff !important;
+            height: auto !important;
+            padding: 9px 12px !important;
+        }
+        .form-control:focus { border-color: #2563eb !important; box-shadow: 0 0 0 3px rgba(37,99,235,.12) !important; outline: none !important; }
+        .form-control[readonly] { background: #f8fafc !important; color: #94a3b8 !important; }
+        .form-label, label { font-size: 12px !important; font-weight: 600 !important; color: #475569 !important; margin-bottom: 6px !important; }
+        .required-star { color: #ef4444; }
+
+        /* ══════════════════════════════════════
+           ALERTS (inline)
+        ══════════════════════════════════════ */
+        .alert { border-radius: 10px !important; border: none !important; font-size: 13px !important; }
+        .alert-success { background: #f0fdf4 !important; color: #166534 !important; border-left: 4px solid #22c55e !important; }
+        .alert-danger  { background: #fff1f2 !important; color: #991b1b !important; border-left: 4px solid #ef4444 !important; }
+        .alert-warning { background: #fffbeb !important; color: #92400e !important; border-left: 4px solid #f59e0b !important; }
+        .alert-info    { background: #eff6ff !important; color: #1e40af !important; border-left: 4px solid #3b82f6 !important; }
+
+        /* SweetAlert2 toast tweaks */
+        .swal2-toast { border-radius: 12px !important; box-shadow: 0 8px 24px rgba(0,0,0,0.15) !important; }
+
+        /* ══════════════════════════════════════
+           FOOTER
+        ══════════════════════════════════════ */
+        .main-footer {
+            background: #fff !important;
+            border-top: 1px solid #e2e8f0 !important;
+            color: #94a3b8 !important;
+            font-size: 12px !important;
+            padding: 10px 24px !important;
+        }
+
+        /* ══════════════════════════════════════
+           WELCOME BANNER
+        ══════════════════════════════════════ */
+        .welcome-banner {
+            background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 60%, #3b82f6 100%);
+            border-radius: 14px; padding: 24px 28px;
+            position: relative; overflow: hidden; color: #fff;
+        }
+        .welcome-banner::before {
+            content: ''; position: absolute;
+            top: -30px; right: -30px;
+            width: 160px; height: 160px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.08);
+        }
+        .welcome-banner::after {
+            content: ''; position: absolute;
+            bottom: -20px; right: 80px;
+            width: 90px; height: 90px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.06);
+        }
+
+        /* ══════════════════════════════════════
+           MISC
+        ══════════════════════════════════════ */
+        .no-print { }
+        @media print { .no-print { display: none !important; } }
+
+        /* Page transition */
+        .content-wrapper { animation: contentFadeIn 0.25s ease; }
+        @keyframes contentFadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+        /* Empty state */
+        .empty-state { text-align: center; padding: 56px 24px; }
+        .empty-state-icon { width: 64px; height: 64px; border-radius: 16px; background: #f1f5f9; margin: 0 auto 16px; display: flex; align-items: center; justify-content: center; font-size: 24px; color: #94a3b8; }
+        .empty-state p { color: #64748b; font-size: 14px; }
+        .empty-state small { color: #94a3b8; font-size: 12px; }
     </style>
+
     @stack('styles')
 </head>
-<body class="text-slate-300">
 
-<div class="flex h-screen overflow-hidden">
+<body class="hold-transition sidebar-mini layout-fixed">
 
-    {{-- Sidebar --}}
-    <aside class="sidebar w-60 flex-shrink-0 flex flex-col h-full no-print">
+{{-- ══ LOADING SCREEN ══ --}}
+<div id="loading-screen">
+    <img src="{{ asset('assets/images/FLUXATRITAMAINDONESIA.png') }}" alt="Fluxa" class="ls-logo">
+    <div class="ls-spinner"></div>
+    <div class="ls-bar-wrap"><div class="ls-bar"></div></div>
+    <p class="ls-text">Memuat Portal...</p>
+</div>
 
+<div class="wrapper">
+
+    {{-- ══ TOP NAVBAR ══ --}}
+    <nav class="main-header navbar navbar-expand no-print">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" data-widget="pushmenu" href="#" role="button">
+                    <i class="fas fa-bars" style="color:#475569"></i>
+                </a>
+            </li>
+            <li class="nav-item d-flex flex-column justify-content-center ml-1">
+                <p class="page-title-text mb-0">@yield('page-title', 'Portal')</p>
+                <p class="page-date-text mb-0">{{ now()->isoFormat('dddd, D MMMM YYYY') }}</p>
+            </li>
+        </ul>
+        <ul class="navbar-nav ml-auto">
+            @yield('topbar-actions')
+            <li class="nav-item d-flex align-items-center ml-2">
+                <span class="user-avatar-circle" style="width:32px;height:32px;font-size:12px;cursor:default;"
+                      title="{{ Auth::user()->name }}">
+                    {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
+                </span>
+            </li>
+        </ul>
+    </nav>
+
+    {{-- ══ SIDEBAR ══ --}}
+    <aside class="main-sidebar sidebar-dark-primary elevation-4 no-print">
         {{-- Logo --}}
-        <div class="p-4 border-b border-white/5">
-            <a href="{{ route('home') }}" class="flex items-center gap-2">
-                <img src="{{ asset('assets/images/logo-white-transparent.png') }}"
-                     alt="Fluxa" class="h-7 opacity-90">
-            </a>
-        </div>
+        <a href="{{ route('home') }}" class="brand-link">
+            <img src="{{ asset('assets/images/logo-white-transparent.png') }}"
+                 alt="Fluxa" style="height:30px; opacity:.9;">
+            <span class="brand-text">Fluxa App</span>
+        </a>
 
-        {{-- Navigation --}}
-        <nav class="flex-1 p-3 space-y-0.5 overflow-y-auto">
+        <div class="sidebar d-flex flex-column" style="height:calc(100% - 58px);">
+            <nav class="mt-2 flex-grow-1" style="overflow-y:auto;">
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" data-accordion="false">
 
-            <p class="nav-section mt-1">Utama</p>
-            <a href="{{ route('dashboard') }}"
-               class="nav-item flex items-center gap-3 px-3 py-2 text-sm font-medium {{ request()->routeIs('dashboard') ? 'active' : '' }}">
-                <i class="fa-solid fa-gauge-high w-4 text-center text-xs"></i>
-                <span>Dashboard</span>
-            </a>
-            <a href="{{ route('dashboard.organization') }}"
-               class="nav-item flex items-center gap-3 px-3 py-2 text-sm font-medium {{ request()->routeIs('dashboard.organization*') ? 'active' : '' }}">
-                <i class="fa-solid fa-sitemap w-4 text-center text-xs"></i>
-                <span>Struktur Organisasi</span>
-            </a>
+                    <li class="nav-header">Utama</li>
 
-            <p class="nav-section mt-3">Dokumen</p>
-            <a href="{{ route('billing.quotations.index') }}"
-               class="nav-item flex items-center gap-3 px-3 py-2 text-sm {{ request()->routeIs('billing.quotations.*') ? 'active' : '' }}">
-                <i class="fa-solid fa-file-contract w-4 text-center text-xs"></i>
-                <span>Quotation</span>
-            </a>
-            <a href="{{ route('billing.quotations.create') }}"
-               class="nav-item flex items-center gap-3 px-3 py-2 text-sm pl-9 {{ request()->routeIs('billing.quotations.create') ? 'active' : '' }}">
-                <i class="fa-solid fa-plus w-4 text-center text-xs"></i>
-                <span>Buat Quotation</span>
-            </a>
-            <a href="{{ route('billing.invoices.index') }}"
-               class="nav-item flex items-center gap-3 px-3 py-2 text-sm {{ request()->routeIs('billing.invoices.*') ? 'active' : '' }}">
-                <i class="fa-solid fa-file-invoice-dollar w-4 text-center text-xs"></i>
-                <span>Invoice</span>
-            </a>
-            <a href="{{ route('billing.invoices.create') }}"
-               class="nav-item flex items-center gap-3 px-3 py-2 text-sm pl-9">
-                <i class="fa-solid fa-plus w-4 text-center text-xs"></i>
-                <span>Buat Invoice</span>
-            </a>
+                    <li class="nav-item">
+                        <a href="{{ route('dashboard') }}"
+                           class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-chart-line"></i>
+                            <p>Dashboard</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('dashboard.organization') }}"
+                           class="nav-link {{ request()->routeIs('dashboard.organization*') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-sitemap"></i>
+                            <p>Struktur Organisasi</p>
+                        </a>
+                    </li>
 
-            <p class="nav-section mt-3">Master Data</p>
-            <a href="{{ route('billing.clients.index') }}"
-               class="nav-item flex items-center gap-3 px-3 py-2 text-sm {{ request()->routeIs('billing.clients.*') ? 'active' : '' }}">
-                <i class="fa-solid fa-building w-4 text-center text-xs"></i>
-                <span>Klien</span>
-            </a>
+                    <li class="nav-header">Dokumen</li>
 
-            @if(Auth::user()->isDirector())
-            <p class="nav-section mt-3">Manajemen</p>
-            <a href="{{ route('dashboard.users') }}"
-               class="nav-item flex items-center gap-3 px-3 py-2 text-sm {{ request()->routeIs('dashboard.users*') ? 'active' : '' }}">
-                <i class="fa-solid fa-users-gear w-4 text-center text-xs"></i>
-                <span>Pengguna</span>
-            </a>
-            @endif
-        </nav>
+                    <li class="nav-item">
+                        <a href="{{ route('billing.quotations.index') }}"
+                           class="nav-link {{ request()->routeIs('billing.quotations.index') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-file-contract"></i>
+                            <p>Quotation</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('billing.quotations.create') }}"
+                           class="nav-link {{ request()->routeIs('billing.quotations.create') ? 'active' : '' }}"
+                           style="padding-left:2.2rem !important; font-size:0.77rem !important;">
+                            <i class="nav-icon fas fa-plus"></i>
+                            <p>Buat Quotation</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('billing.invoices.index') }}"
+                           class="nav-link {{ request()->routeIs('billing.invoices.index') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-file-invoice-dollar"></i>
+                            <p>Invoice</p>
+                        </a>
+                    </li>
 
-        {{-- User info --}}
-        <div class="p-3 border-t border-white/5">
-            <div class="flex items-center gap-2.5 mb-2">
-                <div class="avatar w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0">
-                    <span class="text-white font-bold text-xs">{{ strtoupper(substr(Auth::user()->name, 0, 1)) }}</span>
+
+                    <li class="nav-header">Master Data</li>
+
+                    <li class="nav-item">
+                        <a href="{{ route('billing.clients.index') }}"
+                           class="nav-link {{ request()->routeIs('billing.clients.*') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-building"></i>
+                            <p>Klien</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('dashboard.positions') }}"
+                           class="nav-link {{ request()->routeIs('dashboard.positions*') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-id-badge"></i>
+                            <p>Jabatan</p>
+                        </a>
+                    </li>
+
+                    @if(Auth::user()->isDirector())
+                    <li class="nav-header">Manajemen</li>
+                    <li class="nav-item">
+                        <a href="{{ route('dashboard.users') }}"
+                           class="nav-link {{ request()->routeIs('dashboard.users*') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-users-gear"></i>
+                            <p>Pengguna</p>
+                        </a>
+                    </li>
+                    @endif
+
+                </ul>
+            </nav>
+
+            {{-- User Panel --}}
+            <div class="sidebar-user-panel">
+                <div class="d-flex align-items-center gap-2 mb-1" style="gap:10px;">
+                    <div class="user-avatar-circle">{{ strtoupper(substr(Auth::user()->name, 0, 1)) }}</div>
+                    <div class="overflow-hidden" style="min-width:0;">
+                        <p class="user-name-text mb-0 text-truncate">{{ Auth::user()->name }}</p>
+                        <span class="user-role-badge {{ Auth::user()->isDirector() ? 'user-role-director' : 'user-role-staff' }}">
+                            {{ Auth::user()->isDirector() ? 'Director' : 'Staff' }}
+                        </span>
+                    </div>
                 </div>
-                <div class="min-w-0">
-                    <p class="text-xs font-medium text-white truncate">{{ Auth::user()->name }}</p>
-                    <span class="text-[10px] px-1.5 py-0.5 rounded {{ Auth::user()->isDirector() ? 'badge-director' : 'badge-role' }}">
-                        {{ Auth::user()->isDirector() ? 'Director' : 'Staff' }}
-                    </span>
-                </div>
+                <a href="{{ route('profile.edit') }}" style="display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:8px;font-size:11px;color:rgba(148,163,184,0.75);text-decoration:none;transition:background 0.15s,color 0.15s;" onmouseover="this.style.background='rgba(255,255,255,0.08)';this.style.color='#e2e8f0'" onmouseout="this.style.background='';this.style.color='rgba(148,163,184,0.75)'">
+                    <i class="fas fa-user-pen" style="font-size:11px;"></i>
+                    Edit Profil
+                </a>
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit" class="btn-logout">
+                        <i class="fas fa-arrow-right-from-bracket" style="font-size:11px;"></i>
+                        Keluar dari Sistem
+                    </button>
+                </form>
             </div>
-            <form method="POST" action="{{ route('logout') }}">
-                @csrf
-                <button type="submit"
-                    class="w-full flex items-center gap-2 px-3 py-1.5 text-xs text-slate-400 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-colors">
-                    <i class="fa-solid fa-arrow-right-from-bracket text-xs"></i>
-                    <span>Keluar</span>
-                </button>
-            </form>
         </div>
     </aside>
 
-    {{-- Main content --}}
-    <div class="flex-1 flex flex-col overflow-hidden">
-
-        {{-- Topbar --}}
-        <header class="topbar px-6 py-3 flex items-center justify-between flex-shrink-0 no-print">
-            <div>
-                <h1 class="text-base font-semibold text-white">@yield('page-title', 'Portal')</h1>
-                <p class="text-[11px] text-slate-500">{{ now()->isoFormat('dddd, D MMMM YYYY') }}</p>
+    {{-- ══ CONTENT WRAPPER ══ --}}
+    <div class="content-wrapper">
+        <section class="content" style="padding-top:20px;">
+            <div class="container-fluid">
+                @yield('content')
             </div>
-            <div class="flex items-center gap-3">
-                @yield('topbar-actions')
-                <span class="text-[11px] px-2.5 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400">
-                    <i class="fa-solid fa-circle text-green-400 text-[6px] mr-1 align-middle"></i>Online
-                </span>
-            </div>
-        </header>
-
-        {{-- Flash messages --}}
-        <div class="px-6 pt-4 no-print">
-            @if(session('success'))
-                <div class="mb-4 p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center gap-3 text-sm text-emerald-300">
-                    <i class="fa-solid fa-circle-check flex-shrink-0"></i>{{ session('success') }}
-                </div>
-            @endif
-            @if(session('error'))
-                <div class="mb-4 p-3 rounded-lg bg-red-500/10 border border-red-500/20 flex items-center gap-3 text-sm text-red-300">
-                    <i class="fa-solid fa-circle-exclamation flex-shrink-0"></i>{{ session('error') }}
-                </div>
-            @endif
-        </div>
-
-        {{-- Page content --}}
-        <main class="flex-1 overflow-y-auto px-6 pb-6">
-            @yield('content')
-        </main>
+        </section>
     </div>
+
+    {{-- ══ FOOTER ══ --}}
+    <footer class="main-footer no-print">
+        <strong>PT Fluxa Tritama Indonesia</strong> &copy; {{ date('Y') }}
+        <span class="float-right text-muted" style="font-size:11px;">
+            Portal Internal v2.0
+        </span>
+    </footer>
+
+    <aside class="control-sidebar control-sidebar-dark"></aside>
 </div>
+
+{{-- ══ SCRIPTS ══ --}}
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2.0/dist/js/adminlte.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+
+<script>
+// ── Loading screen ──────────────────────────────────────
+window.addEventListener('load', function () {
+    setTimeout(function () {
+        var ls = document.getElementById('loading-screen');
+        ls.classList.add('fade-out');
+        setTimeout(function () { ls.style.display = 'none'; }, 520);
+    }, 350);
+});
+
+// ── SweetAlert2 toast helper ───────────────────────────
+function fluxaToast(icon, title, timer) {
+    Swal.fire({
+        toast: true,
+        position: 'top-end',
+        icon: icon,
+        title: title,
+        showConfirmButton: false,
+        timer: timer || 3800,
+        timerProgressBar: true,
+        showClass: { popup: 'swal2-show' },
+        hideClass: { popup: 'swal2-hide' },
+        customClass: { popup: 'fluxa-toast-popup' }
+    });
+}
+
+// ── Flash messages as toasts ───────────────────────────
+@if(session('success'))
+    fluxaToast('success', '{{ addslashes(session("success")) }}');
+@endif
+@if(session('error'))
+    fluxaToast('error', '{{ addslashes(session("error")) }}');
+@endif
+@if(session('warning'))
+    fluxaToast('warning', '{{ addslashes(session("warning")) }}');
+@endif
+
+// ── Confirm dialog (data-confirm attribute) ────────────
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('[data-confirm]').forEach(function (form) {
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            var self = this;
+            var msg  = this.dataset.confirm || 'Apakah Anda yakin?';
+            var icon = this.dataset.confirmIcon || 'warning';
+            var confirmText = this.dataset.confirmBtn || 'Ya, Lanjutkan';
+            Swal.fire({
+                title: 'Konfirmasi',
+                text: msg,
+                icon: icon,
+                showCancelButton: true,
+                confirmButtonColor: '#ef4444',
+                cancelButtonColor:  '#94a3b8',
+                confirmButtonText: '<i class="fas fa-check mr-1"></i>' + confirmText,
+                cancelButtonText: 'Batal',
+                buttonsStyling: true,
+                customClass: { confirmButton: 'btn btn-sm', cancelButton: 'btn btn-sm' }
+            }).then(function (result) {
+                if (result.isConfirmed) self.submit();
+            });
+        });
+    });
+});
+</script>
 
 @stack('scripts')
 </body>
