@@ -176,7 +176,7 @@
                                 <div class="snapshot-heading-wrap">
                                     <p class="text-sm uppercase tracking-[0.26em] text-sky-200/70" data-i18n="snapshot.badge">Company Snapshot</p>
                                     <h2 class="snapshot-title mt-3 display-font text-2xl font-bold leading-tight text-white">
-                                        <span class="block" data-i18n="snapshot.titleLine1">Why PT Fluxa</span>
+                                        <span class="block" data-i18n="snapshot.titleLine1">Why PT Fluxa Tritama Indonesia</span>
                                         <span class="snapshot-title-accent mt-1 block text-sky-100/95" data-i18n="snapshot.titleLine2">Tritama Indonesia</span>
                                     </h2>
                                 </div>

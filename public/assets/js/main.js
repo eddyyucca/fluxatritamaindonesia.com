@@ -43,7 +43,7 @@ const translations = {
         },
         snapshot: {
             badge: 'Company Snapshot',
-            titleLine1: 'Why PT Fluxa',
+            titleLine1: 'Why PT Fluxa Tritama Indonesia',
             titleLine2: 'Tritama Indonesia',
             metric1: 'Inisiatif digital dan implementasi IT',
             metric2: 'Klien dari berbagai sektor bisnis',
@@ -210,7 +210,7 @@ const translations = {
         },
         snapshot: {
             badge: 'Company Snapshot',
-            titleLine1: 'Why PT Fluxa',
+            titleLine1: 'Why PT Fluxa Tritama Indonesia',
             titleLine2: 'Tritama Indonesia',
             metric1: 'Digital initiatives and IT implementations',
             metric2: 'Clients across multiple business sectors',
@@ -376,7 +376,7 @@ const translations = {
         },
         snapshot: {
             badge: 'Company Snapshot',
-            titleLine1: 'Why PT Fluxa',
+            titleLine1: 'Why PT Fluxa Tritama Indonesia',
             titleLine2: 'Tritama Indonesia',
             metric1: 'æ•°å­—åŒ–é¡¹ç›®ä¸Ž IT å®žæ–½',
             metric2: 'æ¥è‡ªå¤šä¸ªè¡Œä¸šçš„å®¢æˆ·',

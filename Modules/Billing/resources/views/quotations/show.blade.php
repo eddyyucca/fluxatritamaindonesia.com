@@ -58,8 +58,8 @@
             </form>
             @endif
         @endif
-        <a href="{{ route('billing.quotations.print', $quotation) }}" target="_blank" class="btn btn-sm btn-fluxa-secondary">
-            <i class="fas fa-print mr-1"></i> Cetak
+        <a href="{{ route('billing.quotations.print', $quotation) }}" class="btn btn-sm btn-fluxa-secondary">
+            <i class="fas fa-file-pdf mr-1" style="color:#ef4444;"></i> Download PDF
         </a>
         @if($quotation->status === 'draft')
         <form method="POST" action="{{ route('billing.quotations.destroy', $quotation) }}" class="d-inline"

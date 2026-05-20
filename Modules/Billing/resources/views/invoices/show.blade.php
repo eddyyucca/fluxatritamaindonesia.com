@@ -29,8 +29,8 @@
                 <i class="fas fa-money-bill-wave mr-1"></i> Catat Pembayaran
             </button>
         @endif
-        <a href="{{ route('billing.invoices.print', $invoice) }}" target="_blank" class="btn btn-sm btn-fluxa-secondary">
-            <i class="fas fa-print mr-1"></i> Cetak
+        <a href="{{ route('billing.invoices.print', $invoice) }}" class="btn btn-sm btn-fluxa-secondary">
+            <i class="fas fa-file-pdf mr-1" style="color:#ef4444;"></i> Download PDF
         </a>
         @if($invoice->status === 'draft')
         <form method="POST" action="{{ route('billing.invoices.destroy', $invoice) }}" class="d-inline"

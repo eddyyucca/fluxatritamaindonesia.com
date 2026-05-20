@@ -16,7 +16,10 @@ class PrintController extends Controller
             abort(403);
         }
         $invoice->load(['client', 'creator', 'approver', 'items', 'quotation']);
-        return view('billing::invoices.print', compact('invoice'));
+        
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('billing::invoices.print', compact('invoice'));
+        $pdf->setPaper('a4', 'portrait');
+        return $pdf->download('Invoice_' . str_replace('/', '_', $invoice->invoice_number) . '.pdf');
     }
 
     public function quotation(Quotation $quotation)
@@ -26,6 +29,9 @@ class PrintController extends Controller
             abort(403);
         }
         $quotation->load(['client', 'creator', 'approver', 'items']);
-        return view('billing::quotations.print', compact('quotation'));
+        
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('billing::quotations.print', compact('quotation'));
+        $pdf->setPaper('a4', 'portrait');
+        return $pdf->download('Quotation_' . str_replace('/', '_', $quotation->quotation_number) . '.pdf');
     }
 }
