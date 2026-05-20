@@ -1,0 +1,11 @@
+{
+    "name": "Billing",
+    "alias": "billing",
+    "description": "Quotation and Invoice management module",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Billing\\App\\Providers\\BillingServiceProvider"
+    ],
+    "files": []
+}

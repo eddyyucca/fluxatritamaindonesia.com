@@ -3,14 +3,162 @@
 namespace Modules\Dashboard\App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Modules\Billing\App\Models\Invoice;
+use Modules\Billing\App\Models\Quotation;
 
 class DashboardController extends Controller
 {
     public function index()
     {
-        return view('dashboard::index', [
-            'user' => Auth::user(),
+        $user = Auth::user();
+
+        if ($user->isDirector()) {
+            $stats = $this->directorStats();
+        } else {
+            $stats = $this->userStats($user);
+        }
+
+        $recentQuotations = $user->isDirector()
+            ? Quotation::with(['client', 'creator'])->latest()->take(5)->get()
+            : Quotation::where('created_by', $user->id)->with('client')->latest()->take(5)->get();
+
+        $recentInvoices = $user->isDirector()
+            ? Invoice::with(['client', 'creator'])->latest()->take(5)->get()
+            : Invoice::where('created_by', $user->id)->with('client')->latest()->take(5)->get();
+
+        return view('dashboard::index', compact('user', 'stats', 'recentQuotations', 'recentInvoices'));
+    }
+
+    public function users()
+    {
+        if (!Auth::user()->isDirector()) {
+            abort(403);
+        }
+
+        $users = User::latest()->get();
+        return view('dashboard::users', compact('users'));
+    }
+
+    public function createUser()
+    {
+        if (!Auth::user()->isDirector()) {
+            abort(403);
+        }
+        return view('dashboard::user-form');
+    }
+
+    public function storeUser(Request $request)
+    {
+        if (!Auth::user()->isDirector()) {
+            abort(403);
+        }
+
+        $data = $request->validate([
+            'name'     => ['required', 'string', 'max:255'],
+            'email'    => ['required', 'email', 'unique:users'],
+            'password' => ['required', 'min:8', 'confirmed'],
+            'role'     => ['required', 'in:director,user'],
+            'position' => ['nullable', 'string', 'max:100'],
         ]);
+
+        User::create([
+            'name'     => $data['name'],
+            'email'    => $data['email'],
+            'password' => Hash::make($data['password']),
+            'role'     => $data['role'],
+            'position' => $data['position'] ?? null,
+        ]);
+
+        return redirect()->route('dashboard.users')
+            ->with('success', 'Pengguna berhasil ditambahkan.');
+    }
+
+    public function organization()
+    {
+        // Get all users with their subordinates recursively to build the tree
+        // It's often easier to get all and build tree in memory or view for small numbers
+        $users = User::all();
+        // The top level users (no parent)
+        $topLevelUsers = User::whereNull('parent_id')->orderBy('org_level')->get();
+        return view('dashboard::organization', compact('users', 'topLevelUsers'));
+    }
+
+    public function editOrganization()
+    {
+        if (!Auth::user()->isDirector()) {
+            abort(403);
+        }
+
+        $users = User::all();
+        return view('dashboard::organization-edit', compact('users'));
+    }
+
+    public function updateOrganization(Request $request)
+    {
+        if (!Auth::user()->isDirector()) {
+            abort(403);
+        }
+
+        $data = $request->validate([
+            'org_data' => ['required', 'array'],
+            'org_data.*.user_id' => ['required', 'exists:users,id'],
+            'org_data.*.parent_id' => ['nullable', 'exists:users,id'],
+            'org_data.*.org_level' => ['nullable', 'integer'],
+        ]);
+
+        foreach ($data['org_data'] as $item) {
+            // Prevent user from being their own parent
+            if ($item['user_id'] == $item['parent_id']) {
+                $item['parent_id'] = null;
+            }
+
+            User::where('id', $item['user_id'])->update([
+                'parent_id' => $item['parent_id'] ?? null,
+                'org_level' => $item['org_level'] ?? null,
+            ]);
+        }
+
+        return redirect()->route('dashboard.organization')->with('success', 'Struktur organisasi berhasil diperbarui.');
+    }
+
+    private function directorStats(): array
+    {
+        $thisMonth = now()->startOfMonth();
+
+        return [
+            'total_quotations'      => Quotation::count(),
+            'pending_quotations'    => Quotation::where('status', 'sent')->count(),
+            'total_invoices'        => Invoice::count(),
+            'pending_invoices'      => Invoice::where('status', 'pending_approval')->count(),
+            'paid_invoices'         => Invoice::where('status', 'paid')->count(),
+            'total_revenue'         => Invoice::where('status', 'paid')->sum('total'),
+            'pt_profit_total'       => Invoice::where('status', 'paid')->sum('pt_profit_amount'),
+            'monthly_revenue'       => Invoice::where('status', 'paid')->where('updated_at', '>=', $thisMonth)->sum('total'),
+            'monthly_pt_profit'     => Invoice::where('status', 'paid')->where('updated_at', '>=', $thisMonth)->sum('pt_profit_amount'),
+            'total_staff'           => User::where('role', 'user')->count(),
+            'total_clients'         => \Modules\Billing\App\Models\Client::count(),
+        ];
+    }
+
+    private function userStats(User $user): array
+    {
+        $thisMonth = now()->startOfMonth();
+
+        return [
+            'my_quotations'         => Quotation::where('created_by', $user->id)->count(),
+            'my_pending_quotations' => Quotation::where('created_by', $user->id)->where('status', 'sent')->count(),
+            'my_invoices'           => Invoice::where('created_by', $user->id)->count(),
+            'my_pending_invoices'   => Invoice::where('created_by', $user->id)->where('status', 'pending_approval')->count(),
+            'my_paid_invoices'      => Invoice::where('created_by', $user->id)->where('status', 'paid')->count(),
+            'my_total_revenue'      => Invoice::where('created_by', $user->id)->where('status', 'paid')->sum('total'),
+            'my_user_amount'        => Invoice::where('created_by', $user->id)->where('status', 'paid')->sum('user_amount'),
+            'my_pt_deduction'       => Invoice::where('created_by', $user->id)->where('status', 'paid')->sum('pt_profit_amount'),
+            'my_monthly_revenue'    => Invoice::where('created_by', $user->id)->where('status', 'paid')->where('updated_at', '>=', $thisMonth)->sum('total'),
+            'my_monthly_share'      => Invoice::where('created_by', $user->id)->where('status', 'paid')->where('updated_at', '>=', $thisMonth)->sum('user_amount'),
+        ];
     }
 }
