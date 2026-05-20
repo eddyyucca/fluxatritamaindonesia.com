@@ -17,27 +17,17 @@
             </form>
         @endif
         @if($invoice->status === 'pending_approval' && Auth::user()->isDirector())
-            <form method="POST" action="{{ route('billing.invoices.approve', $invoice) }}" class="d-inline">
-                @csrf
-                <button type="submit" class="btn btn-sm btn-fluxa-success">
-                    <i class="fas fa-circle-check mr-1"></i> Setujui &amp; Terbitkan ke Pendapatan
-                </button>
-            </form>
-            <form method="POST" action="{{ route('billing.invoices.reject', $invoice) }}" class="d-inline"
-                  data-confirm="Tolak invoice ini? Invoice akan dikembalikan ke Draft." data-confirm-icon="warning" data-confirm-btn="Ya, Tolak">
-                @csrf
-                <button type="submit" class="btn btn-sm btn-fluxa-danger">
-                    <i class="fas fa-xmark mr-1"></i> Tolak
-                </button>
-            </form>
+            <button type="button" class="btn btn-sm btn-fluxa-success" onclick="openApproveModal()">
+                <i class="fas fa-circle-check mr-1"></i> Setujui &amp; Terbitkan
+            </button>
+            <button type="button" class="btn btn-sm btn-fluxa-danger" onclick="openRejectModal()">
+                <i class="fas fa-xmark mr-1"></i> Tolak
+            </button>
         @endif
-        @if($invoice->status === 'approved' && Auth::user()->isDirector())
-            <form method="POST" action="{{ route('billing.invoices.paid', $invoice) }}" class="d-inline">
-                @csrf
-                <button type="submit" class="btn btn-sm btn-fluxa-success">
-                    <i class="fas fa-money-bill-wave mr-1"></i> Tandai Lunas
-                </button>
-            </form>
+        @if(in_array($invoice->status, ['approved','partial']) && Auth::user()->isDirector())
+            <button type="button" class="btn btn-sm btn-fluxa-success" onclick="openPaymentModal()">
+                <i class="fas fa-money-bill-wave mr-1"></i> Catat Pembayaran
+            </button>
         @endif
         <a href="{{ route('billing.invoices.print', $invoice) }}" target="_blank" class="btn btn-sm btn-fluxa-secondary">
             <i class="fas fa-print mr-1"></i> Cetak
@@ -63,28 +53,36 @@
     $alertMap = ['emerald'=>'alert-success','blue'=>'alert-info','amber'=>'alert-warning','red'=>'alert-danger','slate'=>'alert-secondary'];
     $iconMap  = ['emerald'=>'fa-circle-check','blue'=>'fa-stamp','amber'=>'fa-clock','red'=>'fa-circle-xmark','slate'=>'fa-file'];
 @endphp
-<div class="alert {{ $alertMap[$color] ?? 'alert-secondary' }} d-flex align-items-center justify-content-between mb-4" style="gap:12px;">
-    <div class="d-flex align-items-center" style="gap:10px;">
-        <i class="fas {{ $iconMap[$color] ?? 'fa-file' }}"></i>
-        <div>
-            <strong>Status: {{ $invoice->status_label }}</strong>
-            @if($invoice->status === 'draft')
-            <div style="font-size:11px;margin-top:2px;opacity:.85;">Ajukan ke Director agar masuk ke data pendapatan perusahaan setelah disetujui.</div>
-            @elseif($invoice->status === 'pending_approval')
-            <div style="font-size:11px;margin-top:2px;opacity:.85;">Menunggu persetujuan Director. Setelah disetujui, invoice ini akan tercatat sebagai pendapatan resmi.</div>
-            @elseif(in_array($invoice->status, ['approved','paid']))
-            <div style="font-size:11px;margin-top:2px;opacity:.85;">
-                @if($invoice->approved_at) Disetujui {{ $invoice->approved_at->isoFormat('D MMMM YYYY') }} oleh {{ $invoice->approver->name ?? '—' }} @endif
-                &nbsp;·&nbsp; <i class="fas fa-chart-line" style="font-size:9px;"></i> <strong>Tercatat di data pendapatan</strong>
+<div class="alert {{ $alertMap[$color] ?? 'alert-secondary' }} mb-4">
+    <div class="d-flex align-items-center justify-content-between" style="gap:12px;">
+        <div class="d-flex align-items-center" style="gap:10px;">
+            <i class="fas {{ $iconMap[$color] ?? 'fa-file' }}"></i>
+            <div>
+                <strong>Status: {{ $invoice->status_label }}</strong>
+                @if($invoice->status === 'draft')
+                <div style="font-size:11px;margin-top:2px;opacity:.85;">Ajukan ke Director agar masuk ke data pendapatan perusahaan setelah disetujui.</div>
+                @elseif($invoice->status === 'pending_approval')
+                <div style="font-size:11px;margin-top:2px;opacity:.85;">Menunggu persetujuan Director. Setelah disetujui, invoice ini akan tercatat sebagai pendapatan resmi.</div>
+                @elseif(in_array($invoice->status, ['approved','partial','paid']))
+                <div style="font-size:11px;margin-top:2px;opacity:.85;">
+                    @if($invoice->approved_at) Disetujui {{ $invoice->approved_at->isoFormat('D MMMM YYYY') }} oleh {{ $invoice->approver->name ?? '&mdash;' }} @endif
+                    &nbsp;&middot;&nbsp; <i class="fas fa-chart-line" style="font-size:9px;"></i> <strong>Tercatat di data pendapatan</strong>
+                </div>
+                @elseif($invoice->status === 'rejected')
+                <div style="font-size:11px;margin-top:2px;opacity:.85;">Invoice ditolak. Edit dan ajukan ulang.</div>
+                @endif
             </div>
-            @elseif($invoice->status === 'rejected')
-            <div style="font-size:11px;margin-top:2px;opacity:.85;">Invoice ditolak. Edit dan ajukan ulang.</div>
-            @endif
         </div>
+        <span style="font-size:11px;opacity:.7;white-space:nowrap;">
+            {{ $invoice->creator->name }} &middot; {{ $invoice->created_at->isoFormat('D MMM YYYY') }}
+        </span>
     </div>
-    <span style="font-size:11px;opacity:.7;white-space:nowrap;">
-        {{ $invoice->creator->name }} · {{ $invoice->created_at->isoFormat('D MMM YYYY') }}
-    </span>
+    @if($invoice->director_notes)
+    <div style="margin-top:10px;padding:10px 14px;background:rgba(0,0,0,0.05);border-radius:8px;font-size:12px;line-height:1.6;border-left:3px solid rgba(0,0,0,0.15);">
+        <i class="fas fa-comment-dots mr-1" style="opacity:.6;"></i>
+        <strong>Catatan Director:</strong> {{ $invoice->director_notes }}
+    </div>
+    @endif
 </div>
 
 <div class="row">
@@ -347,6 +345,43 @@
     </div>
 </div>
 
+{{-- Payment History --}}
+@if($invoice->payments->count() > 0)
+<div class="card mt-4">
+    <div class="card-header d-flex align-items-center" style="gap:8px;">
+        <i class="fas fa-money-bill-wave" style="color:#16a34a;font-size:13px;"></i>
+        <h6 class="card-title mb-0">Riwayat Pembayaran</h6>
+        <span style="margin-left:auto;font-size:12px;color:#64748b;">
+            Terbayar: <strong style="color:#16a34a;">Rp {{ number_format($invoice->amount_paid, 0, ',', '.') }}</strong>
+            &nbsp;|&nbsp; Sisa: <strong style="color:{{ $invoice->amount_remaining > 0 ? '#dc2626' : '#16a34a' }};">Rp {{ number_format($invoice->amount_remaining, 0, ',', '.') }}</strong>
+        </span>
+    </div>
+    <div class="card-body p-0">
+        <table class="table mb-0" style="font-size:12px;">
+            <thead><tr>
+                <th>Tanggal</th><th>Jenis</th><th>Metode</th><th class="text-right">Jumlah</th><th>Catatan</th><th>Dicatat oleh</th>
+            </tr></thead>
+            <tbody>
+                @foreach($invoice->payments as $pay)
+                <tr>
+                    <td>{{ $pay->payment_date->format('d/m/Y') }}</td>
+                    <td>
+                        <span class="pill {{ $pay->type === 'full' ? 'pill-paid' : 'pill-pending' }}" style="font-size:10px;">
+                            {{ $pay->type === 'full' ? 'Lunas' : 'Sebagian' }}
+                        </span>
+                    </td>
+                    <td>{{ $pay->payment_method ?? '&mdash;' }}</td>
+                    <td class="text-right" style="font-weight:700;color:#16a34a;">Rp {{ number_format($pay->amount, 0, ',', '.') }}</td>
+                    <td style="color:#64748b;">{{ $pay->notes ?? '&mdash;' }}</td>
+                    <td style="color:#94a3b8;">{{ $pay->recorder->name }}</td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+</div>
+@endif
+
 @endsection
 
 @push('scripts')
@@ -358,5 +393,137 @@ new QRCode(document.getElementById("qrcode"), {
     colorDark: "#000000", colorLight: "#ffffff",
     correctLevel: QRCode.CorrectLevel.M
 });
+
+function openApproveModal() {
+    Swal.fire({
+        title: 'Setujui & Terbitkan Invoice',
+        html: `
+            <p style="font-size:13px;color:#64748b;margin-bottom:12px;">
+                Invoice <strong>{{ $invoice->invoice_number }}</strong> akan disetujui dan masuk ke data pendapatan.
+            </p>
+            <textarea id="swal-notes" class="swal2-textarea" placeholder="Catatan untuk staff (opsional)..." style="height:90px;font-size:13px;"></textarea>
+        `,
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: '<i class="fas fa-circle-check mr-1"></i> Ya, Setujui & Terbitkan',
+        cancelButtonText: 'Batal',
+        confirmButtonColor: '#16a34a',
+        focusConfirm: false,
+        preConfirm: () => {
+            const notes = document.getElementById('swal-notes').value;
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = '{{ route("billing.invoices.approve", $invoice) }}';
+            form.innerHTML = `<input name="_token" value="{{ csrf_token() }}"><input name="director_notes" value="${notes}">`;
+            document.body.appendChild(form);
+            form.submit();
+        }
+    });
+}
+
+function openRejectModal() {
+    Swal.fire({
+        title: 'Tolak Invoice',
+        html: `
+            <p style="font-size:13px;color:#64748b;margin-bottom:12px;">
+                Invoice <strong>{{ $invoice->invoice_number }}</strong> akan ditolak dan dikembalikan ke Draft.
+            </p>
+            <textarea id="swal-notes" class="swal2-textarea" placeholder="Alasan penolakan (opsional)..." style="height:90px;font-size:13px;"></textarea>
+        `,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: '<i class="fas fa-xmark mr-1"></i> Ya, Tolak',
+        cancelButtonText: 'Batal',
+        confirmButtonColor: '#dc2626',
+        focusConfirm: false,
+        preConfirm: () => {
+            const notes = document.getElementById('swal-notes').value;
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = '{{ route("billing.invoices.reject", $invoice) }}';
+            form.innerHTML = `<input name="_token" value="{{ csrf_token() }}"><input name="director_notes" value="${notes}">`;
+            document.body.appendChild(form);
+            form.submit();
+        }
+    });
+}
+
+function openPaymentModal() {
+    const remaining = {{ $invoice->amount_remaining ?? $invoice->total }};
+    const fmtRp = n => 'Rp ' + Math.round(n).toLocaleString('id-ID');
+    Swal.fire({
+        title: 'Catat Pembayaran',
+        width: 520,
+        html: `
+            <p style="font-size:12px;color:#64748b;margin-bottom:14px;">Sisa tagihan: <strong style="color:#dc2626;">${fmtRp(remaining)}</strong></p>
+            <div style="text-align:left;">
+                <label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px;">Jenis Pembayaran</label>
+                <div style="display:flex;gap:12px;margin-bottom:14px;">
+                    <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;">
+                        <input type="radio" name="ptype" value="partial" id="r-partial" checked onchange="toggleAmount()"> Pembayaran Sebagian
+                    </label>
+                    <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;">
+                        <input type="radio" name="ptype" value="full" id="r-full" onchange="toggleAmount()"> Lunas Penuh
+                    </label>
+                </div>
+                <div id="amount-wrap" style="margin-bottom:14px;">
+                    <label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px;">Jumlah Dibayar (Rp)</label>
+                    <input type="number" id="pay-amount" class="swal2-input" style="margin:0;" placeholder="Masukkan nominal..." min="1" max="${remaining}">
+                </div>
+                <label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px;">Tanggal Pembayaran</label>
+                <input type="date" id="pay-date" class="swal2-input" style="margin:0 0 14px;" value="{{ now()->format('Y-m-d') }}">
+                <label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px;">Metode Pembayaran</label>
+                <input type="text" id="pay-method" class="swal2-input" style="margin:0 0 14px;" placeholder="Transfer Bank, Tunai, dll">
+                <label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px;">Catatan</label>
+                <input type="text" id="pay-notes" class="swal2-input" style="margin:0;" placeholder="Opsional">
+            </div>
+        `,
+        showCancelButton: true,
+        confirmButtonText: '<i class="fas fa-save mr-1"></i> Simpan Pembayaran',
+        cancelButtonText: 'Batal',
+        confirmButtonColor: '#2563eb',
+        focusConfirm: false,
+        didOpen: () => { toggleAmount(); },
+        preConfirm: () => {
+            const type   = document.querySelector('input[name="ptype"]:checked').value;
+            const amount = document.getElementById('pay-amount').value;
+            const date   = document.getElementById('pay-date').value;
+            const method = document.getElementById('pay-method').value;
+            const notes  = document.getElementById('pay-notes').value;
+            if (type === 'partial') {
+                if (!amount || parseFloat(amount) <= 0) {
+                    Swal.showValidationMessage('Masukkan jumlah pembayaran yang valid.');
+                    return false;
+                }
+                if (parseFloat(amount) > remaining) {
+                    Swal.showValidationMessage(
+                        `Jumlah melebihi sisa tagihan. Maksimal yang dapat dibayar: ${fmtRp(remaining)}`
+                    );
+                    return false;
+                }
+            }
+            if (!date) { Swal.showValidationMessage('Tanggal pembayaran wajib diisi.'); return false; }
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = '{{ route("billing.invoices.payment", $invoice) }}';
+            form.innerHTML = `
+                <input name="_token" value="{{ csrf_token() }}">
+                <input name="payment_type" value="${type}">
+                <input name="amount" value="${amount}">
+                <input name="payment_date" value="${date}">
+                <input name="payment_method" value="${method}">
+                <input name="notes" value="${notes}">
+            `;
+            document.body.appendChild(form);
+            form.submit();
+        }
+    });
+}
+
+function toggleAmount() {
+    const isFull = document.getElementById('r-full') && document.getElementById('r-full').checked;
+    const wrap = document.getElementById('amount-wrap');
+    if (wrap) wrap.style.display = isFull ? 'none' : 'block';
+}
 </script>
 @endpush

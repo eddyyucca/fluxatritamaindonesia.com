@@ -13,8 +13,8 @@ class Quotation extends Model
     protected $fillable = [
         'quotation_number', 'client_id', 'created_by', 'title', 'description',
         'terms_and_conditions', 'status', 'subtotal', 'pt_profit_percent',
-        'pt_profit_amount', 'user_amount', 'total', 'notes', 'valid_until',
-        'approved_by', 'approved_at', 'qr_token',
+        'pt_profit_amount', 'user_amount', 'total', 'notes', 'director_notes',
+        'valid_until', 'approved_by', 'approved_at', 'qr_token',
     ];
 
     protected function casts(): array

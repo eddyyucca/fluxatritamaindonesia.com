@@ -384,11 +384,40 @@
         </ul>
         <ul class="navbar-nav ml-auto">
             @yield('topbar-actions')
-            <li class="nav-item d-flex align-items-center ml-2">
-                <span class="user-avatar-circle" style="width:32px;height:32px;font-size:12px;cursor:default;"
-                      title="{{ Auth::user()->name }}">
-                    {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
-                </span>
+            <li class="nav-item dropdown ml-2">
+                <a class="nav-link d-flex align-items-center" data-toggle="dropdown" href="#" style="gap:10px; padding:0; cursor:pointer;" title="Profil & Pengaturan">
+                    <div class="text-right d-none d-sm-block">
+                        <p class="mb-0" style="font-size:13px; font-weight:600; color:#1e293b; line-height:1.2;">{{ Auth::user()->name }}</p>
+                        <p class="mb-0" style="font-size:11px; color:#64748b;">{{ Auth::user()->isDirector() ? 'Director' : 'Staff' }}</p>
+                    </div>
+                    <span class="user-avatar-circle" style="width:36px;height:36px;font-size:14px;background:#e2e8f0;color:#475569;font-weight:700;">
+                        {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
+                    </span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right shadow-sm mt-2" style="border:1px solid #e2e8f0; border-radius:12px; padding:10px; min-width:220px;">
+                    <div class="text-center py-2 mb-2" style="border-bottom:1px solid #f1f5f9;">
+                        <span class="user-avatar-circle mx-auto mb-2" style="width:48px;height:48px;font-size:18px;">
+                            {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
+                        </span>
+                        <h6 class="mb-1" style="font-weight:700; font-size:14px; color:#1e293b;">{{ Auth::user()->name }}</h6>
+                        <span class="user-role-badge {{ Auth::user()->isDirector() ? 'user-role-director' : 'user-role-staff' }}" style="font-size:10px; padding:2px 8px;">
+                            {{ Auth::user()->isDirector() ? 'Director' : 'Staff' }}
+                        </span>
+                    </div>
+                    
+                    <a href="{{ route('profile.edit') }}" class="dropdown-item d-flex align-items-center" style="border-radius:6px; font-size:13px; color:#475569; padding:8px 12px; gap:8px;">
+                        <i class="fas fa-user-pen" style="color:#94a3b8; font-size:12px;"></i> Edit Profil & Password
+                    </a>
+                    
+                    <div class="dropdown-divider my-2 border-slate-100" style="border-color:#f1f5f9;"></div>
+                    
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button type="submit" class="dropdown-item d-flex align-items-center text-danger" style="border-radius:6px; font-size:13px; font-weight:500; padding:8px 12px; gap:8px;">
+                            <i class="fas fa-arrow-right-from-bracket" style="font-size:12px;"></i> Keluar dari Sistem
+                        </button>
+                    </form>
+                </div>
             </li>
         </ul>
     </nav>
@@ -396,7 +425,7 @@
     {{-- ══ SIDEBAR ══ --}}
     <aside class="main-sidebar sidebar-dark-primary elevation-4 no-print">
         {{-- Logo --}}
-        <a href="{{ route('home') }}" class="brand-link">
+        <a href="{{ route('dashboard') }}" class="brand-link">
             <img src="{{ asset('assets/images/logo-white-transparent.png') }}"
                  alt="Fluxa" style="height:30px; opacity:.9;">
             <span class="brand-text">Fluxa App</span>
@@ -429,7 +458,14 @@
                         <a href="{{ route('billing.quotations.index') }}"
                            class="nav-link {{ request()->routeIs('billing.quotations.index') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-file-contract"></i>
-                            <p>Quotation</p>
+                            <p>Quotation
+                            @if(Auth::user()->isDirector())
+                            @php $pendingQ = \Modules\Billing\App\Models\Quotation::where('status','sent')->count(); @endphp
+                            @if($pendingQ > 0)
+                            <span class="badge badge-warning right" style="font-size:10px;background:#d97706;color:#fff;border-radius:99px;padding:1px 6px;margin-left:4px;">{{ $pendingQ }}</span>
+                            @endif
+                            @endif
+                            </p>
                         </a>
                     </li>
                     <li class="nav-item">
@@ -444,7 +480,14 @@
                         <a href="{{ route('billing.invoices.index') }}"
                            class="nav-link {{ request()->routeIs('billing.invoices.index') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-file-invoice-dollar"></i>
-                            <p>Invoice</p>
+                            <p>Invoice
+                            @if(Auth::user()->isDirector())
+                            @php $pendingI = \Modules\Billing\App\Models\Invoice::where('status','pending_approval')->count(); @endphp
+                            @if($pendingI > 0)
+                            <span class="badge badge-warning right" style="font-size:10px;background:#dc2626;color:#fff;border-radius:99px;padding:1px 6px;margin-left:4px;">{{ $pendingI }}</span>
+                            @endif
+                            @endif
+                            </p>
                         </a>
                     </li>
 
@@ -474,35 +517,46 @@
                             <i class="nav-icon fas fa-users-gear"></i>
                             <p>Pengguna</p>
                         </a>
-                    </li>
                     @endif
 
+                    <li class="nav-header">Operasional</li>
+                    <li class="nav-item">
+                        <a href="{{ route('coming-soon', ['feature' => 'Manajemen Proyek']) }}" class="nav-link">
+                            <i class="nav-icon fas fa-diagram-project"></i>
+                            <p>Proyek IT</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('coming-soon', ['feature' => 'Manajemen Tugas']) }}" class="nav-link">
+                            <i class="nav-icon fas fa-list-check"></i>
+                            <p>Tugas & Kanban</p>
+                        </a>
+                    </li>
+
+                    <li class="nav-header">Keuangan & Analitik</li>
+                    <li class="nav-item">
+                        <a href="{{ route('coming-soon', ['feature' => 'Arus Kas (Cashflow)']) }}" class="nav-link">
+                            <i class="nav-icon fas fa-money-bill-wave"></i>
+                            <p>Arus Kas</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('coming-soon', ['feature' => 'Laporan & Analitik']) }}" class="nav-link">
+                            <i class="nav-icon fas fa-chart-pie"></i>
+                            <p>Laporan</p>
+                        </a>
+                    </li>
+
+                    <li class="nav-header">Pengaturan</li>
+                    <li class="nav-item">
+                        <a href="{{ route('coming-soon', ['feature' => 'Pengaturan Sistem']) }}" class="nav-link">
+                            <i class="nav-icon fas fa-gear"></i>
+                            <p>Pengaturan Sistem</p>
+                        </a>
+                    </li>
                 </ul>
             </nav>
 
-            {{-- User Panel --}}
-            <div class="sidebar-user-panel">
-                <div class="d-flex align-items-center gap-2 mb-1" style="gap:10px;">
-                    <div class="user-avatar-circle">{{ strtoupper(substr(Auth::user()->name, 0, 1)) }}</div>
-                    <div class="overflow-hidden" style="min-width:0;">
-                        <p class="user-name-text mb-0 text-truncate">{{ Auth::user()->name }}</p>
-                        <span class="user-role-badge {{ Auth::user()->isDirector() ? 'user-role-director' : 'user-role-staff' }}">
-                            {{ Auth::user()->isDirector() ? 'Director' : 'Staff' }}
-                        </span>
-                    </div>
-                </div>
-                <a href="{{ route('profile.edit') }}" style="display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:8px;font-size:11px;color:rgba(148,163,184,0.75);text-decoration:none;transition:background 0.15s,color 0.15s;" onmouseover="this.style.background='rgba(255,255,255,0.08)';this.style.color='#e2e8f0'" onmouseout="this.style.background='';this.style.color='rgba(148,163,184,0.75)'">
-                    <i class="fas fa-user-pen" style="font-size:11px;"></i>
-                    Edit Profil
-                </a>
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-                    <button type="submit" class="btn-logout">
-                        <i class="fas fa-arrow-right-from-bracket" style="font-size:11px;"></i>
-                        Keluar dari Sistem
-                    </button>
-                </form>
-            </div>
         </div>
     </aside>
 

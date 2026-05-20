@@ -76,9 +76,9 @@
                                 <label>Keuntungan PT (%)</label>
                                 <div class="input-group">
                                     <input type="number" name="pt_profit_percent" id="ptPercent"
-                                           value="{{ old('pt_profit_percent', $quotation->pt_profit_percent ?? 11) }}"
-                                           min="0" max="100" step="0.1"
-                                           class="form-control" onchange="recalc()">
+                                           value="11"
+                                           min="11" max="11" step="1"
+                                           class="form-control" readonly onchange="recalc()">
                                     <div class="input-group-append">
                                         <span class="input-group-text">%</span>
                                     </div>

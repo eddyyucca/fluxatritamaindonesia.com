@@ -14,7 +14,7 @@ Route::middleware('web')->group(function () {
 });
 
 // Authenticated billing routes
-Route::middleware(['web', 'auth'])->prefix('billing')->name('billing.')->group(function () {
+Route::middleware(['web', 'auth', 'force_password_change'])->prefix('billing')->name('billing.')->group(function () {
 
     // Clients
     Route::get('/clients', [ClientController::class, 'index'])->name('clients.index');
@@ -48,7 +48,7 @@ Route::middleware(['web', 'auth'])->prefix('billing')->name('billing.')->group(f
     Route::post('/invoices/{invoice}/submit', [InvoiceController::class, 'submit'])->name('invoices.submit');
     Route::post('/invoices/{invoice}/approve', [InvoiceController::class, 'approve'])->name('invoices.approve');
     Route::post('/invoices/{invoice}/reject', [InvoiceController::class, 'reject'])->name('invoices.reject');
-    Route::post('/invoices/{invoice}/paid', [InvoiceController::class, 'markPaid'])->name('invoices.paid');
+    Route::post('/invoices/{invoice}/payment', [InvoiceController::class, 'addPayment'])->name('invoices.payment');
     Route::delete('/invoices/{invoice}', [InvoiceController::class, 'destroy'])->name('invoices.destroy');
 
     // Print views

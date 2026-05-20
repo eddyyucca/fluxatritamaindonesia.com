@@ -59,6 +59,9 @@
                         <td class="d-none d-sm-table-cell" style="color:#94a3b8;font-size:12px;">{{ $u->created_at->format('d/m/Y') }}</td>
                         <td>
                             <div class="d-flex" style="gap:4px;">
+                                <a href="{{ route('dashboard.users.edit', $u) }}" class="btn btn-icon btn-fluxa-secondary" title="Edit Pengguna">
+                                    <i class="fas fa-pen" style="font-size:11px;color:#2563eb;"></i>
+                                </a>
                                 <a href="{{ route('users.reset-password', $u) }}" class="btn btn-icon btn-fluxa-secondary" title="Reset Password">
                                     <i class="fas fa-key" style="font-size:11px;color:#d97706;"></i>
                                 </a>

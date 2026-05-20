@@ -14,19 +14,23 @@ class Invoice extends Model
         'invoice_number', 'quotation_id', 'client_id', 'created_by', 'title',
         'description', 'terms_and_conditions', 'status', 'subtotal',
         'pt_profit_percent', 'pt_profit_amount', 'user_amount', 'total',
-        'invoice_date', 'due_date', 'notes', 'approved_by', 'approved_at', 'qr_token',
+        'amount_paid', 'amount_remaining',
+        'invoice_date', 'due_date', 'notes', 'director_notes',
+        'approved_by', 'approved_at', 'qr_token',
     ];
 
     protected function casts(): array
     {
         return [
-            'invoice_date' => 'date',
-            'due_date'     => 'date',
-            'approved_at'  => 'datetime',
-            'subtotal'     => 'decimal:2',
+            'invoice_date'     => 'date',
+            'due_date'         => 'date',
+            'approved_at'      => 'datetime',
+            'subtotal'         => 'decimal:2',
             'pt_profit_amount' => 'decimal:2',
-            'user_amount'  => 'decimal:2',
-            'total'        => 'decimal:2',
+            'user_amount'      => 'decimal:2',
+            'total'            => 'decimal:2',
+            'amount_paid'      => 'decimal:2',
+            'amount_remaining' => 'decimal:2',
         ];
     }
 
@@ -55,6 +59,26 @@ class Invoice extends Model
         $this->total            = $this->subtotal;
         $this->pt_profit_amount = round($this->subtotal * ($this->pt_profit_percent / 100), 2);
         $this->user_amount      = round($this->subtotal - $this->pt_profit_amount, 2);
+        $this->amount_remaining = $this->total - ($this->amount_paid ?? 0);
+    }
+
+    /**
+     * Recalculate payment fields after a payment is recorded.
+     * Updates amount_paid, amount_remaining, and status.
+     */
+    public function recalculatePayment(): void
+    {
+        $paid = $this->payments()->sum('amount');
+        $this->amount_paid      = $paid;
+        $this->amount_remaining = max(0, $this->total - $paid);
+
+        if ($this->amount_remaining <= 0) {
+            $this->status = 'paid';
+        } elseif ($paid > 0) {
+            $this->status = 'partial';
+        }
+        // else stay as approved
+        $this->save();
     }
 
     public function client(): BelongsTo
@@ -82,12 +106,18 @@ class Invoice extends Model
         return $this->hasMany(InvoiceItem::class);
     }
 
+    public function payments(): HasMany
+    {
+        return $this->hasMany(InvoicePayment::class)->latest();
+    }
+
     public function getStatusLabelAttribute(): string
     {
         return match ($this->status) {
             'draft'            => 'Draft',
             'pending_approval' => 'Menunggu Persetujuan Final Director',
             'approved'         => 'Diterbitkan (Aktif)',
+            'partial'          => 'Pembayaran Sebagian',
             'rejected'         => 'Ditolak',
             'paid'             => 'Lunas',
             default            => ucfirst($this->status),
@@ -100,6 +130,7 @@ class Invoice extends Model
             'draft'            => 'slate',
             'pending_approval' => 'amber',
             'approved'         => 'blue',
+            'partial'          => 'orange',
             'rejected'         => 'red',
             'paid'             => 'emerald',
             default            => 'slate',

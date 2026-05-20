@@ -20,19 +20,12 @@
             <a href="{{ route('billing.quotations.edit', $quotation) }}" class="btn btn-sm btn-fluxa-secondary">
                 <i class="fas fa-pen mr-1"></i> Edit
             </a>
-            <form method="POST" action="{{ route('billing.quotations.approve', $quotation) }}" class="d-inline">
-                @csrf
-                <button type="submit" class="btn btn-sm btn-fluxa-success">
-                    <i class="fas fa-check mr-1"></i> Setujui
-                </button>
-            </form>
-            <form method="POST" action="{{ route('billing.quotations.reject', $quotation) }}" class="d-inline"
-                  data-confirm="Tolak quotation ini?" data-confirm-icon="warning" data-confirm-btn="Ya, Tolak">
-                @csrf
-                <button type="submit" class="btn btn-sm btn-fluxa-danger">
-                    <i class="fas fa-xmark mr-1"></i> Tolak
-                </button>
-            </form>
+            <button type="button" class="btn btn-sm btn-fluxa-success" onclick="openApproveModal()">
+                <i class="fas fa-check mr-1"></i> Setujui
+            </button>
+            <button type="button" class="btn btn-sm btn-fluxa-danger" onclick="openRejectModal()">
+                <i class="fas fa-xmark mr-1"></i> Tolak
+            </button>
         @endif
         @if(in_array($quotation->status, ['approved', 'rejected']) && Auth::user()->isDirector())
             <a href="{{ route('billing.quotations.edit', $quotation) }}" class="btn btn-sm btn-fluxa-secondary">
@@ -89,21 +82,29 @@
     $alertMap = ['emerald'=>'alert-success','amber'=>'alert-warning','red'=>'alert-danger','slate'=>'alert-secondary','blue'=>'alert-info'];
     $iconMap  = ['emerald'=>'fa-circle-check','amber'=>'fa-clock','red'=>'fa-circle-xmark','slate'=>'fa-file','blue'=>'fa-stamp'];
 @endphp
-<div class="alert {{ $alertMap[$color] ?? 'alert-secondary' }} d-flex align-items-center justify-content-between mb-4" style="gap:12px;">
-    <div class="d-flex align-items-center" style="gap:10px;">
-        <i class="fas {{ $iconMap[$color] ?? 'fa-file' }}"></i>
-        <div>
-            <strong>Status: {{ $quotation->status_label }}</strong>
-            @if($quotation->approved_at)
-            <span style="font-size:12px;opacity:.75;margin-left:8px;">
-                — {{ $quotation->approved_at->isoFormat('D MMMM YYYY') }} oleh {{ $quotation->approver->name ?? '—' }}
-            </span>
-            @endif
+<div class="alert {{ $alertMap[$color] ?? 'alert-secondary' }} mb-4" style="gap:12px;">
+    <div class="d-flex align-items-center justify-content-between" style="gap:12px;">
+        <div class="d-flex align-items-center" style="gap:10px;">
+            <i class="fas {{ $iconMap[$color] ?? 'fa-file' }}"></i>
+            <div>
+                <strong>Status: {{ $quotation->status_label }}</strong>
+                @if($quotation->approved_at)
+                <span style="font-size:12px;opacity:.75;margin-left:8px;">
+                    &mdash; {{ $quotation->approved_at->isoFormat('D MMMM YYYY') }} oleh {{ $quotation->approver->name ?? '&mdash;' }}
+                </span>
+                @endif
+            </div>
         </div>
+        <span style="font-size:11px;opacity:.7;white-space:nowrap;">
+            {{ $quotation->creator->name }} &middot; {{ $quotation->created_at->isoFormat('D MMM YYYY') }}
+        </span>
     </div>
-    <span style="font-size:11px;opacity:.7;white-space:nowrap;">
-        {{ $quotation->creator->name }} · {{ $quotation->created_at->isoFormat('D MMM YYYY') }}
-    </span>
+    @if($quotation->director_notes)
+    <div style="margin-top:10px;padding:10px 14px;background:rgba(0,0,0,0.05);border-radius:8px;font-size:12px;line-height:1.6;border-left:3px solid rgba(0,0,0,0.15);">
+        <i class="fas fa-comment-dots mr-1" style="opacity:.6;"></i>
+        <strong>Catatan Director:</strong> {{ $quotation->director_notes }}
+    </div>
+    @endif
 </div>
 
 <div class="row">
@@ -348,5 +349,59 @@ new QRCode(document.getElementById("qrcode"), {
     colorDark: "#000000", colorLight: "#ffffff",
     correctLevel: QRCode.CorrectLevel.M
 });
+
+function openApproveModal() {
+    Swal.fire({
+        title: 'Setujui Quotation',
+        html: `
+            <p style="font-size:13px;color:#64748b;margin-bottom:12px;">
+                Quotation <strong>{{ $quotation->quotation_number }}</strong> akan disetujui.
+            </p>
+            <textarea id="swal-notes" class="swal2-textarea" placeholder="Catatan untuk staff (opsional)..." style="height:100px;font-size:13px;"></textarea>
+        `,
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: '<i class="fas fa-check mr-1"></i> Ya, Setujui',
+        cancelButtonText: 'Batal',
+        confirmButtonColor: '#16a34a',
+        focusConfirm: false,
+        preConfirm: () => {
+            const notes = document.getElementById('swal-notes').value;
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = '{{ route("billing.quotations.approve", $quotation) }}';
+            form.innerHTML = `<input name="_token" value="{{ csrf_token() }}"><input name="director_notes" value="${notes}">`;
+            document.body.appendChild(form);
+            form.submit();
+        }
+    });
+}
+
+function openRejectModal() {
+    Swal.fire({
+        title: 'Tolak Quotation',
+        html: `
+            <p style="font-size:13px;color:#64748b;margin-bottom:12px;">
+                Quotation <strong>{{ $quotation->quotation_number }}</strong> akan ditolak.
+            </p>
+            <textarea id="swal-notes" class="swal2-textarea" placeholder="Alasan penolakan (opsional)..." style="height:100px;font-size:13px;"></textarea>
+        `,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: '<i class="fas fa-xmark mr-1"></i> Ya, Tolak',
+        cancelButtonText: 'Batal',
+        confirmButtonColor: '#dc2626',
+        focusConfirm: false,
+        preConfirm: () => {
+            const notes = document.getElementById('swal-notes').value;
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = '{{ route("billing.quotations.reject", $quotation) }}';
+            form.innerHTML = `<input name="_token" value="{{ csrf_token() }}"><input name="director_notes" value="${notes}">`;
+            document.body.appendChild(form);
+            form.submit();
+        }
+    });
+}
 </script>
 @endpush

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Modules\Billing\App\Models\Client;
 use Modules\Billing\App\Models\Invoice;
 use Modules\Billing\App\Models\InvoiceItem;
+use Modules\Billing\App\Models\InvoicePayment;
 use Modules\Billing\App\Models\Quotation;
 
 class InvoiceController extends Controller
@@ -18,14 +19,14 @@ class InvoiceController extends Controller
     {
         $user = Auth::user();
 
-        // Hanya tampilkan invoice yang sudah diterbitkan (approved / paid)
+        // Hanya tampilkan invoice yang sudah diterbitkan (approved / partial / paid)
         $invoices = $user->isDirector()
             ? Invoice::with(['client', 'creator'])
-                ->whereIn('status', ['approved', 'paid'])
+                ->whereIn('status', ['approved', 'partial', 'paid'])
                 ->latest()->get()
             : Invoice::where('created_by', $user->id)
                 ->with(['client', 'creator'])
-                ->whereIn('status', ['approved', 'paid'])
+                ->whereIn('status', ['approved', 'partial', 'paid'])
                 ->latest()->get();
 
         // Invoice menunggu persetujuan (khusus Director)
@@ -166,7 +167,7 @@ class InvoiceController extends Controller
     {
         $user = Auth::user();
         $this->authorizeView($invoice, $user);
-        $invoice->load(['client', 'creator', 'approver', 'items', 'quotation']);
+        $invoice->load(['client', 'creator', 'approver', 'items', 'quotation', 'payments.recorder']);
 
         return view('billing::invoices.show', compact('user', 'invoice'));
     }
@@ -211,14 +212,18 @@ class InvoiceController extends Controller
 
         $invoice->update([
             'client_id'            => $data['client_id'],
-            'quotation_id'         => $data['quotation_id'] ?? null,
             'title'                => $data['title'],
             'description'          => $data['description'] ?? null,
             'terms_and_conditions' => $data['terms_and_conditions'] ?? null,
             'notes'                => $data['notes'] ?? null,
             'invoice_date'         => $data['invoice_date'],
-            'due_date'             => $data['due_date'] ?? null,
+            'due_date'             => $due_date ?? null,
             'pt_profit_percent'    => $data['pt_profit_percent'],
+            // Revisi apapun wajib approval ulang
+            'status'               => 'draft',
+            'approved_by'          => null,
+            'approved_at'          => null,
+            'director_notes'       => null,
         ]);
 
         $invoice->items()->delete();
@@ -238,7 +243,7 @@ class InvoiceController extends Controller
         $invoice->save();
 
         return redirect()->route('billing.invoices.show', $invoice)
-            ->with('success', 'Invoice berhasil diperbarui.');
+            ->with('success', 'Invoice berhasil diperbarui. Status dikembalikan ke Draft — ajukan kembali ke Director.');
     }
 
     public function submit(Invoice $invoice)
@@ -254,51 +259,90 @@ class InvoiceController extends Controller
             ->with('success', 'Invoice berhasil diajukan untuk persetujuan Director.');
     }
 
-    public function approve(Invoice $invoice)
+    public function approve(Request $request, Invoice $invoice)
     {
         if (!Auth::user()->isDirector()) {
             abort(403);
         }
 
+        $request->validate(['director_notes' => ['nullable', 'string', 'max:1000']]);
+
         $invoice->update([
-            'status'      => 'approved',
-            'approved_by' => Auth::id(),
-            'approved_at' => now(),
+            'status'         => 'approved',
+            'approved_by'    => Auth::id(),
+            'approved_at'    => now(),
+            'director_notes' => $request->director_notes,
+            'amount_paid'      => 0,
+            'amount_remaining' => $invoice->total,
         ]);
 
         return redirect()->route('billing.invoices.show', $invoice)
-            ->with('success', 'Invoice berhasil disetujui dan siap diterbitkan.');
+            ->with('success', 'Invoice berhasil disetujui dan resmi diterbitkan.');
     }
 
-    public function reject(Invoice $invoice)
+    public function reject(Request $request, Invoice $invoice)
     {
         if (!Auth::user()->isDirector()) {
             abort(403);
         }
 
+        $request->validate(['director_notes' => ['nullable', 'string', 'max:1000']]);
+
         $invoice->update([
-            'status'      => 'rejected',
-            'approved_by' => Auth::id(),
-            'approved_at' => now(),
+            'status'         => 'rejected',
+            'approved_by'    => Auth::id(),
+            'approved_at'    => now(),
+            'director_notes' => $request->director_notes,
         ]);
 
         return redirect()->route('billing.invoices.show', $invoice)
             ->with('success', 'Invoice telah ditolak.');
     }
 
-    public function markPaid(Invoice $invoice)
+    /**
+     * Catat pembayaran invoice — lunas penuh atau parsial.
+     */
+    public function addPayment(Request $request, Invoice $invoice)
     {
         if (!Auth::user()->isDirector()) {
             abort(403);
         }
 
-        if ($invoice->status !== 'approved') {
-            return back()->with('error', 'Hanya invoice yang disetujui yang bisa ditandai lunas.');
+        if (!in_array($invoice->status, ['approved', 'partial'])) {
+            return back()->with('error', 'Hanya invoice yang sudah diterbitkan yang bisa dicatat pembayarannya.');
         }
 
-        $invoice->update(['status' => 'paid']);
+        $data = $request->validate([
+            'payment_type'   => ['required', 'in:partial,full'],
+            'amount'         => ['required_if:payment_type,partial', 'nullable', 'numeric', 'min:1'],
+            'payment_date'   => ['required', 'date'],
+            'payment_method' => ['nullable', 'string', 'max:100'],
+            'notes'          => ['nullable', 'string', 'max:500'],
+        ]);
+
+        $amount = $data['payment_type'] === 'full'
+            ? $invoice->amount_remaining
+            : (float) $data['amount'];
+
+        // Jangan melebihi sisa tagihan
+        $amount = min($amount, $invoice->amount_remaining);
+
+        InvoicePayment::create([
+            'invoice_id'     => $invoice->id,
+            'recorded_by'    => Auth::id(),
+            'type'           => $data['payment_type'] === 'full' ? 'full' : 'partial',
+            'amount'         => $amount,
+            'payment_date'   => $data['payment_date'],
+            'payment_method' => $data['payment_method'] ?? null,
+            'notes'          => $data['notes'] ?? null,
+        ]);
+
+        $invoice->recalculatePayment();
+
+        $label = $invoice->status === 'paid' ? 'Invoice telah Lunas.' : 'Pembayaran sebesar Rp ' . number_format($amount, 0, ',', '.') . ' berhasil dicatat.';
+
         return redirect()->route('billing.invoices.show', $invoice)
-            ->with('success', 'Invoice ditandai sebagai Lunas.');
+            ->with('success', $label);
     }
 
     public function destroy(Invoice $invoice)

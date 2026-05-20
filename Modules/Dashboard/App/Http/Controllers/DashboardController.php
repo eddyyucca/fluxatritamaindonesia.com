@@ -61,21 +61,57 @@ class DashboardController extends Controller
         $data = $request->validate([
             'name'     => ['required', 'string', 'max:255'],
             'email'    => ['required', 'email', 'unique:users'],
-            'password' => ['required', 'min:8', 'confirmed'],
             'role'     => ['required', 'in:director,user'],
             'position' => ['nullable', 'string', 'max:100'],
         ]);
 
+        $randomPassword = \Illuminate\Support\Str::random(10);
+
         User::create([
             'name'     => $data['name'],
             'email'    => $data['email'],
-            'password' => Hash::make($data['password']),
+            'password' => Hash::make($randomPassword),
             'role'     => $data['role'],
             'position' => $data['position'] ?? null,
+            'must_change_password' => true,
         ]);
 
         return redirect()->route('dashboard.users')
-            ->with('success', 'Pengguna berhasil ditambahkan.');
+            ->with('success', "Pengguna berhasil ditambahkan. Password sementara: {$randomPassword}");
+    }
+
+    public function editUser(\App\Models\User $user)
+    {
+        if (!Auth::user()->isDirector()) abort(403);
+        $positions = \App\Models\Position::active()->orderBy('name')->get();
+        // Ambil data atasan (yang bukan user ini sendiri)
+        $supervisors = \App\Models\User::where('id', '!=', $user->id)->orderBy('name')->get();
+        return view('dashboard::user-edit', compact('user', 'positions', 'supervisors'));
+    }
+
+    public function updateUser(Request $request, \App\Models\User $user)
+    {
+        if (!Auth::user()->isDirector()) abort(403);
+
+        $data = $request->validate([
+            'name'     => ['required', 'string', 'max:255'],
+            'email'    => ['required', 'email', 'unique:users,email,' . $user->id],
+            'role'     => ['required', 'in:director,user'],
+            'position' => ['nullable', 'string', 'max:100'],
+            'org_level' => ['nullable', 'integer', 'min:1', 'max:5'],
+            'parent_id' => ['nullable', 'exists:users,id'],
+        ]);
+
+        if ($request->filled('password')) {
+            $request->validate(['password' => ['min:8']]);
+            $data['password'] = \Illuminate\Support\Facades\Hash::make($request->password);
+            $data['must_change_password'] = true; // force change if director resets it
+        }
+
+        $user->update($data);
+
+        return redirect()->route('dashboard.users')
+            ->with('success', 'Data pengguna berhasil diperbarui.');
     }
 
     public function organization()

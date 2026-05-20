@@ -76,7 +76,10 @@ class AuthController extends Controller
             return back()->withErrors(['current_password' => 'Password saat ini tidak sesuai.'])->withInput();
         }
 
-        $user->update(['password' => Hash::make($data['password'])]);
+        $user->update([
+            'password' => Hash::make($data['password']),
+            'must_change_password' => false
+        ]);
 
         return redirect()->route('profile.edit')
             ->with('success', 'Password berhasil diubah.');

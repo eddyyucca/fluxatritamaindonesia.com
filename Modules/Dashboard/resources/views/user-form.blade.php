@@ -54,21 +54,10 @@
                         <small class="form-text text-muted">Director dapat menyetujui/menolak dokumen dan melihat seluruh data.</small>
                     </div>
 
-                    <hr class="my-3">
-
-                    <div class="form-group">
-                        <label>Password <span class="required-star">*</span></label>
-                        <input type="password" name="password"
-                               class="form-control" placeholder="Minimal 8 karakter" required minlength="8">
+                    <div class="alert alert-info mt-3" style="font-size:12px;">
+                        <i class="fas fa-info-circle mr-1"></i> Password akan dibuatkan secara otomatis dan ditampilkan setelah user berhasil ditambahkan. User wajib mengganti password saat login pertama kali.
                     </div>
 
-                    <div class="form-group">
-                        <label>Konfirmasi Password <span class="required-star">*</span></label>
-                        <input type="password" name="password_confirmation"
-                               class="form-control" placeholder="Ulangi password" required>
-                    </div>
-
-                    <hr class="my-3">
 
                     <div class="d-flex align-items-center" style="gap:10px;">
                         <button type="submit" class="btn btn-fluxa-primary">

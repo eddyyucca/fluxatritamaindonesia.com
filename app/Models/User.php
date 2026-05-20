@@ -20,6 +20,7 @@ class User extends Authenticatable
         'position',
         'parent_id',
         'org_level',
+        'must_change_password',
     ];
 
     protected $hidden = [

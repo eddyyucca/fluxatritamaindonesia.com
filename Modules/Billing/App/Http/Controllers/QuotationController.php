@@ -131,6 +131,11 @@ class QuotationController extends Controller
             'notes'                => $data['notes'] ?? null,
             'valid_until'          => $data['valid_until'] ?? null,
             'pt_profit_percent'    => $data['pt_profit_percent'],
+            // Jika sebelumnya sudah diajukan/disetujui, revisi wajib approval ulang
+            'status'               => 'draft',
+            'approved_by'          => null,
+            'approved_at'          => null,
+            'director_notes'       => null,
         ]);
 
         $quotation->items()->delete();
@@ -150,7 +155,7 @@ class QuotationController extends Controller
         $quotation->save();
 
         return redirect()->route('billing.quotations.show', $quotation)
-            ->with('success', 'Quotation berhasil diperbarui.');
+            ->with('success', 'Quotation berhasil diperbarui. Status dikembalikan ke Draft — ajukan kembali untuk persetujuan.');
     }
 
     public function submit(Quotation $quotation)
@@ -166,16 +171,19 @@ class QuotationController extends Controller
             ->with('success', 'Quotation berhasil diajukan untuk persetujuan.');
     }
 
-    public function approve(Quotation $quotation)
+    public function approve(Request $request, Quotation $quotation)
     {
         if (!Auth::user()->isDirector()) {
             abort(403);
         }
 
+        $request->validate(['director_notes' => ['nullable', 'string', 'max:1000']]);
+
         $quotation->update([
-            'status'      => 'approved',
-            'approved_by' => Auth::id(),
-            'approved_at' => now(),
+            'status'         => 'approved',
+            'approved_by'    => Auth::id(),
+            'approved_at'    => now(),
+            'director_notes' => $request->director_notes,
         ]);
 
         return redirect()->route('billing.quotations.show', $quotation)
@@ -188,10 +196,13 @@ class QuotationController extends Controller
             abort(403);
         }
 
+        $request->validate(['director_notes' => ['nullable', 'string', 'max:1000']]);
+
         $quotation->update([
-            'status'      => 'rejected',
-            'approved_by' => Auth::id(),
-            'approved_at' => now(),
+            'status'         => 'rejected',
+            'approved_by'    => Auth::id(),
+            'approved_at'    => now(),
+            'director_notes' => $request->director_notes,
         ]);
 
         return redirect()->route('billing.quotations.show', $quotation)

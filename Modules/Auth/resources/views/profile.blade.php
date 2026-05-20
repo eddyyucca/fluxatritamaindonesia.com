@@ -16,8 +16,10 @@
                 @if($errors->has('name') || $errors->has('email') || $errors->has('position'))
                 <div class="alert alert-danger mb-3">
                     <ul class="mb-0 pl-3" style="font-size:13px;">
-                        @foreach($errors->only(['name','email','position']) as $err)
-                        <li>{{ $err }}</li>
+                        @foreach(['name','email','position'] as $f)
+                            @foreach($errors->get($f) as $err)
+                            <li>{{ $err }}</li>
+                            @endforeach
                         @endforeach
                     </ul>
                 </div>
@@ -91,8 +93,10 @@
                 @if($errors->has('current_password') || $errors->has('password'))
                 <div class="alert alert-danger mb-3">
                     <ul class="mb-0 pl-3" style="font-size:13px;">
-                        @foreach($errors->only(['current_password','password']) as $err)
-                        <li>{{ $err }}</li>
+                        @foreach(['current_password','password'] as $f)
+                            @foreach($errors->get($f) as $err)
+                            <li>{{ $err }}</li>
+                            @endforeach
                         @endforeach
                     </ul>
                 </div>
