@@ -30,7 +30,7 @@
         .doc-title { font-size: 24px; font-weight: bold; color: #0284c7; letter-spacing: 1px; margin: 0 0 2px 0; }
         .doc-no { font-size: 12px; font-weight: bold; color: #334155; margin: 0 0 8px 0; }
         
-        .meta-table { width: 100%; border-collapse: collapse; float: right; width: 200px; }
+        .meta-table { border-collapse: collapse; width: 200px; margin-left: auto; }
         .meta-table td { font-size: 10px; padding: 2px 0; }
         .meta-label { color: #64748b; font-weight: bold; text-align: right; padding-right: 8px; }
         .meta-val { color: #0f172a; font-weight: bold; text-align: right; }
@@ -184,7 +184,7 @@
                         <p class="box-title">STATUS PEMBAYARAN</p>
                         @php
                             $statusClass = 'status-unpaid';
-                            $statusText = 'BELUM DIBAYAR';
+                            $statusText = 'MENUNGGU PEMBAYARAN';
                             if ($invoice->status === 'paid') {
                                 $statusClass = 'status-paid';
                                 $statusText = 'LUNAS';
@@ -269,8 +269,8 @@
         <div style="border-left: 3px solid #0284c7; padding-left: 12px; margin-bottom: 30px;">
             <p style="font-size: 10px; font-weight: bold; color: #0f172a; margin: 0 0 6px 0; text-transform: uppercase;">Informasi Pembayaran</p>
             <p style="font-size: 11px; color: #475569; margin: 0 0 4px 0;">Silakan lakukan pembayaran melalui transfer bank ke:</p>
-            <p style="font-size: 11px; color: #475569; margin: 0 0 4px 0; margin-top: 8px;">Bank: <span style="font-weight: bold; color: #0f172a;">BSI (Bank Syariah Indonesia)</span></p>
-            <p style="font-size: 11px; color: #475569; margin: 0 0 4px 0;">No. Rekening: <span style="font-weight: bold; color: #0f172a; font-size: 13px;">7288339891</span></p>
+            <p style="font-size: 11px; color: #475569; margin: 0 0 4px 0; margin-top: 8px;">Bank: <span style="font-weight: bold; color: #0f172a;">Bank Mandiri</span></p>
+            <p style="font-size: 11px; color: #475569; margin: 0 0 4px 0;">No. Rekening: <span style="font-weight: bold; color: #0f172a; font-size: 13px;">031-00-2387227-1</span></p>
             <p style="font-size: 11px; color: #475569; margin: 0 0 4px 0;">Atas Nama: <span style="font-weight: bold; color: #0f172a;">PT FLUXA TRITAMA INDONESIA</span></p>
             @if($invoice->notes)
             <p style="font-size:10px; color:#64748b; font-style: italic; margin-top: 10px;">Catatan: {{ $invoice->notes }}</p>

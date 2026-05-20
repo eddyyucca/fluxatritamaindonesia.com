@@ -30,7 +30,7 @@
         .doc-title { font-size: 32px; font-weight: bold; color: #0f172a; letter-spacing: 2px; margin: 0 0 4px 0; }
         .doc-no { font-size: 16px; font-weight: bold; color: #0f172a; margin: 0 0 12px 0; }
         
-        .meta-table { width: 100%; border-collapse: collapse; float: right; width: 220px; }
+        .meta-table { border-collapse: collapse; width: 220px; margin-left: auto; }
         .meta-table td { font-size: 12px; padding: 2px 0; }
         .meta-label { color: #64748b; font-weight: bold; text-align: right; padding-right: 8px; }
         .meta-val { color: #0f172a; font-weight: bold; text-align: right; }
@@ -220,24 +220,22 @@
             </tr>
         </table>
 
-        <table class="bottom-table">
-            <tr>
-                <td style="width: 60%; padding-right: 20px;">
-                    <!-- T&C INFO -->
-                    @if($quotation->terms_and_conditions)
-                    <div class="tnc-box">
-                        <p class="tnc-title">Syarat &amp; Ketentuan</p>
-                        <div class="tnc-text">
-                            {!! nl2br(e($quotation->terms_and_conditions)) !!}
-                        </div>
-                    </div>
-                    @endif
+        <!-- T&C FULL WIDTH -->
+        @if($quotation->terms_and_conditions)
+        <div class="tnc-box">
+            <p class="tnc-title">Syarat &amp; Ketentuan</p>
+            <div class="tnc-text">
+                {!! nl2br(e($quotation->terms_and_conditions)) !!}
+            </div>
+        </div>
+        @endif
 
-                    <!-- CREATOR NAME DIRECTLY BELOW T&C -->
-                    <div style="margin-top: 25px;">
-                        <p style="font-size:11px; color:#64748b; font-weight: bold; margin:0 0 4px 0;">Dibuat Oleh,</p>
-                        <p style="font-size:13px; font-weight: bold; color: #0f172a; margin: 0;">{{ $quotation->creator->name }}</p>
-                    </div>
+        <!-- SIGNATURES -->
+        <table class="bottom-table" style="margin-top: 30px;">
+            <tr>
+                <td style="width: 60%; vertical-align: bottom; padding-bottom: 8px;">
+                    <p style="font-size:11px; color:#64748b; font-weight: bold; margin:0 0 4px 0;">Dibuat Oleh,</p>
+                    <p style="font-size:13px; font-weight: bold; color: #0f172a; margin: 0;">{{ $quotation->creator->name }}</p>
                 </td>
                 <td style="width: 40%;" class="sig-box">
                     <p style="font-size:11px; color:#64748b; font-weight: bold; margin:0 0 8px 0;">Disetujui Oleh,</p>
