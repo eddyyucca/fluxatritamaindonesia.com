@@ -27,7 +27,7 @@
         .company-name { font-size: 14px; font-weight: bold; color: #0f172a; margin: 0 0 2px 0; }
         .company-contact { font-size: 10px; color: #64748b; margin: 0; }
         
-        .doc-title { font-size: 24px; font-weight: bold; color: #0284c7; letter-spacing: 1px; margin: 0 0 2px 0; }
+        .doc-title { font-size: 24px; font-weight: bold; color: #0f172a; letter-spacing: 1px; margin: 0 0 2px 0; }
         .doc-no { font-size: 12px; font-weight: bold; color: #334155; margin: 0 0 8px 0; }
         
         .meta-table { border-collapse: collapse; width: 200px; margin-left: auto; }
@@ -81,7 +81,7 @@
         .totals-val { text-align: right; color: #0f172a; font-weight: bold; width: 25%; }
         
         .grand-total-label { text-align: right; font-size: 12px; font-weight: bold; color: #0f172a; border-top: 2px solid #cbd5e1; padding-top: 8px; }
-        .grand-total-val { text-align: right; font-size: 14px; font-weight: bold; color: #0284c7; border-top: 2px solid #cbd5e1; padding-top: 8px; }
+        .grand-total-val { text-align: right; font-size: 14px; font-weight: bold; color: #0f172a; border-top: 2px solid #cbd5e1; padding-top: 8px; }
 
         /* ── PAYMENT & SIGNATURE ── */
         .bottom-table { width: 100%; border-collapse: collapse; page-break-inside: avoid; }
@@ -197,10 +197,10 @@
                             {{ $statusText }}
                         </div>
                         
-                        @if($invoice->paid_amount > 0)
+                        @if($invoice->amount_paid > 0)
                         <div style="font-size: 10px; color: #475569; margin-top: 8px; border-top: 1px dashed #cbd5e1; padding-top: 6px;">
-                            Telah dibayar: <strong>Rp{{ number_format($invoice->paid_amount, 0, ',', '.') }}</strong><br>
-                            Sisa tagihan: <strong>Rp{{ number_format($invoice->remaining_balance, 0, ',', '.') }}</strong>
+                            Telah dibayar: <strong>Rp{{ number_format($invoice->amount_paid, 0, ',', '.') }}</strong><br>
+                            Sisa tagihan: <strong>Rp{{ number_format($invoice->amount_remaining, 0, ',', '.') }}</strong>
                         </div>
                         @endif
                     </div>
@@ -236,15 +236,15 @@
                 <td class="totals-label">Subtotal</td>
                 <td class="totals-val">Rp{{ number_format($invoice->total, 0, ',', '.') }}</td>
             </tr>
-            @if($invoice->paid_amount > 0)
+            @if($invoice->amount_paid > 0)
             <tr>
                 <td class="totals-label">Telah Dibayar</td>
-                <td class="totals-val" style="color:#059669;">- Rp{{ number_format($invoice->paid_amount, 0, ',', '.') }}</td>
+                <td class="totals-val" style="color:#059669;">- Rp{{ number_format($invoice->amount_paid, 0, ',', '.') }}</td>
             </tr>
             @endif
             <tr>
-                <td class="grand-total-label">{{ $invoice->paid_amount > 0 ? 'SISA TAGIHAN' : 'TOTAL TAGIHAN' }}</td>
-                <td class="grand-total-val">Rp{{ number_format($invoice->remaining_balance, 0, ',', '.') }}</td>
+                <td class="grand-total-label">{{ $invoice->amount_paid > 0 ? 'SISA TAGIHAN' : 'TOTAL TAGIHAN' }}</td>
+                <td class="grand-total-val">Rp{{ number_format($invoice->amount_remaining, 0, ',', '.') }}</td>
             </tr>
         </table>
 
