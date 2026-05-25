@@ -1,0 +1,30 @@
+{
+    "name": "nwidart/statereport",
+    "description": "",
+    "authors": [
+        {
+            "name": "Nicolas Widart",
+            "email": "n.widart@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\StateReport\\": ".",
+            "Modules\\StateReport\\Database\\Factories\\": "database/factories/",
+            "Modules\\StateReport\\Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Modules\\StateReport\\Tests\\": "tests/"
+        }
+    }
+}

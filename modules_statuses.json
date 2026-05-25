@@ -2,5 +2,9 @@
     "Web": true,
     "Auth": true,
     "Dashboard": true,
-    "Billing": true
+    "Billing": true,
+    "StateReport": true,
+    "Finance": true,
+    "License": true,
+    "Project": true
 }

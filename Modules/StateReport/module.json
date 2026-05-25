@@ -1,0 +1,11 @@
+{
+    "name": "StateReport",
+    "alias": "statereport",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\StateReport\\Providers\\StateReportServiceProvider"
+    ],
+    "files": []
+}

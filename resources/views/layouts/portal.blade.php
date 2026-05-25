@@ -351,7 +351,35 @@
         .empty-state { text-align: center; padding: 56px 24px; }
         .empty-state-icon { width: 64px; height: 64px; border-radius: 16px; background: #f1f5f9; margin: 0 auto 16px; display: flex; align-items: center; justify-content: center; font-size: 24px; color: #94a3b8; }
         .empty-state p { color: #64748b; font-size: 14px; }
-        .empty-state small { color: #94a3b8; font-size: 12px; }
+        .empty-state small { color: #94a3b8; font-size: 12px; }        /* Custom Sidebar Size & Transparent Scrollbar */
+        .sidebar .nav-link {
+            font-size: 13.5px !important;
+            padding: 6px 16px !important;
+        }
+        .sidebar .nav-header {
+            font-size: 11px !important;
+            padding: 10px 16px 4px 16px !important;
+            letter-spacing: 0.5px;
+            opacity: 0.7;
+        }
+        .sidebar .nav-icon {
+            font-size: 14px !important;
+        }
+        
+        /* Scrollbar Transparan untuk Sidebar */
+        .sidebar-scroll::-webkit-scrollbar {
+            width: 5px;
+        }
+        .sidebar-scroll::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .sidebar-scroll::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+        }
+        .sidebar-scroll::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
     </style>
 
     @stack('styles')
@@ -432,118 +460,100 @@
         </a>
 
         <div class="sidebar d-flex flex-column" style="height:calc(100% - 58px);">
-            <nav class="mt-2 flex-grow-1" style="overflow-y:auto;">
-                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" data-accordion="false">
+            <nav class="mt-2 flex-grow-1 sidebar-scroll" style="overflow-y:auto; overflow-x:hidden;">
+                <ul class="nav nav-pills nav-sidebar flex-column nav-compact text-sm" data-widget="treeview" data-accordion="false" style="padding-bottom: 20px;">
 
-                    <li class="nav-header">Utama</li>
-
+                    <!-- 1. Analitik & Dashboard -->
+                    <li class="nav-header">Analitik & Dashboard</li>
                     <li class="nav-item">
-                        <a href="{{ route('dashboard') }}"
-                           class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
+                        <a href="{{ route('finance.analytics.index') }}" class="nav-link {{ request()->routeIs('finance.analytics.index') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-chart-pie"></i>
+                            <p>Laporan & Analitik</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('dashboard') }}" class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-chart-line"></i>
-                            <p>Dashboard</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('dashboard.organization') }}"
-                           class="nav-link {{ request()->routeIs('dashboard.organization*') ? 'active' : '' }}">
-                            <i class="nav-icon fas fa-sitemap"></i>
-                            <p>Struktur Organisasi</p>
+                            <p>Dashboard Utama</p>
                         </a>
                     </li>
 
-                    <li class="nav-header">Dokumen</li>
-
+                    <!-- 2. Operasional & Project -->
+                    <li class="nav-header">Operasional & Project</li>
                     <li class="nav-item">
-                        <a href="{{ route('billing.quotations.index') }}"
-                           class="nav-link {{ request()->routeIs('billing.quotations.index') ? 'active' : '' }}">
+                        <a href="{{ route('project.index') }}" class="nav-link {{ request()->routeIs('project.*') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-diagram-project"></i>
+                            <p>Project & Kanban</p>
+                        </a>
+                    </li>
+
+                    <!-- 3. Aset & Lisensi -->
+                    <li class="nav-header">Aset & Lisensi</li>
+                    <li class="nav-item">
+                        <a href="{{ route('license.index') }}" class="nav-link {{ request()->routeIs('license.*') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-key"></i>
+                            <p>Pencatatan Lisensi</p>
+                        </a>
+                    </li>
+
+                    <!-- 4. Billing & Kas -->
+                    <li class="nav-header">Billing & Kas</li>
+                    <li class="nav-item">
+                        <a href="{{ route('billing.quotations.index') }}" class="nav-link {{ request()->routeIs('billing.quotations.*') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-file-contract"></i>
                             <p>Quotation
                             @if(Auth::user()->isDirector())
-                            @php $pendingQ = \Modules\Billing\App\Models\Quotation::where('status','sent')->count(); @endphp
-                            @if($pendingQ > 0)
-                            <span class="badge badge-warning right" style="font-size:10px;background:#d97706;color:#fff;border-radius:99px;padding:1px 6px;margin-left:4px;">{{ $pendingQ }}</span>
-                            @endif
+                                @php $pendingQ = \Illuminate\Support\Facades\DB::table('quotations')->where('status','sent')->count(); @endphp
+                                @if($pendingQ > 0)
+                                <span class="badge badge-warning right" style="font-size:10px;background:#d97706;color:#fff;border-radius:99px;padding:1px 6px;margin-left:4px;">{{ $pendingQ }}</span>
+                                @endif
                             @endif
                             </p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('billing.quotations.create') }}"
-                           class="nav-link {{ request()->routeIs('billing.quotations.create') ? 'active' : '' }}"
-                           style="padding-left:2.2rem !important; font-size:0.77rem !important;">
-                            <i class="nav-icon fas fa-plus"></i>
-                            <p>Buat Quotation</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('billing.invoices.index') }}"
-                           class="nav-link {{ request()->routeIs('billing.invoices.index') ? 'active' : '' }}">
+                        <a href="{{ route('billing.invoices.index') }}" class="nav-link {{ request()->routeIs('billing.invoices.*') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-file-invoice-dollar"></i>
                             <p>Invoice
                             @if(Auth::user()->isDirector())
-                            @php $pendingI = \Modules\Billing\App\Models\Invoice::where('status','pending_approval')->count(); @endphp
-                            @if($pendingI > 0)
-                            <span class="badge badge-warning right" style="font-size:10px;background:#dc2626;color:#fff;border-radius:99px;padding:1px 6px;margin-left:4px;">{{ $pendingI }}</span>
-                            @endif
+                                @php $pendingI = \Illuminate\Support\Facades\DB::table('invoices')->where('status','pending_approval')->count(); @endphp
+                                @if($pendingI > 0)
+                                <span class="badge badge-warning right" style="font-size:10px;background:#dc2626;color:#fff;border-radius:99px;padding:1px 6px;margin-left:4px;">{{ $pendingI }}</span>
+                                @endif
                             @endif
                             </p>
                         </a>
                     </li>
-
-
-                    <li class="nav-header">Master Data</li>
-
                     <li class="nav-item">
-                        <a href="{{ route('billing.clients.index') }}"
-                           class="nav-link {{ request()->routeIs('billing.clients.*') ? 'active' : '' }}">
-                            <i class="nav-icon fas fa-building"></i>
-                            <p>Klien</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('dashboard.positions') }}"
-                           class="nav-link {{ request()->routeIs('dashboard.positions*') ? 'active' : '' }}">
-                            <i class="nav-icon fas fa-id-badge"></i>
-                            <p>Jabatan</p>
-                        </a>
-                    </li>
-
-                    @if(Auth::user()->isDirector())
-                    <li class="nav-header">Manajemen</li>
-                    <li class="nav-item">
-                        <a href="{{ route('dashboard.users') }}"
-                           class="nav-link {{ request()->routeIs('dashboard.users*') ? 'active' : '' }}">
-                            <i class="nav-icon fas fa-users-gear"></i>
-                            <p>Pengguna</p>
-                        </a>
-                    @endif
-
-                    <li class="nav-header">Operasional</li>
-                    <li class="nav-item">
-                        <a href="{{ route('coming-soon', ['feature' => 'Manajemen Proyek']) }}" class="nav-link">
-                            <i class="nav-icon fas fa-diagram-project"></i>
-                            <p>Proyek IT</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('coming-soon', ['feature' => 'Manajemen Tugas']) }}" class="nav-link">
-                            <i class="nav-icon fas fa-list-check"></i>
-                            <p>Tugas & Kanban</p>
-                        </a>
-                    </li>
-
-                    <li class="nav-header">Keuangan & Analitik</li>
-                    <li class="nav-item">
-                        <a href="{{ route('coming-soon', ['feature' => 'Arus Kas (Cashflow)']) }}" class="nav-link">
+                        <a href="{{ route('finance.cashflow.index') }}" class="nav-link {{ request()->routeIs('finance.cashflow.index') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-money-bill-wave"></i>
-                            <p>Arus Kas</p>
+                            <p>Arus Kas (Cashflow)</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('coming-soon', ['feature' => 'Laporan & Analitik']) }}" class="nav-link">
-                            <i class="nav-icon fas fa-chart-pie"></i>
-                            <p>Laporan</p>
+                        <a href="{{ route('finance.expenses.index') }}" class="nav-link {{ request()->routeIs('finance.expenses.*') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-receipt"></i>
+                            <p>Laporan & Analitik</p>
+                        </a>
+                    </li>
+
+                    <li class="nav-header">Pelaporan Negara</li>
+                    <li class="nav-item">
+                        <a href="{{ route('statereport.financials.index') }}" class="nav-link {{ request()->routeIs('statereport.financials.*') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-file-invoice-dollar"></i>
+                            <p>Pelaporan Keuangan</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('statereport.taxes.index') }}" class="nav-link {{ request()->routeIs('statereport.taxes.*') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-file-signature"></i>
+                            <p>Pelaporan SPT</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('statereport.others.index') }}" class="nav-link {{ request()->routeIs('statereport.others.*') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-folder-open"></i>
+                            <p>Laporan Lainnya</p>
                         </a>
                     </li>
 
