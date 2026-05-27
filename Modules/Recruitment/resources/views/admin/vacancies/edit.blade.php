@@ -34,10 +34,20 @@
                         <label class="required-star">Persyaratan Khusus</label>
                         <textarea name="requirements" class="form-control @error('requirements') is-invalid @enderror" rows="5" required>{{ old('requirements', $vacancy->requirements) }}</textarea>
                         @error('requirements')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                    </div>
+
+                    <div class="row">
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="closing_date">Batas Waktu Lamaran <span class="text-muted">(Opsional)</span></label>
                                 <input type="date" class="form-control" id="closing_date" name="closing_date" value="{{ old('closing_date', $vacancy->closing_date) }}">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group mb-3">
+                                <label class="required-star">Departemen / Divisi</label>
+                                <input type="text" name="department" class="form-control @error('department') is-invalid @enderror" value="{{ old('department', $vacancy->department) }}" required placeholder="Contoh: IT / Development">
+                                @error('department')<div class="invalid-feedback">{{ $message }}</div>@enderror
                             </div>
                         </div>
                         <div class="col-md-4">

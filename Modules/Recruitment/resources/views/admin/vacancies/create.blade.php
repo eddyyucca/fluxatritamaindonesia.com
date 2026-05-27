@@ -18,9 +18,21 @@
                         @error('title')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
                     
-                    <div class="form-group mb-3">
-                        <label>Lokasi Kerja</label>
-                        <input type="text" name="location" class="form-control" value="{{ old('location') }}" placeholder="Contoh: Jakarta Selatan (WFO)">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label class="required-star">Lokasi Kerja</label>
+                                <input type="text" name="location" class="form-control @error('location') is-invalid @enderror" value="{{ old('location') }}" required placeholder="Contoh: Jakarta Selatan (WFO)">
+                                @error('location')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label class="required-star">Departemen / Divisi</label>
+                                <input type="text" name="department" class="form-control @error('department') is-invalid @enderror" value="{{ old('department') }}" required placeholder="Contoh: IT / Development">
+                                @error('department')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                            </div>
+                        </div>
                     </div>
 
                     <div class="form-group mb-3">

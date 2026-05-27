@@ -76,6 +76,17 @@
                         <p>{{ session('error') }}</p>
                     </div>
                 @endif
+                
+                @if ($errors->any())
+                    <div class="mb-6 bg-red-500/20 border border-red-500/50 text-red-300 p-4 rounded-xl flex items-start gap-3">
+                        <i class="fas fa-exclamation-circle mt-1"></i>
+                        <ul class="list-disc pl-5">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
 
                 <div class="glass rounded-2xl p-8 md:p-12 shadow-2xl shadow-blue-900/20">
                     <div class="flex justify-between items-start flex-col md:flex-row gap-6 mb-10 pb-10 border-b border-white/10">
