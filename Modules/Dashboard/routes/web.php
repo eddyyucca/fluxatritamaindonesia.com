@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Modules\Dashboard\App\Http\Controllers\DashboardController;
 
-Route::middleware(['web', 'auth', 'force_password_change'])->group(function () {
+Route::middleware(['web', 'auth', \App\Http\Middleware\ForcePasswordChange::class, \App\Http\Middleware\BlockCandidate::class])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::prefix('dashboard')->name('dashboard.')->group(function () {

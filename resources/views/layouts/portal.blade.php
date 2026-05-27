@@ -487,6 +487,23 @@
                         </a>
                     </li>
 
+                    <!-- Rekrutmen & HR -->
+                    @if(Auth::user()->isDirector())
+                    <li class="nav-header">Rekrutmen & HR</li>
+                    <li class="nav-item">
+                        <a href="{{ route('admin.vacancies.index') }}" class="nav-link {{ request()->routeIs('admin.vacancies.*') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-briefcase"></i>
+                            <p>Kelola Lowongan</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('admin.applicants.index') }}" class="nav-link {{ request()->routeIs('admin.applicants.*') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-users-viewfinder"></i>
+                            <p>Kelola Pelamar</p>
+                        </a>
+                    </li>
+                    @endif
+
                     <!-- 3. Aset & Lisensi -->
                     <li class="nav-header">Aset & Lisensi</li>
                     <li class="nav-item">

@@ -13,6 +13,8 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->alias([
             'force_password_change' => \App\Http\Middleware\ForcePasswordChange::class,
+            'check_director' => \App\Http\Middleware\CheckDirector::class,
+            'block_candidate' => \App\Http\Middleware\BlockCandidate::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

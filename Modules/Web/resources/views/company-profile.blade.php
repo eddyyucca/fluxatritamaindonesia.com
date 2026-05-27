@@ -259,6 +259,7 @@
                 <a href="#portfolio"  class="nl" data-i18n="nav.projects">Proyek</a>
                 <a href="#process"    class="nl" data-i18n="nav.process">Proses</a>
                 <a href="#contact"    class="nl" data-i18n="nav.contact">Kontak</a>
+                <a href="/career/login" class="nl">Karir</a>
             </div>
 
             <div class="hidden lg:flex items-center gap-3">
@@ -268,7 +269,7 @@
                     <button class="lang-b" data-lang="zh">中文</button>
                 </div>
                 <button id="th-tog" class="th-tog"><i class="fas fa-moon text-sm" id="th-ic"></i></button>
-                <a href="mailto:official@fluxatritamaindonesia.com" class="btn-s" data-i18n="cta.email">Email Kami</a>
+                <a href="mailto:official@fluxa.co.id" class="btn-s" data-i18n="cta.email">Email Kami</a>
                 <a href="https://wa.me/6281250653005" class="btn-p" data-i18n="cta.consult">Konsultasi</a>
             </div>
 
@@ -290,6 +291,7 @@
                 <a href="#portfolio"  class="text-sm py-2.5 px-3 rounded-xl transition-colors" data-i18n="nav.projects">Proyek</a>
                 <a href="#process"    class="text-sm py-2.5 px-3 rounded-xl transition-colors" data-i18n="nav.process">Proses</a>
                 <a href="#contact"    class="text-sm py-2.5 px-3 rounded-xl transition-colors" data-i18n="nav.contact">Kontak</a>
+                <a href="/career/login" class="text-sm py-2.5 px-3 rounded-xl transition-colors">Karir</a>
             </div>
             <div class="flex gap-1.5 pt-3 border-t border-white/10">
                 <button class="lang-b active flex-1 text-center" data-lang="id">ID</button>
@@ -297,7 +299,7 @@
                 <button class="lang-b flex-1 text-center" data-lang="zh">中文</button>
             </div>
             <div class="flex flex-col gap-2">
-                <a href="mailto:official@fluxatritamaindonesia.com" class="btn-s text-center py-3" data-i18n="cta.email">Email Kami</a>
+                <a href="mailto:official@fluxa.co.id" class="btn-s text-center py-3" data-i18n="cta.email">Email Kami</a>
                 <a href="https://wa.me/6281250653005" class="btn-p text-center py-3" data-i18n="cta.consult">Konsultasi</a>
             </div>
         </div>
@@ -710,7 +712,7 @@
                     <p class="text-sm leading-relaxed text-slate-400 mb-6" data-i18n="contact.desc">Jika Anda butuh website company profile, aplikasi internal, atau infrastruktur IT yang lebih rapi, kami siap membantu dari perencanaan sampai implementasi.</p>
                     <div class="flex flex-col gap-3">
                         <a href="https://wa.me/6281250653005" class="btn-p text-center py-3.5 px-7" data-i18n="contact.cta1"><i class="fab fa-whatsapp mr-2"></i>Chat via WhatsApp</a>
-                        <a href="mailto:official@fluxatritamaindonesia.com" class="btn-s text-center py-3.5 px-7" data-i18n="contact.cta2"><i class="fas fa-envelope mr-2"></i>Kirim Email</a>
+                        <a href="mailto:official@fluxa.co.id" class="btn-s text-center py-3.5 px-7" data-i18n="contact.cta2"><i class="fas fa-envelope mr-2"></i>Kirim Email</a>
                     </div>
                 </div>
                 <div class="space-y-3">
@@ -718,7 +720,7 @@
                         <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style="background:rgba(56,189,248,.1)"><i class="fas fa-envelope text-sky-300 text-sm"></i></div>
                         <div class="min-w-0">
                             <p class="text-xs text-slate-500 uppercase tracking-widest mb-1" data-i18n="contact.card1">Email</p>
-                            <a href="mailto:official@fluxatritamaindonesia.com" class="text-sm text-slate-200 hover:text-white transition-colors break-all">official@fluxatritamaindonesia.com</a>
+                            <a href="mailto:official@fluxa.co.id" class="text-sm text-slate-200 hover:text-white transition-colors break-all">official@fluxa.co.id</a>
                         </div>
                     </div>
                     <div class="ct-item">
@@ -769,7 +771,7 @@
         <a href="https://wa.me/6281250653005" target="_blank" style="flex:1;display:flex;align-items:center;justify-content:center;gap:.3rem;padding:.375rem;border-radius:50px;background:linear-gradient(135deg,#25d366,#128c7e);color:#fff;font-size:.65rem;font-weight:700;text-decoration:none">
             <i class="fab fa-whatsapp"></i> WhatsApp
         </a>
-        <a href="mailto:official@fluxatritamaindonesia.com" style="flex:1;display:flex;align-items:center;justify-content:center;gap:.3rem;padding:.375rem;border-radius:50px;border:1px solid var(--border2);background:var(--surface);color:var(--text2);font-size:.65rem;font-weight:600;text-decoration:none">
+        <a href="mailto:official@fluxa.co.id" style="flex:1;display:flex;align-items:center;justify-content:center;gap:.3rem;padding:.375rem;border-radius:50px;border:1px solid var(--border2);background:var(--surface);color:var(--text2);font-size:.65rem;font-weight:600;text-decoration:none">
             <i class="fas fa-envelope"></i> Email
         </a>
     </div>
@@ -791,27 +793,27 @@ const T={
 };
 
 const WA='https://wa.me/6281250653005';
-const EM='mailto:official@fluxatritamaindonesia.com';
+const EM='mailto:official@fluxa.co.id';
 const chatR={
   layanan:{
-    id:'Kami menyediakan: (1) Application Development — web, mobile, sistem internal; (2) Infrastructure & Network — LAN/WAN, server, security; (3) IT Procurement — hardware & software.\n\nSilakan hubungi kami langsung untuk diskusi kebutuhan Anda:\n📱 WhatsApp: +62 812-5065-3005\n📧 Email: official@fluxatritamaindonesia.com',
-    en:'We provide: (1) Application Development — web, mobile, internal systems; (2) Infrastructure & Network; (3) IT Procurement.\n\nContact us directly to discuss your needs:\n📱 WhatsApp: +62 812-5065-3005\n📧 Email: official@fluxatritamaindonesia.com',
-    zh:'我们提供：(1) 应用程序开发; (2) 基础设施与网络; (3) IT采购。\n\n请直接联系我们讨论您的需求：\n📱 WhatsApp: +62 812-5065-3005\n📧 邮件：official@fluxatritamaindonesia.com'
+    id:'Kami menyediakan: (1) Application Development — web, mobile, sistem internal; (2) Infrastructure & Network — LAN/WAN, server, security; (3) IT Procurement — hardware & software.\n\nSilakan hubungi kami langsung untuk diskusi kebutuhan Anda:\n📱 WhatsApp: +62 812-5065-3005\n📧 Email: official@fluxa.co.id',
+    en:'We provide: (1) Application Development — web, mobile, internal systems; (2) Infrastructure & Network; (3) IT Procurement.\n\nContact us directly to discuss your needs:\n📱 WhatsApp: +62 812-5065-3005\n📧 Email: official@fluxa.co.id',
+    zh:'我们提供：(1) 应用程序开发; (2) 基础设施与网络; (3) IT采购。\n\n请直接联系我们讨论您的需求：\n📱 WhatsApp: +62 812-5065-3005\n📧 邮件：official@fluxa.co.id'
   },
   website:{
-    id:'Ya, kami membangun company profile, landing page, portal bisnis, dashboard, dan sistem web kustom sesuai kebutuhan bisnis Anda.\n\nYuk diskusi lebih lanjut:\n📱 WhatsApp: +62 812-5065-3005\n📧 Email: official@fluxatritamaindonesia.com',
-    en:'Yes! We build company profiles, landing pages, business portals, dashboards, and custom web systems tailored to your business.\n\nLet\'s discuss further:\n📱 WhatsApp: +62 812-5065-3005\n📧 Email: official@fluxatritamaindonesia.com',
-    zh:'是的，我们构建企业官网、登陆页、业务门户、仪表板和定制Web系统。\n\n欢迎进一步洽谈：\n📱 WhatsApp: +62 812-5065-3005\n📧 邮件：official@fluxatritamaindonesia.com'
+    id:'Ya, kami membangun company profile, landing page, portal bisnis, dashboard, dan sistem web kustom sesuai kebutuhan bisnis Anda.\n\nYuk diskusi lebih lanjut:\n📱 WhatsApp: +62 812-5065-3005\n📧 Email: official@fluxa.co.id',
+    en:'Yes! We build company profiles, landing pages, business portals, dashboards, and custom web systems tailored to your business.\n\nLet\'s discuss further:\n📱 WhatsApp: +62 812-5065-3005\n📧 Email: official@fluxa.co.id',
+    zh:'是的，我们构建企业官网、登陆页、业务门户、仪表板和定制Web系统。\n\n欢迎进一步洽谈：\n📱 WhatsApp: +62 812-5065-3005\n📧 邮件：official@fluxa.co.id'
   },
   konsultasi:{
-    id:'Konsultasi awal kami gratis! Silakan hubungi kami melalui:\n📱 WhatsApp: +62 812-5065-3005\n📧 Email: official@fluxatritamaindonesia.com\n\nTim kami siap merespons dan membantu memetakan kebutuhan Anda.',
-    en:'Our initial consultation is free! Please contact us via:\n📱 WhatsApp: +62 812-5065-3005\n📧 Email: official@fluxatritamaindonesia.com\n\nOur team is ready to respond and help map your needs.',
-    zh:'初步咨询免费！请通过以下方式联系我们：\n📱 WhatsApp: +62 812-5065-3005\n📧 邮件：official@fluxatritamaindonesia.com\n\n我们的团队随时准备响应并帮助梳理您的需求。'
+    id:'Konsultasi awal kami gratis! Silakan hubungi kami melalui:\n📱 WhatsApp: +62 812-5065-3005\n📧 Email: official@fluxa.co.id\n\nTim kami siap merespons dan membantu memetakan kebutuhan Anda.',
+    en:'Our initial consultation is free! Please contact us via:\n📱 WhatsApp: +62 812-5065-3005\n📧 Email: official@fluxa.co.id\n\nOur team is ready to respond and help map your needs.',
+    zh:'初步咨询免费！请通过以下方式联系我们：\n📱 WhatsApp: +62 812-5065-3005\n📧 邮件：official@fluxa.co.id\n\n我们的团队随时准备响应并帮助梳理您的需求。'
   },
   default:{
-    id:'Terima kasih sudah menghubungi kami! Untuk diskusi lebih lanjut, silakan hubungi tim PT Fluxa Tritama Indonesia:\n📱 WhatsApp: +62 812-5065-3005\n📧 Email: official@fluxatritamaindonesia.com',
-    en:'Thank you for reaching out! To discuss further, please contact the PT Fluxa Tritama Indonesia team:\n📱 WhatsApp: +62 812-5065-3005\n📧 Email: official@fluxatritamaindonesia.com',
-    zh:'感谢您的联系！如需进一步讨论，请联系PT Fluxa Tritama Indonesia团队：\n📱 WhatsApp: +62 812-5065-3005\n📧 邮件：official@fluxatritamaindonesia.com'
+    id:'Terima kasih sudah menghubungi kami! Untuk diskusi lebih lanjut, silakan hubungi tim PT Fluxa Tritama Indonesia:\n📱 WhatsApp: +62 812-5065-3005\n📧 Email: official@fluxa.co.id',
+    en:'Thank you for reaching out! To discuss further, please contact the PT Fluxa Tritama Indonesia team:\n📱 WhatsApp: +62 812-5065-3005\n📧 Email: official@fluxa.co.id',
+    zh:'感谢您的联系！如需进一步讨论，请联系PT Fluxa Tritama Indonesia团队：\n📱 WhatsApp: +62 812-5065-3005\n📧 邮件：official@fluxa.co.id'
   }
 };
 

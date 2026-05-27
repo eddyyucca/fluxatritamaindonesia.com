@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id" class="scroll-smooth">
 <head>
     
@@ -37,7 +37,7 @@
                     "@id": "#organization",
                     "name": "PT Fluxa Tritama Indonesia",
                     "alternateName": "PT Fluxa Tritama Indonesia",
-                    "email": "official@fluxatritamaindonesia.com",
+                    "email": "official@fluxa.co.id",
                     "telephone": "+62-812-5065-3005",
                     "address": {
                         "@type": "PostalAddress",
@@ -100,13 +100,13 @@
                     <div class="lang-switcher" role="group" aria-label="Language switcher">
                         <button class="lang-btn is-active" type="button" data-lang="id">ID</button>
                         <button class="lang-btn" type="button" data-lang="en">EN</button>
-                        <button class="lang-btn" type="button" data-lang="zh">中文</button>
+                        <button class="lang-btn" type="button" data-lang="zh">??</button>
                     </div>
                     <button id="themeToggle" class="theme-toggle" type="button" aria-label="Ganti tema">
                         <i class="fas fa-moon theme-icon theme-icon-dark"></i>
                         <i class="fas fa-sun theme-icon theme-icon-light"></i>
                     </button>
-                    <a href="mailto:official@fluxatritamaindonesia.com" class="rounded-full border border-white/10 px-4 py-2 text-sm text-slate-200 transition hover:border-sky-300/30 hover:bg-white/5" data-i18n="cta.email">Email Kami</a>
+                    <a href="mailto:official@fluxa.co.id" class="rounded-full border border-white/10 px-4 py-2 text-sm text-slate-200 transition hover:border-sky-300/30 hover:bg-white/5" data-i18n="cta.email">Email Kami</a>
                     <a href="https://wa.me/6281250653005" class="rounded-full bg-gradient-to-r from-teal-300 to-sky-400 px-5 py-2 text-sm font-semibold text-slate-950 transition hover:brightness-110" data-i18n="cta.consult">Konsultasi</a>
                 </div>
 
@@ -127,16 +127,18 @@
                 <div class="lang-switcher" role="group" aria-label="Language switcher mobile">
                     <button class="lang-btn is-active" type="button" data-lang="id">ID</button>
                     <button class="lang-btn" type="button" data-lang="en">EN</button>
-                    <button class="lang-btn" type="button" data-lang="zh">中文</button>
+                    <button class="lang-btn" type="button" data-lang="zh">??</button>
                 </div>
                 <a href="#about" class="block" data-i18n="nav.about">Tentang</a>
                 <a href="#services" class="block" data-i18n="nav.services">Layanan</a>
                 <a href="#industries" class="block" data-i18n="nav.industries">Industri</a>
-                <a href="#portfolio" class="block" data-i18n="nav.projects">Proyek</a>
-                <a href="#process" class="block" data-i18n="nav.process">Proses</a>
-                <a href="#contact" class="block" data-i18n="nav.contact">Kontak</a>
+                <a href="#portfolio"  class="nl" data-i18n="nav.projects">Proyek</a>
+                <a href="#process"    class="nl" data-i18n="nav.process">Proses</a>
+                <a href="/service" class="nl">Layanan</a>
+                <a href="/career" class="nl">Karir</a>
+                <a href="/contact" class="nl">Kontak</a>
                 <div class="flex flex-col gap-3 pt-3">
-                    <a href="mailto:official@fluxatritamaindonesia.com" class="rounded-2xl border border-white/10 px-4 py-3 text-center" data-i18n="cta.email">Email Kami</a>
+                    <a href="mailto:official@fluxa.co.id" class="rounded-2xl border border-white/10 px-4 py-3 text-center" data-i18n="cta.email">Email Kami</a>
                     <a href="https://wa.me/6281250653005" class="rounded-2xl bg-gradient-to-r from-teal-300 to-sky-400 px-4 py-3 text-center font-semibold text-slate-950" data-i18n="cta.consult">Konsultasi</a>
                 </div>
             </div>
@@ -610,7 +612,7 @@
                             <p class="mt-6 max-w-2xl text-base leading-8 text-slate-300" data-i18n="contact.desc">Jika Anda butuh website company profile, aplikasi internal, atau infrastruktur IT yang lebih rapi, kami siap bantu dari tahap perencanaan sampai implementasi.</p>
                             <div class="mt-8 flex flex-col gap-4 sm:flex-row">
                                 <a href="https://wa.me/6281250653005" class="rounded-2xl bg-gradient-to-r from-teal-300 to-sky-400 px-7 py-4 text-center text-sm font-semibold text-slate-950 transition hover:brightness-110" data-i18n="contact.cta1">Chat via WhatsApp</a>
-                                <a href="mailto:official@fluxatritamaindonesia.com" class="rounded-2xl border border-white/10 px-7 py-4 text-center text-sm font-semibold text-white transition hover:border-sky-300/30 hover:bg-white/5" data-i18n="contact.cta2">Kirim Email</a>
+                                <a href="mailto:official@fluxa.co.id" class="rounded-2xl border border-white/10 px-7 py-4 text-center text-sm font-semibold text-white transition hover:border-sky-300/30 hover:bg-white/5" data-i18n="contact.cta2">Kirim Email</a>
                             </div>
                         </div>
 
@@ -620,7 +622,7 @@
                                     <i class="fas fa-envelope"></i>
                                 </div>
                                 <h3 class="text-lg font-bold text-white" data-i18n="contact.card1">Email</h3>
-                                <a href="mailto:official@fluxatritamaindonesia.com" class="mt-2 inline-block text-sm text-slate-300 hover:text-white">official@fluxatritamaindonesia.com</a>
+                                <a href="mailto:official@fluxa.co.id" class="mt-2 inline-block text-sm text-slate-300 hover:text-white">official@fluxa.co.id</a>
                             </div>
                             <div class="contact-card rounded-[1.75rem] border border-white/10 bg-white/[0.03] p-6">
                                 <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-teal-300/10 text-teal-200">
