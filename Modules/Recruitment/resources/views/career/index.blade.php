@@ -121,7 +121,7 @@
     </main>
 
     <!-- Footer -->
-    <footer class="border-t border-white/10 mt-auto bg-slate-900/50">
+    <footer class="w-full border-t border-white/10 mt-auto bg-slate-900/50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 text-center text-slate-400 text-sm">
             &copy; {{ date('Y') }} PT Fluxa Tritama Indonesia. All rights reserved.
         </div>
