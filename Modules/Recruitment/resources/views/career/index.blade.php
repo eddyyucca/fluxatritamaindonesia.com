@@ -122,14 +122,8 @@
 
     <!-- Footer -->
     <footer class="border-t border-white/10 mt-auto bg-slate-900/50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col md:flex-row justify-between items-center gap-4">
-            <div class="text-slate-400 text-sm">
-                &copy; {{ date('Y') }} PT Fluxa Tritama Indonesia. All rights reserved.
-            </div>
-            <div class="flex gap-4">
-                <a href="#" class="text-slate-400 hover:text-white transition-colors"><i class="fab fa-linkedin text-xl"></i></a>
-                <a href="#" class="text-slate-400 hover:text-white transition-colors"><i class="fab fa-instagram text-xl"></i></a>
-            </div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 text-center text-slate-400 text-sm">
+            &copy; {{ date('Y') }} PT Fluxa Tritama Indonesia. All rights reserved.
         </div>
     </footer>
 </body>
