@@ -40,7 +40,7 @@ class DashboardController extends Controller
             abort(403);
         }
 
-        $users = User::latest()->get();
+        $users = User::where('role', '!=', 'candidate')->latest()->get();
         return view('dashboard::users', compact('users'));
     }
 
@@ -85,7 +85,9 @@ class DashboardController extends Controller
         if (!Auth::user()->isDirector()) abort(403);
         $positions = \App\Models\Position::active()->orderBy('name')->get();
         // Ambil data atasan (yang bukan user ini sendiri)
-        $supervisors = \App\Models\User::where('id', '!=', $user->id)->orderBy('name')->get();
+        $supervisors = \App\Models\User::where('id', '!=', $user->id)
+            ->where('role', '!=', 'candidate')
+            ->orderBy('name')->get();
         return view('dashboard::user-edit', compact('user', 'positions', 'supervisors'));
     }
 
@@ -118,9 +120,9 @@ class DashboardController extends Controller
     {
         // Get all users with their subordinates recursively to build the tree
         // It's often easier to get all and build tree in memory or view for small numbers
-        $users = User::all();
+        $users = User::where('role', '!=', 'candidate')->get();
         // The top level users (no parent)
-        $topLevelUsers = User::whereNull('parent_id')->orderBy('org_level')->get();
+        $topLevelUsers = User::whereNull('parent_id')->where('role', '!=', 'candidate')->orderBy('org_level')->get();
         return view('dashboard::organization', compact('users', 'topLevelUsers'));
     }
 
@@ -130,7 +132,7 @@ class DashboardController extends Controller
             abort(403);
         }
 
-        $users = User::all();
+        $users = User::where('role', '!=', 'candidate')->get();
         return view('dashboard::organization-edit', compact('users'));
     }
 
