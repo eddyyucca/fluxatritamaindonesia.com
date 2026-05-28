@@ -31,6 +31,7 @@ Route::prefix('career')->group(function () {
             Route::get('/dashboard', [\Modules\Recruitment\Http\Controllers\CandidateAuthController::class, 'dashboard'])->name('career.dashboard');
             Route::get('/profile', [\Modules\Recruitment\Http\Controllers\CandidateAuthController::class, 'profile'])->name('career.profile');
             Route::post('/profile/update', [\Modules\Recruitment\Http\Controllers\CandidateAuthController::class, 'updateProfile'])->name('career.profile.update');
+            Route::get('/cv/{path}', [\Modules\Recruitment\Http\Controllers\CandidateAuthController::class, 'viewCv'])->where('path', '.*')->name('career.cv');
         });
     });
 });
@@ -39,6 +40,7 @@ Route::prefix('career')->group(function () {
 Route::middleware(['web', 'auth', \App\Http\Middleware\ForcePasswordChange::class, \App\Http\Middleware\CheckDirector::class])->prefix('dashboard/recruitment')->name('admin.')->group(function () {
     Route::get('/applicants', [\Modules\Recruitment\Http\Controllers\AdminRecruitmentController::class, 'index'])->name('applicants.index');
     Route::put('/applicants/{id}/status', [\Modules\Recruitment\Http\Controllers\AdminRecruitmentController::class, 'updateStatus'])->name('applicants.update-status');
+    Route::get('/applicants/cv/{path}', [\Modules\Recruitment\Http\Controllers\AdminRecruitmentController::class, 'viewCv'])->where('path', '.*')->name('applicants.cv');
 
     Route::resource('vacancies', \Modules\Recruitment\Http\Controllers\AdminJobVacancyController::class);
 });

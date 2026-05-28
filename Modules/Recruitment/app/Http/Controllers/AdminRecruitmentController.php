@@ -74,4 +74,13 @@ class AdminRecruitmentController extends Controller
 
         return back()->with('success', 'Status lamaran berhasil diperbarui.');
     }
+
+    public function viewCv($path)
+    {
+        if (\Illuminate\Support\Facades\Storage::disk('public')->exists($path)) {
+            return \Illuminate\Support\Facades\Storage::disk('public')->response($path);
+        }
+        
+        abort(404, 'CV tidak ditemukan.');
+    }
 }

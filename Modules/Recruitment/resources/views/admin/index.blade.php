@@ -88,7 +88,7 @@
                                         </div>
                                         <div class="modal-footer">
                                             @if($app->cv_path)
-                                                <a href="{{ asset('storage/' . $app->cv_path) }}" target="_blank" class="btn btn-sm btn-danger"><i class="fas fa-file-pdf mr-1"></i> Buka CV</a>
+                                                <a href="{{ route('admin.applicants.cv', ['path' => $app->cv_path]) }}" target="_blank" class="btn btn-sm btn-danger"><i class="fas fa-file-pdf mr-1"></i> Buka CV</a>
                                             @endif
                                             <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Tutup</button>
                                         </div>
@@ -118,7 +118,7 @@
                         <td>{{ $app->created_at->format('d M Y, H:i') }}</td>
                         <td class="text-center">
                             @if($app->cv_path)
-                                <a href="{{ asset('storage/' . $app->cv_path) }}" target="_blank" class="btn btn-sm btn-fluxa-secondary mr-1" title="Lihat CV"><i class="fas fa-file-pdf text-danger"></i></a>
+                                <a href="{{ route('admin.applicants.cv', ['path' => $app->cv_path]) }}" target="_blank" class="btn btn-sm btn-fluxa-secondary mr-1" title="Lihat CV"><i class="fas fa-file-pdf text-danger"></i></a>
                             @endif
                             <button type="button" class="btn btn-sm btn-fluxa-primary" data-toggle="modal" data-target="#statusModal{{ $app->id }}" title="Ubah Status"><i class="fas fa-edit"></i></button>
 

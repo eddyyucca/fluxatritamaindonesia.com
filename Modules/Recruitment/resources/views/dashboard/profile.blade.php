@@ -112,7 +112,7 @@
                                 <p class="text-xs text-slate-400">File telah berhasil diunggah.</p>
                             </div>
                         </div>
-                        <a href="{{ asset('storage/' . $profile->cv_path) }}" target="_blank" class="px-4 py-2 bg-slate-700 hover:bg-slate-600 rounded-lg text-sm font-medium text-white transition-colors">
+                        <a href="{{ route('career.cv', ['path' => $profile->cv_path]) }}" target="_blank" class="px-4 py-2 bg-slate-700 hover:bg-slate-600 rounded-lg text-sm font-medium text-white transition-colors">
                             Lihat File
                         </a>
                     </div>
