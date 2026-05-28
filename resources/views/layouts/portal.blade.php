@@ -574,6 +574,28 @@
                         </a>
                     </li>
 
+                    <li class="nav-header">SDM & Organisasi</li>
+                    <li class="nav-item">
+                        <a href="{{ route('dashboard.organization') }}" class="nav-link {{ request()->routeIs('dashboard.organization*') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-sitemap"></i>
+                            <p>Struktur Organisasi</p>
+                        </a>
+                    </li>
+                    @if(Auth::user()->isDirector())
+                    <li class="nav-item">
+                        <a href="{{ route('dashboard.users') }}" class="nav-link {{ request()->routeIs('dashboard.users*') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-users"></i>
+                            <p>Kelola Pengguna</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('dashboard.positions') }}" class="nav-link {{ request()->routeIs('dashboard.positions*') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-user-tie"></i>
+                            <p>Master Jabatan</p>
+                        </a>
+                    </li>
+                    @endif
+
                     <li class="nav-header">Pengaturan</li>
                     <li class="nav-item">
                         <a href="{{ route('coming-soon', ['feature' => 'Pengaturan Sistem']) }}" class="nav-link">
