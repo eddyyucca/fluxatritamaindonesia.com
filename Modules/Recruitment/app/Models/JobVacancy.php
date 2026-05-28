@@ -15,6 +15,7 @@ class JobVacancy extends Model
      */
     protected $fillable = [
         'title',
+        'department',
         'description',
         'requirements',
         'location',
