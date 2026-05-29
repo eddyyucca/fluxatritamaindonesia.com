@@ -31,12 +31,12 @@
         }
 
         /* Running Footer */
-        footer {
+        .page-footer {
             position: fixed;
             bottom: 0;
             left: 0;
             right: 0;
-            height: 20px;
+            height: 25px;
             border-top: 1px solid #e2e8f0;
             padding-top: 5px;
             font-size: 10px;
@@ -83,7 +83,7 @@
             position: relative;
             z-index: 1;
         }
-        .cover-logo { height: 120px; margin-bottom: 50px; } /* Increased from 90px to 120px */
+        .cover-logo { height: 120px; margin-bottom: 50px; }
         .cover-type { font-size: 16px; font-weight: 700; letter-spacing: 4px; color: #93c5fd; text-transform: uppercase; margin-bottom: 15px; }
         .cover-title { font-size: 38px; font-weight: 900; line-height: 1.2; margin: 0 0 15px 0; color: #ffffff !important; }
         .cover-subtitle { font-size: 18px; color: #f8fafc; font-weight: 400; margin: 0 0 60px 0; }
@@ -103,7 +103,7 @@
         p { margin-bottom: 15px; text-align: justify; }
         
         .header { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px solid #e2e8f0; padding-bottom: 15px; margin-bottom: 30px; }
-        .header img { height: 60px; } /* Increased from 40px to 60px */
+        .header img { height: 60px; }
         .header .meta { text-align: right; font-size: 11px; color: #64748b; }
         .header .meta strong { color: #0f172a; font-size: 13px; display: block; margin-bottom: 3px; }
 
@@ -113,10 +113,12 @@
         .rich-text li { margin-bottom: 5px; }
 
         /* Investment Table */
-        .items-table { width: 100%; border-collapse: collapse; margin-bottom: 25px; border: 1px solid #e2e8f0; page-break-inside: avoid; }
+        .items-table { width: 100%; border-collapse: collapse; margin-bottom: 25px; border: 1px solid #e2e8f0; }
+        .items-table thead { display: table-header-group; }
+        .items-table tr { page-break-inside: avoid; }
         .items-table th { background-color: #f8fafc; font-size: 12px; font-weight: 700; color: #0f172a; padding: 12px; text-align: left; border-bottom: 2px solid #cbd5e1; }
         .items-table td { padding: 12px; border-bottom: 1px solid #e2e8f0; font-size: 13px; vertical-align: top; }
-        .items-table tfoot td { font-weight: 800; font-size: 15px; background: #f8fafc; border-top: 2px solid #cbd5e1; }
+        .items-table tfoot td { font-weight: 800; font-size: 15px; background: #f8fafc; border-top: 2px solid #cbd5e1; page-break-inside: avoid; }
         
         .th-no { width: 5%; text-align: center !important; }
         .th-price { width: 25%; text-align: right !important; }
@@ -138,6 +140,15 @@
     <div class="no-print" style="text-align:center; padding:20px; background:#fff; border-bottom:1px solid #e2e8f0; margin-bottom: 20px;">
         <button onclick="window.print()" style="background:#2563eb; color:white; border:none; padding:10px 20px; border-radius:8px; font-weight:bold; cursor:pointer; font-family:'Inter', sans-serif;">Cetak / Print (Ctrl+P)</button>
         <p style="font-size:12px; color:#64748b; margin-top:10px;">Gunakan browser cetak dan aktifkan "Background graphics". Jarak halaman dan header/footer otomatis diatur oleh browser.</p>
+    </div>
+
+    <div class="page-footer">
+        <table class="footer-table">
+            <tr>
+                <td class="footer-left">Proposal Penawaran Aplikasi - PT FLUXA TRITAMA INDONESIA</td>
+                <td class="footer-right">Halaman <span class="pagenum"></span></td>
+            </tr>
+        </table>
     </div>
 
     <div class="print-container">
@@ -166,16 +177,6 @@
                 <p style="margin-bottom:0;">No. Ref: {{ $app_proposal->proposal_number }}</p>
             </div>
         </div>
-
-        <!-- RUNNING FOOTER FOR CONTENT PAGES -->
-        <footer>
-            <table class="footer-table">
-                <tr>
-                    <td class="footer-left">Proposal Penawaran Aplikasi - PT FLUXA TRITAMA INDONESIA</td>
-                    <td class="footer-right">Halaman <span class="pagenum"></span></td>
-                </tr>
-            </table>
-        </footer>
 
         <!-- CONTENT Flow -->
         <div class="content-wrapper content-page">
