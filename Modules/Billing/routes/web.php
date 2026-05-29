@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Modules\Billing\App\Http\Controllers\ClientController;
 use Modules\Billing\App\Http\Controllers\QuotationController;
+use Modules\Billing\App\Http\Controllers\AppProposalController;
 use Modules\Billing\App\Http\Controllers\InvoiceController;
 use Modules\Billing\App\Http\Controllers\VerifyController;
 use Modules\Billing\App\Http\Controllers\PrintController;
@@ -10,6 +11,7 @@ use Modules\Billing\App\Http\Controllers\PrintController;
 // Public verification (no auth required)
 Route::middleware('web')->group(function () {
     Route::get('/verify/q/{token}', [VerifyController::class, 'quotation'])->name('verify.quotation');
+    Route::get('/verify/p/{token}', [VerifyController::class, 'app_proposal'])->name('verify.app_proposal');
     Route::get('/verify/i/{token}', [VerifyController::class, 'invoice'])->name('verify.invoice');
 });
 
@@ -38,6 +40,19 @@ Route::middleware(['web', 'auth', 'force_password_change'])->prefix('billing')->
     Route::post('/quotations/{quotation}/to-invoice', [InvoiceController::class, 'storeFromQuotation'])->name('quotations.to-invoice');
     Route::delete('/quotations/{quotation}', [QuotationController::class, 'destroy'])->name('quotations.destroy');
 
+    // App Proposals
+    Route::get('/app-proposals', [AppProposalController::class, 'index'])->name('app_proposals.index');
+    Route::get('/app-proposals/create', [AppProposalController::class, 'create'])->name('app_proposals.create');
+    Route::post('/app-proposals', [AppProposalController::class, 'store'])->name('app_proposals.store');
+    Route::get('/app-proposals/{app_proposal}', [AppProposalController::class, 'show'])->name('app_proposals.show');
+    Route::get('/app-proposals/{app_proposal}/edit', [AppProposalController::class, 'edit'])->name('app_proposals.edit');
+    Route::put('/app-proposals/{app_proposal}', [AppProposalController::class, 'update'])->name('app_proposals.update');
+    Route::post('/app-proposals/{app_proposal}/submit', [AppProposalController::class, 'submit'])->name('app_proposals.submit');
+    Route::post('/app-proposals/{app_proposal}/approve', [AppProposalController::class, 'approve'])->name('app_proposals.approve');
+    Route::post('/app-proposals/{app_proposal}/reject', [AppProposalController::class, 'reject'])->name('app_proposals.reject');
+    Route::post('/app-proposals/{app_proposal}/revert', [AppProposalController::class, 'revert'])->name('app_proposals.revert');
+    Route::delete('/app-proposals/{app_proposal}', [AppProposalController::class, 'destroy'])->name('app_proposals.destroy');
+
     // Invoices
     Route::get('/invoices', [InvoiceController::class, 'index'])->name('invoices.index');
     Route::get('/invoices/create', [InvoiceController::class, 'create'])->name('invoices.create');
@@ -54,5 +69,6 @@ Route::middleware(['web', 'auth', 'force_password_change'])->prefix('billing')->
     // Print views
     Route::get('/invoices/{invoice}/print', [PrintController::class, 'invoice'])->name('invoices.print');
     Route::get('/quotations/{quotation}/print', [PrintController::class, 'quotation'])->name('quotations.print');
+    Route::get('/app-proposals/{app_proposal}/print', [PrintController::class, 'app_proposal'])->name('app_proposals.print');
 
 });

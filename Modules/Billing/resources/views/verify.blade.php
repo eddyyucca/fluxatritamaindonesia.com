@@ -47,7 +47,7 @@
             </div>
 
             <h1 class="text-center text-white font-bold text-lg mb-1">
-                {{ $type === 'quotation' ? 'Quotation' : 'Invoice' }} Terverifikasi
+                {{ $type === 'quotation' ? 'Quotation' : ($type === 'app_proposal' ? 'Proposal Aplikasi' : 'Invoice') }} Terverifikasi
             </h1>
             <p class="text-center text-slate-500 text-sm mb-6">
                 Dokumen ini dikeluarkan oleh PT Fluxa Tritama Indonesia
@@ -93,7 +93,7 @@
                     <span class="text-white">{{ $document->invoice_date->format('d/m/Y') }}</span>
                 </div>
                 @endif
-                @if($type === 'quotation' && $document->valid_until)
+                @if(in_array($type, ['quotation', 'app_proposal']) && $document->valid_until)
                 <div class="flex justify-between text-sm">
                     <span class="text-slate-500">Berlaku s/d</span>
                     <span class="{{ $document->valid_until->isPast() ? 'text-red-400' : 'text-white' }}">

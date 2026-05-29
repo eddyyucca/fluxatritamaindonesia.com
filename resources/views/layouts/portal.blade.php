@@ -529,6 +529,19 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a href="{{ route('billing.app_proposals.index') }}" class="nav-link {{ request()->routeIs('billing.app_proposals.*') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-laptop-code"></i>
+                            <p>Proposal Aplikasi
+                            @if(Auth::user()->isDirector())
+                                @php $pendingP = \Illuminate\Support\Facades\DB::table('app_proposals')->where('status','sent')->count(); @endphp
+                                @if($pendingP > 0)
+                                <span class="badge badge-warning right" style="font-size:10px;background:#d97706;color:#fff;border-radius:99px;padding:1px 6px;margin-left:4px;">{{ $pendingP }}</span>
+                                @endif
+                            @endif
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a href="{{ route('billing.invoices.index') }}" class="nav-link {{ request()->routeIs('billing.invoices.*') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-file-invoice-dollar"></i>
                             <p>Invoice

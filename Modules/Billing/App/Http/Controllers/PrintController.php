@@ -34,4 +34,19 @@ class PrintController extends Controller
         $pdf->setPaper('a4', 'portrait');
         return $pdf->download('Quotation_' . str_replace('/', '_', $quotation->quotation_number) . '.pdf');
     }
+
+    public function app_proposal(\Modules\Billing\App\Models\AppProposal $app_proposal)
+    {
+        $user = Auth::user();
+        if (!$user->isDirector() && $app_proposal->created_by !== $user->id) {
+            abort(403);
+        }
+        $app_proposal->load(['client', 'creator', 'approver', 'items']);
+        
+        // For app proposals, we might want to just show the HTML view because of complex covers, 
+        // or we can use DomPDF. Let's use DomPDF but with 'stream' instead of download, 
+        // or just return the view if PDF generation fails. We will return view for now 
+        // to allow better CSS printing with browser.
+        return view('billing::app_proposals.print', compact('app_proposal'));
+    }
 }
