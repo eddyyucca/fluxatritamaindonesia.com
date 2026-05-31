@@ -36,7 +36,7 @@
             bottom: 0;
             left: 0;
             right: 0;
-            height: 25px;
+            height: 35px;
             border-top: 1px solid #e2e8f0;
             padding-top: 5px;
             font-size: 10px;
@@ -44,8 +44,8 @@
             z-index: 10;
         }
         .footer-table { width: 100%; border-collapse: collapse; }
-        .footer-left { text-align: left; }
-        .footer-right { text-align: right; }
+        .footer-left { text-align: left; line-height: 1.4; }
+        .footer-right { text-align: right; vertical-align: bottom; }
         .pagenum:before { content: counter(page); }
 
         /* Hide print button on print */
@@ -93,7 +93,7 @@
         .cover-client-name { font-size: 26px; font-weight: 800; margin: 0; color: #ffffff; }
         .cover-client-city { font-size: 16px; margin-top: 5px; color: #f1f5f9; }
         
-        .cover-footer { margin-top: auto; text-align: center; color: #f1f5f9; font-size: 14px; position: relative; z-index: 1; padding-top: 40px; }
+        .cover-footer { margin-top: auto; text-align: center; color: #f1f5f9; font-size: 12px; position: relative; z-index: 1; padding-top: 40px; line-height: 1.5; }
 
         /* Standard Content Styling */
         .content-wrapper { position: relative; z-index: 20; background: white; }
@@ -145,7 +145,13 @@
     <div class="page-footer">
         <table class="footer-table">
             <tr>
-                <td class="footer-left">Proposal Penawaran Aplikasi - PT FLUXA TRITAMA INDONESIA</td>
+                <td class="footer-left">
+                    <strong style="color:#475569;">PT FLUXA TRITAMA INDONESIA</strong><br>
+                    <span style="font-size:9px;">
+                        Tapin, RT 011, RW 004, Suato Tatakan, Tapin Selatan, Kalsel 71181<br>
+                        Telp: 0812-5065-3005 &middot; Email: official@fluxa.co.id
+                    </span>
+                </td>
                 <td class="footer-right">Halaman <span class="pagenum"></span></td>
             </tr>
         </table>
@@ -172,9 +178,17 @@
             </div>
             
             <div class="cover-footer">
-                <p style="margin-bottom:0;"><strong>PT FLUXA TRITAMA INDONESIA</strong></p>
-                <p style="margin-bottom:0;">Tanggal Dokumen: {{ $app_proposal->created_at->format('d F Y') }}</p>
-                <p style="margin-bottom:0;">No. Ref: {{ $app_proposal->proposal_number }}</p>
+                <p style="margin-bottom:2px; font-size:15px; letter-spacing:1px;"><strong>PT FLUXA TRITAMA INDONESIA</strong></p>
+                <p style="margin-bottom:2px; font-size:12px; color:#cbd5e1;">
+                    Tapin, RT 011, RW 004, Suato Tatakan, Tapin Selatan, Kalimantan Selatan 71181
+                </p>
+                <p style="margin-bottom:15px; font-size:12px; color:#cbd5e1;">
+                    Telp: 0812-5065-3005 &nbsp;&middot;&nbsp; Email: official@fluxa.co.id
+                </p>
+                <div style="width:100px; height:1px; background:rgba(255,255,255,0.2); margin:0 auto 10px auto;"></div>
+                <p style="margin-bottom:0; font-size:11px; color:#94a3b8;">
+                    Tanggal Dokumen: {{ $app_proposal->created_at->format('d F Y') }} &nbsp;&middot;&nbsp; No. Ref: {{ $app_proposal->proposal_number }}
+                </p>
             </div>
         </div>
 

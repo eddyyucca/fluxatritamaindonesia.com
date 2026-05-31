@@ -609,13 +609,15 @@
                     </li>
                     @endif
 
+                    @if(Auth::user()->isDirector())
                     <li class="nav-header">Pengaturan</li>
                     <li class="nav-item">
-                        <a href="{{ route('coming-soon', ['feature' => 'Pengaturan Sistem']) }}" class="nav-link">
+                        <a href="{{ route('setting.index') }}" class="nav-link {{ request()->routeIs('setting.*') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-gear"></i>
                             <p>Pengaturan Sistem</p>
                         </a>
                     </li>
+                    @endif
                 </ul>
             </nav>
 

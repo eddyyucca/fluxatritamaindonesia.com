@@ -61,7 +61,7 @@ class DashboardController extends Controller
         $data = $request->validate([
             'name'     => ['required', 'string', 'max:255'],
             'email'    => ['required', 'email', 'unique:users'],
-            'role'     => ['required', 'in:director,user'],
+            'role'     => ['required', 'in:director,admin,staff,hr,finance,user'],
             'position' => ['nullable', 'string', 'max:100'],
         ]);
 
@@ -98,7 +98,7 @@ class DashboardController extends Controller
         $data = $request->validate([
             'name'     => ['required', 'string', 'max:255'],
             'email'    => ['required', 'email', 'unique:users,email,' . $user->id],
-            'role'     => ['required', 'in:director,user'],
+            'role'     => ['required', 'in:director,admin,staff,hr,finance,user'],
             'position' => ['nullable', 'string', 'max:100'],
             'org_level' => ['nullable', 'integer', 'min:1', 'max:5'],
             'parent_id' => ['nullable', 'exists:users,id'],

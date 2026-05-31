@@ -47,11 +47,16 @@
 
                     <div class="form-group">
                         <label>Peran <span class="required-star">*</span></label>
+                        @php
+                            $availableRoles = ['director', 'admin', 'staff', 'hr', 'finance', 'user'];
+                        @endphp
                         <select name="role" class="form-control" required>
-                            <option value="user" {{ old('role') === 'user' ? 'selected' : '' }}>Staff / User</option>
-                            <option value="director" {{ old('role') === 'director' ? 'selected' : '' }}>Director</option>
+                            <option value="">-- Pilih Peran --</option>
+                            @foreach($availableRoles as $r)
+                                <option value="{{ $r }}" {{ old('role') === $r ? 'selected' : '' }}>{{ ucfirst($r) }}</option>
+                            @endforeach
                         </select>
-                        <small class="form-text text-muted">Director dapat menyetujui/menolak dokumen dan melihat seluruh data.</small>
+                        <small class="form-text text-muted">Director dapat mengakses seluruh sistem. Role lainnya mengikuti pengaturan hak akses di Pengaturan Sistem.</small>
                     </div>
 
                     <div class="alert alert-info mt-3" style="font-size:12px;">
